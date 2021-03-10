@@ -1,0 +1,104 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server) | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="This last week-end, I’ve tried to upgrade my Dedibox running Ubuntu Server from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed to go well: no error messages, pretty easy, fast and straightforward process. Then came the required reboot." />
+<meta property="og:description" content="This last week-end, I’ve tried to upgrade my Dedibox running Ubuntu Server from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed to go well: no error messages, pretty easy, fast and straightforward process. Then came the required reboot." />
+<link rel="canonical" href="https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/" />
+<meta property="og:url" content="https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-01-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/","@type":"BlogPosting","headline":"Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)","dateModified":"2012-01-30T00:00:00+00:00","datePublished":"2012-01-30T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/"},"description":"This last week-end, I’ve tried to upgrade my Dedibox running Ubuntu Server from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed to go well: no error messages, pretty easy, fast and straightforward process. Then came the required reboot.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2012-01-30T00:00:00+00:00" itemprop="datePublished">
+        January 30, 2012
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>This last week-end, I’ve tried to upgrade my <a href="https://www.online.net/">Dedibox</a> running Ubuntu Server
+from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed
+to go well: no error messages, pretty easy, fast and straightforward process.
+Then came the required reboot.</p>
+<p>Once the server was restarted, nothing would work, including <code>ping</code>, <code>ssh</code> and
+of course, all hosted websites.</p>
+<p>It took me a couple of hours to fix the server and get everything running again.
+Here is what I did.</p>
+<p>I first found <del>this URL</del> which gave me the first steps of the process but
+actually didn’t work. Nevertheless, it helped identifying that grub was indeed
+the problem. Then I’ve applied <a href="https://help.ubuntu.com/community/Grub2#ChRoot">these guidelines</a> from the Dedibox’
+rescue mode. A last step was missing (found from studying <a href="http://forum.ubuntu-fr.org/viewtopic.php?id=444506">this URL</a>),
+applying:</p>
+<pre><code class="language-shell">sudo grub-install
+</code></pre>
+<p>Now, everything was back to normal : the server booted correctly, Natty was up
+and running. Thanks David B. for the support! Feel free to leave a comment if
+you want more details.</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/troubleshooting-ubuntu-server-upgrade/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/devops/">
+          devops
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/introducing-green-room-radio/">
+        First Hackathon Experience: Introducing Green Room Radio
+      </a>
+    </p>
+    <p class="related-page-date">November 20, 2011</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/debugging-iOS-symbolic-links/">
+        Debugging Symbolic Links On iOS
+      </a>
+    </p>
+    <p class="related-page-date">March 20, 2012</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

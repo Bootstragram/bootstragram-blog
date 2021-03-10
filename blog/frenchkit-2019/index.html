@@ -1,0 +1,209 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Notes from FrenchKit 2019 | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Notes from FrenchKit 2019" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend." />
+<meta property="og:description" content="Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend." />
+<link rel="canonical" href="https://bootstragram.com/blog/frenchkit-2019/" />
+<meta property="og:url" content="https://bootstragram.com/blog/frenchkit-2019/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-10-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Notes from FrenchKit 2019" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/frenchkit-2019/","@type":"BlogPosting","headline":"Notes from FrenchKit 2019","dateModified":"2019-10-10T00:00:00+00:00","datePublished":"2019-10-10T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/frenchkit-2019/"},"description":"Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Notes from FrenchKit 2019</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2019-10-10T00:00:00+00:00" itemprop="datePublished">
+        October 10, 2019
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p><a href="/blog/frenchkit-2018/"><strong>Again</strong></a>,
+<a href="http://frenchkit.fr">FrenchKit 2019</a> was awesome. Talks with 🌟 are the talks I
+recommend.</p>
+<h2>Day 1</h2>
+<h3>Animations with SwiftUI — <a href="https://twitter.com/chriseidhof">Chris Eidhof</a> 🌟</h3>
+<p>Using a basic animation example, namely creating a shaking effect on a rectangle
+view, Chris shows the hidden complexity of SwiftUI and how developers used to
+UIKit need to change their mental model about how to build views. Under the
+hood, SwiftUI seems very similar to React: a tree of views with wrappers all
+hover the place, with an efficient diffing algorithm deciding what to re-render.</p>
+<h3>Understanding Combine — <a href="https://twitter.com/dimsumthinking">Daniel Steinberg</a> 🌟</h3>
+<p>A good counterpart to Chris’ talk to mention how Apple frameworks evolved from
+using the delegation pattern, then closures and are now adopting Reactive
+Programming. Combine will probably become the <em>de facto</em> framework to use, as
+opposed to RxSwift and ReactiveCococa, due to its 1st party nature. The only
+problem is that it is only available for iOS 13.</p>
+<h3>SwiftUI &amp; Redux — Thomas Ricouard</h3>
+<p>Many frameworks are available to bring the Redux pattern to iOS development, ie
+dispatch actions, reducers, immutable states, mapStateToProps, etc. It could be
+a good idea to use one to keep having architectural conversations relevant to
+the mobile and web teams.</p>
+<h3>Testing &amp; Declarative UIs — <a href="https://twitter.com/nataliya_bg">Nataliya Patsovska</a> 🌟</h3>
+<p>Great talk promoting snapshot testing, something I tend to already do on ongoing
+projects 💪. Nataliya mentioned how we could benefit from a new feature of
+iOS/Xcode ie Previews. She wondered if tree inspecting libraries similar to
+<code>react-testing-library</code> would eventually show up to inspect contents of SwiftUI
+tree representations. A cool idea for an OSS side-project 💡.</p>
+<h3>Showcase Driven Development — <a href="https://twitter.com/JegnuX/">Jérôme Alves</a> 🌟</h3>
+<p>This talk was about how Heetch created a browsing interface within the debug
+release version of their app to demo <em>work in progress</em> to their product and
+quality teams as early as they could, building on <a href="http://khanlou.com/2019/07/continuous-integration/">the real continuous
+integration post</a> by Soroush Khanlou.</p>
+<h3>Slide to Unlock — <a href="https://twitter.com/myunderpants">Joel Kin</a> 🌟</h3>
+<p>Subtitle: Building Custom UI with UIKit and Core Animation.</p>
+<p>When something looks a little complicated, should you spend time looking for a
+library doing what you need, or should you spend time implementing it yourself?
+Building on UISlider, Joel shows a real-case scenario of what to assess to make
+the best informed decision. Notably, UISlider had a much better accessibility
+support that 3rd parties equivalents.</p>
+<h3>Swiftly Swift manipulation… with Swift — Marcin Krzyzanowski</h3>
+<p>Marcin shows up what’s under the hood of his <em>work in progress</em> code reordering
+tool. While we could benefit from such a tool, it sounds too immature to be
+integrated in a CI, but worth trying and keeping an eye on. Or even
+contributing? It involves playing with SourceKitten and Swift AST.</p>
+<h3>Empower Your UITableView DataSources with a Flexible Model — Denis Poifol</h3>
+<p>A prescription of a model to write table view view models.</p>
+<h3>When Did My View Layout? — Gaëtan Zanella</h3>
+<p>The title of the talk is misleading. It was more about what is an iOS
+application in terms of entry point, event management, run loop, etc.</p>
+<h3>Math &amp; Map Masterclass — Daniel Steinberg</h3>
+<p>Good simple exercises on how to implement an alternative version of <code>map</code> for
+arrays, generics, optionals, results, and combine. Basic &amp; deep at the same
+time.</p>
+<h3>Swift Pills - <a href="https://twitter.com/v_pradeilles">Vincent Pradeilles</a> 🌟</h3>
+<ol>
+<li>Weakifiable</li>
+<li>Autoclosure for log tooling</li>
+<li>Use map instead of if let These 3 tips are very actionable and recommended.</li>
+</ol>
+<h2>Day 2</h2>
+<h3>Swift Generics Topic — Rob Napier</h3>
+<p>Don’t make things generic to early. Very similar to
+<a href="https://kentcdodds.com/blog/aha-programming">this AHA Programming</a></p>
+<h3>Note encryption — <a href="https://twitter.com/vixentael">Anastasiia Voitova</a> 🌟</h3>
+<p>Subtitle: 10 lines for encryption, 1500 lines for key management.</p>
+<p>Anastasiia mentioned the real case of how her consulting company helped the Bear
+app to add security features in their app. What tradeoffs you should pick
+depending on the risks, threats, trust. Lots of recommended readings:</p>
+<ul>
+<li>Cossack Labs / Implementing End-to-End encryption in Bear App:
+<a href="https://t.co/oy5vJNCdvR?amp=1">here</a></li>
+<li><a href="https://github.com/OWASP/owasp-mstg">OWASP/owasp-mstg</a>: The Mobile Security
+Testing Guide (MSTG) is a comprehensive manual for mobile app security
+development, testing and reverse engineering.</li>
+</ul>
+<h3>SwiftPM’s New Resolver — Mert Buran</h3>
+<p>Subtitle: Can it Resolve the Conflicts in my Relationship?.</p>
+<p>Really fun and innovative format. Many analogies to explain how pubgrub works
+for SPM, and how algorithms we took for granted are under-appreciated.</p>
+<h3>This is Not Rocket (Data) Science — Hervé Berenger</h3>
+<p>Almost a star for this one. The idea was: how AI is actually hidden everywhere
+and how 1st party frameworks can already help with a lot of stuff. Example:
+using the background color of a messaging app to give a hint of the tone of the
+message that is being written to help think twice about the choice of words
+being used.</p>
+<h3>Building Voice-First Apps — Elaine Dias Batista</h3>
+<p>Elaine insisted how voice-first could be important for accessibility, and to do
+it properly with existing frameworks.</p>
+<h3>An Introduction to Property-Based Testing — Vincent Pradeilles</h3>
+<p>Another approach to test using random values that can auto-discover edge cases
+of input values that will reveal bugs in a codebase. It is not self sufficient
+but can be a good complement to other testing strategies. Also, it can lead to
+randomness in tests: for instance, a test could fail at the 10th execution. But
+frameworks handling these kind of tests will provide you the failing data and
+you can turn this failing scenario into a deterministic test case by adding it
+in traditional test cases.</p>
+<h3>Shipping a Catalyst app: The Good, the Bad and the Ugly — Peter Steinberger</h3>
+<p>The story of how <a href="https://pdfviewer.io">PDF Viewer</a> was ported to macOS using a
+mix of AppKit, UIKit, private API, etc. The conclusion for me is that if you can
+invest on SwiftUI, it is not worth exploring Catalyst.</p>
+<h3>And That’s A Wrap! — Olivier Halligon</h3>
+<p>An exploration of property wrappers, a feature introduced by Swift 5.1. It is
+totally compatible with older version of iOS as it is interpreted at compile
+time. The idea is to DRY behaviors of some properties. Example use cases:
+clamping values into a range, handling UserDefaults with convenience,
+customizing how a type conform to Codable, database mapping, etc.</p>
+<h3>Vapor Classroom — David Bonnet</h3>
+<p>Key takeaways:</p>
+<ul>
+<li>Apple now releases Swift Docker images on the same day new version of Swift
+are released;</li>
+<li>Vapor allows to share DTO between an iOS client and a backend;</li>
+<li>A lot of boilerplate code that should be made better via property wrapper in
+Vapor 4.</li>
+</ul>
+
+  </div>
+
+  <a class="u-url" href="/blog/frenchkit-2019/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/conf/">
+          conf
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/swift/">
+          swift
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/wwdc-2019-basic-wishlist/">
+        WWDC 2019, A Basic Wish List
+      </a>
+    </p>
+    <p class="related-page-date">May 29, 2019</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/pomodoro-cli-swift/">
+        Pomodoro CLI 1.0.0 Released 🎉
+      </a>
+    </p>
+    <p class="related-page-date">February 01, 2020</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

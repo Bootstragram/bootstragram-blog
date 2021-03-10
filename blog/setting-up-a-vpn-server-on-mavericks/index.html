@@ -1,0 +1,154 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Setting up a VPN Server with Mac OS X Mavericks | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Setting up a VPN Server with Mac OS X Mavericks" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="My company needed a way for people to access a local network server from home. The solution was to set up a VPN. That was fun and not that hard but I still ran into a couple of issues." />
+<meta property="og:description" content="My company needed a way for people to access a local network server from home. The solution was to set up a VPN. That was fun and not that hard but I still ran into a couple of issues." />
+<link rel="canonical" href="https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/" />
+<meta property="og:url" content="https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-10-30T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Setting up a VPN Server with Mac OS X Mavericks" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/","@type":"BlogPosting","headline":"Setting up a VPN Server with Mac OS X Mavericks","dateModified":"2013-10-30T00:00:00+00:00","datePublished":"2013-10-30T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/"},"description":"My company needed a way for people to access a local network server from home. The solution was to set up a VPN. That was fun and not that hard but I still ran into a couple of issues.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Setting up a VPN Server with Mac OS X Mavericks</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2013-10-30T00:00:00+00:00" itemprop="datePublished">
+        October 30, 2013
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>My company needed a way for people to access a local network server from home.
+The solution was to set up a VPN. That was fun and not that hard but I still ran
+into a couple of issues.</p>
+<h2>Why a VPN?</h2>
+<p>In case you’re still wondering what a VPN is at this point, let me explain.</p>
+<p><img src="../../assets/images/vpn-explain-1.png" alt="Without a VPN" title="Without a VPN" /></p>
+<p>The typical usage of a VPN in a professional context is to create a bridge
+between your enterprise network and the rest of the Internet. And if the bridge
+can be secured, it’s better.</p>
+<p><img src="../../assets/images/vpn-explain-2.png" alt="With a VPN" title="With a VPN" /></p>
+<h2>OS X Server.app</h2>
+<p>Our local server is a Mac Mini that was running Mountain Lion at the time. After
+some research, I realized the easiest solution to set up the VPN access was to
+use the OS X Server app (17,99€), which required the latest version of OS X
+<em>aka</em> Mavericks.</p>
+<p>After the app was installed, I was pleasantly surprised that the app included a
+step-by-step tutorial to setup its VPN feature. However, here are some tips that
+could help:</p>
+<ul>
+<li>make sure to create “local network users” and not “local users”</li>
+<li>make sure <strong>not</strong> to create a local directory for your VPN users</li>
+</ul>
+<p>If you run into errors such as:</p>
+<pre><code>DSAuth plugin: MPPE key required, but its retrieval failed.
+</code></pre>
+<p>or:</p>
+<pre><code>CHAP peer authentication failed for clinteastwood
+</code></pre>
+<p>you may not have followed these two guidelines and I would invite you to watch
+<a href="http://www.youtube.com/watch?v=gG8HcsQuyjI">this very helpful video</a> as support.</p>
+<h2>Configuring your set-top box</h2>
+<h3>Port Forwarding</h3>
+<p>The OS X Server.app’s tutorial is pretty clear about what you should do with
+your Internet provider box: ports 500, 1701 and 4500 should be redirected to
+your server.</p>
+<p>With my Orange box though, I ran into a problem: the port 1701 could not be
+redirected at all. The message in the admin console was just: “reserved port”
+and I found no way to change that.</p>
+<p>In my case, the somewhat satisfactory solution was to configure the VPN server
+for both L2TP and PPTP protocols.</p>
+<p>PPTP is less secured than L2TP, but it will do the job.</p>
+<h3>Local DNS</h3>
+<p>The default for OS X Server’s VPN access is to use <code>192.168.1.1</code> as the local
+DNS server, using a <code>.home</code> domain to address the different machines of your
+LAN.</p>
+<p>If you want to use names for your machines instead of their local IP adresses,
+make sure that you assigned names for your different machines in your local
+network on this <code>192.168.1.1</code> machine.</p>
+<p>In addition, you should probably assign static local IP adresses to your
+different machines as well.</p>
+<p>Be aware too, that you should avoid creating conflicts between the VPN network
+and a typical home network for instance, where all local IPs could start by
+<code>192.168.1.***</code>. Perhaps creating a VPN with IP like <code>192.168.11.***</code> for
+instance could be a good idea.</p>
+<h3>Dynamic IP</h3>
+<p>In my case, Orange wouldn’t let me have a fixed IP address for my box. I
+considered creating an account with a dynamic DNS service provider but I thought
+it was a little overpriced and probably not necessary.</p>
+<p>Eventually, I realized that my registrar, <a href="http://www.gandi.net">Gandi</a>, provided an XML-RPC
+based API that could modify your DNS records. Then I found the script I needed:
+<a href="https://github.com/Chralu/gandyn">gandyn</a> (python 3) that I just installed on my Mac, and scheduled to
+run every 5 minutes via <code>launchctl</code>.</p>
+<h2>Conclusion</h2>
+<p>So far, so good. The VPN is up and working correctly. Once connected, I can
+access any machines of the LAN via a <code>machine.home</code> address in my browser. I’ll
+try to open a ticket to Orange support so that they may open the 1701 port of
+their boxes so that I can used the more secured L2TP protocol in the future.</p>
+<p>Feel free to submit any addition/correction/remark on this post <a href="https://github.com/dirtyhenry/bootstragram-blog/issues">here</a>.</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/setting-up-a-vpn-server-on-mavericks/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/devops/">
+          devops
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/code-review-checklist/">
+        Code Reviews, a Checklist
+      </a>
+    </p>
+    <p class="related-page-date">August 01, 2013</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/notes-from-M101/">
+        Notes from 10 gen's M101JS MongoDB for Developers courseware
+      </a>
+    </p>
+    <p class="related-page-date">January 16, 2014</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

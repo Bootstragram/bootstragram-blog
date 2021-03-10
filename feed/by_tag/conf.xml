@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/conf.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/conf.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Notes from FrenchKit 2019</title><link href="https://bootstragram.com/blog/frenchkit-2019/" rel="alternate" type="text/html" title="Notes from FrenchKit 2019" /><published>2019-10-10T00:00:00+00:00</published><updated>2019-10-10T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2019</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2019/">&lt;p&gt;&lt;a href=&quot;/blog/frenchkit-2018/&quot;&gt;&lt;strong&gt;Again&lt;/strong&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit 2019&lt;/a&gt; was awesome. Talks with 🌟 are the talks I
+recommend.&lt;/p&gt;
+&lt;h2&gt;Day 1&lt;/h2&gt;
+&lt;h3&gt;Animations with SwiftUI — &lt;a href=&quot;https://twitter.com/chriseidhof&quot;&gt;Chris Eidhof&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Using a basic animation example, namely creating a shaking effect on a rectangle
+view, Chris shows the hidden complexity of SwiftUI and how developers used to
+UIKit need to change their mental model about how to build views. Under the
+hood, SwiftUI seems very similar to React: a tree of views with wrappers all
+hover the place, with an efficient diffing algorithm deciding what to re-render.&lt;/p&gt;
+&lt;h3&gt;Understanding Combine — &lt;a href=&quot;https://twitter.com/dimsumthinking&quot;&gt;Daniel Steinberg&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;A good counterpart to Chris’ talk to mention how Apple frameworks evolved from
+using the delegation pattern, then closures and are now adopting Reactive
+Programming. Combine will probably become the &lt;em&gt;de facto&lt;/em&gt; framework to use, as
+opposed to RxSwift and ReactiveCococa, due to its 1st party nature. The only
+problem is that it is only available for iOS 13.&lt;/p&gt;
+&lt;h3&gt;SwiftUI &amp;amp; Redux — Thomas Ricouard&lt;/h3&gt;
+&lt;p&gt;Many frameworks are available to bring the Redux pattern to iOS development, ie
+dispatch actions, reducers, immutable states, mapStateToProps, etc. It could be
+a good idea to use one to keep having architectural conversations relevant to
+the mobile and web teams.&lt;/p&gt;
+&lt;h3&gt;Testing &amp;amp; Declarative UIs — &lt;a href=&quot;https://twitter.com/nataliya_bg&quot;&gt;Nataliya Patsovska&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Great talk promoting snapshot testing, something I tend to already do on ongoing
+projects 💪. Nataliya mentioned how we could benefit from a new feature of
+iOS/Xcode ie Previews. She wondered if tree inspecting libraries similar to
+&lt;code&gt;react-testing-library&lt;/code&gt; would eventually show up to inspect contents of SwiftUI
+tree representations. A cool idea for an OSS side-project 💡.&lt;/p&gt;
+&lt;h3&gt;Showcase Driven Development — &lt;a href=&quot;https://twitter.com/JegnuX/&quot;&gt;Jérôme Alves&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;This talk was about how Heetch created a browsing interface within the debug
+release version of their app to demo &lt;em&gt;work in progress&lt;/em&gt; to their product and
+quality teams as early as they could, building on &lt;a href=&quot;http://khanlou.com/2019/07/continuous-integration/&quot;&gt;the real continuous
+integration post&lt;/a&gt; by Soroush Khanlou.&lt;/p&gt;
+&lt;h3&gt;Slide to Unlock — &lt;a href=&quot;https://twitter.com/myunderpants&quot;&gt;Joel Kin&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: Building Custom UI with UIKit and Core Animation.&lt;/p&gt;
+&lt;p&gt;When something looks a little complicated, should you spend time looking for a
+library doing what you need, or should you spend time implementing it yourself?
+Building on UISlider, Joel shows a real-case scenario of what to assess to make
+the best informed decision. Notably, UISlider had a much better accessibility
+support that 3rd parties equivalents.&lt;/p&gt;
+&lt;h3&gt;Swiftly Swift manipulation… with Swift — Marcin Krzyzanowski&lt;/h3&gt;
+&lt;p&gt;Marcin shows up what’s under the hood of his &lt;em&gt;work in progress&lt;/em&gt; code reordering
+tool. While we could benefit from such a tool, it sounds too immature to be
+integrated in a CI, but worth trying and keeping an eye on. Or even
+contributing? It involves playing with SourceKitten and Swift AST.&lt;/p&gt;
+&lt;h3&gt;Empower Your UITableView DataSources with a Flexible Model — Denis Poifol&lt;/h3&gt;
+&lt;p&gt;A prescription of a model to write table view view models.&lt;/p&gt;
+&lt;h3&gt;When Did My View Layout? — Gaëtan Zanella&lt;/h3&gt;
+&lt;p&gt;The title of the talk is misleading. It was more about what is an iOS
+application in terms of entry point, event management, run loop, etc.&lt;/p&gt;
+&lt;h3&gt;Math &amp;amp; Map Masterclass — Daniel Steinberg&lt;/h3&gt;
+&lt;p&gt;Good simple exercises on how to implement an alternative version of &lt;code&gt;map&lt;/code&gt; for
+arrays, generics, optionals, results, and combine. Basic &amp;amp; deep at the same
+time.&lt;/p&gt;
+&lt;h3&gt;Swift Pills - &lt;a href=&quot;https://twitter.com/v_pradeilles&quot;&gt;Vincent Pradeilles&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Weakifiable&lt;/li&gt;
+&lt;li&gt;Autoclosure for log tooling&lt;/li&gt;
+&lt;li&gt;Use map instead of if let These 3 tips are very actionable and recommended.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Day 2&lt;/h2&gt;
+&lt;h3&gt;Swift Generics Topic — Rob Napier&lt;/h3&gt;
+&lt;p&gt;Don’t make things generic to early. Very similar to
+&lt;a href=&quot;https://kentcdodds.com/blog/aha-programming&quot;&gt;this AHA Programming&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Note encryption — &lt;a href=&quot;https://twitter.com/vixentael&quot;&gt;Anastasiia Voitova&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: 10 lines for encryption, 1500 lines for key management.&lt;/p&gt;
+&lt;p&gt;Anastasiia mentioned the real case of how her consulting company helped the Bear
+app to add security features in their app. What tradeoffs you should pick
+depending on the risks, threats, trust. Lots of recommended readings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cossack Labs / Implementing End-to-End encryption in Bear App:
+&lt;a href=&quot;https://t.co/oy5vJNCdvR?amp=1&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/OWASP/owasp-mstg&quot;&gt;OWASP/owasp-mstg&lt;/a&gt;: The Mobile Security
+Testing Guide (MSTG) is a comprehensive manual for mobile app security
+development, testing and reverse engineering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;SwiftPM’s New Resolver — Mert Buran&lt;/h3&gt;
+&lt;p&gt;Subtitle: Can it Resolve the Conflicts in my Relationship?.&lt;/p&gt;
+&lt;p&gt;Really fun and innovative format. Many analogies to explain how pubgrub works
+for SPM, and how algorithms we took for granted are under-appreciated.&lt;/p&gt;
+&lt;h3&gt;This is Not Rocket (Data) Science — Hervé Berenger&lt;/h3&gt;
+&lt;p&gt;Almost a star for this one. The idea was: how AI is actually hidden everywhere
+and how 1st party frameworks can already help with a lot of stuff. Example:
+using the background color of a messaging app to give a hint of the tone of the
+message that is being written to help think twice about the choice of words
+being used.&lt;/p&gt;
+&lt;h3&gt;Building Voice-First Apps — Elaine Dias Batista&lt;/h3&gt;
+&lt;p&gt;Elaine insisted how voice-first could be important for accessibility, and to do
+it properly with existing frameworks.&lt;/p&gt;
+&lt;h3&gt;An Introduction to Property-Based Testing — Vincent Pradeilles&lt;/h3&gt;
+&lt;p&gt;Another approach to test using random values that can auto-discover edge cases
+of input values that will reveal bugs in a codebase. It is not self sufficient
+but can be a good complement to other testing strategies. Also, it can lead to
+randomness in tests: for instance, a test could fail at the 10th execution. But
+frameworks handling these kind of tests will provide you the failing data and
+you can turn this failing scenario into a deterministic test case by adding it
+in traditional test cases.&lt;/p&gt;
+&lt;h3&gt;Shipping a Catalyst app: The Good, the Bad and the Ugly — Peter Steinberger&lt;/h3&gt;
+&lt;p&gt;The story of how &lt;a href=&quot;https://pdfviewer.io&quot;&gt;PDF Viewer&lt;/a&gt; was ported to macOS using a
+mix of AppKit, UIKit, private API, etc. The conclusion for me is that if you can
+invest on SwiftUI, it is not worth exploring Catalyst.&lt;/p&gt;
+&lt;h3&gt;And That’s A Wrap! — Olivier Halligon&lt;/h3&gt;
+&lt;p&gt;An exploration of property wrappers, a feature introduced by Swift 5.1. It is
+totally compatible with older version of iOS as it is interpreted at compile
+time. The idea is to DRY behaviors of some properties. Example use cases:
+clamping values into a range, handling UserDefaults with convenience,
+customizing how a type conform to Codable, database mapping, etc.&lt;/p&gt;
+&lt;h3&gt;Vapor Classroom — David Bonnet&lt;/h3&gt;
+&lt;p&gt;Key takeaways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apple now releases Swift Docker images on the same day new version of Swift
+are released;&lt;/li&gt;
+&lt;li&gt;Vapor allows to share DTO between an iOS client and a backend;&lt;/li&gt;
+&lt;li&gt;A lot of boilerplate code that should be made better via property wrapper in
+Vapor 4.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend.</summary></entry><entry><title type="html">Notes from FrenchKit 2018</title><link href="https://bootstragram.com/blog/frenchkit-2018/" rel="alternate" type="text/html" title="Notes from FrenchKit 2018" /><published>2018-11-19T00:00:00+00:00</published><updated>2018-11-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2018</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2018/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2018 was awesome. I recommend it
+&lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;again&lt;/a&gt; to any iOS/Swift developer around. Day 1 was much better than
+Day 2. Two recurring topics were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;code generation leveraging;&lt;/li&gt;
+&lt;li&gt;and the importance of a good product management policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Most speakers seemed to use &lt;a href=&quot;https://www.deckset.com&quot;&gt;Deckset&lt;/a&gt; for their
+presentations. As &lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;often&lt;/a&gt;, international speakers were much much better
+than French ones.&lt;/p&gt;
+&lt;p&gt;Here are the talks I recommend.&lt;/p&gt;
+&lt;h2&gt;brew create - Max Howell&lt;/h2&gt;
+&lt;p&gt;Storytelling of how Max came to create &lt;a href=&quot;https://brew.sh&quot;&gt;Homebrew&lt;/a&gt; and how he
+managed its huge success. It’s surprising he had such a product-oriented
+approach for such a tech product. The whole talk was really nicely put (very
+minimalist use of slides and a great video of the git activity to give a visual
+feeling to the growing popularity of Brew).&lt;/p&gt;
+&lt;p&gt;Two segments particularly stood out to me:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One about the importance of naming things (the whole brew, cellar, keg,
+formulae that Brew is using);&lt;/li&gt;
+&lt;li&gt;One about the feeling of code ownership and how to control it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/WMMPRS58n-o&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Going Prod with Server-Side Swift - Pim Stolk&lt;/h2&gt;
+&lt;p&gt;How an ING side-project (Banking of Things) is using server-side Swift. They
+picked &lt;a href=&quot;https://www.kitura.dev&quot;&gt;Kitura&lt;/a&gt; over &lt;a href=&quot;https://vapor.codes&quot;&gt;Vapor&lt;/a&gt;
+because they had a good vibe from the team and they seem to work very closely
+together. They had tips to use containers to be as cloud-provider agnostic as
+possible.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/tRakjsKwdg4&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Sharing Swift: writing code that scales - Florent Pillet&lt;/h2&gt;
+&lt;p&gt;This was a good counterpart to Pim’s talk. Florent is French and is using Vapor
+server-side. He’s really a big fan of
+&lt;a href=&quot;https://github.com/apple/swift-nio&quot;&gt;SwiftNIO&lt;/a&gt; and its performances. One of his
+tip was to make builds in containers locally so you can just deploy binaries to
+production containers (no need for Swift compilers). He seems to have insights
+straight from Apple saying that &lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;SPM&lt;/a&gt; is not
+coming to iOS anytime soon.&lt;/p&gt;
+&lt;p&gt;Both Florent &amp;amp; Pim consider &lt;strong&gt;server-side Swift is production ready&lt;/strong&gt;. Kitura &amp;amp;
+Vapor both provide &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; support which seems to be
+good enough for monitoring. One of the main pain point remaining seems to be
+debugging from Linux.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/1G63BKeNfjA&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Lost Art of System Design - John Sundell&lt;/h2&gt;
+&lt;p&gt;John is as a good showman and as energetic as reading
+&lt;a href=&quot;https://www.swiftbysundell.com&quot;&gt;his blog&lt;/a&gt; lets you think. The talk was about
+how to answer “where should we sit this piece of code?”. He was advocating
+towards decoupling, building frameworks, keys &amp;amp; lock-in to different parts of an
+application. Great practical tips that were somewhat Swift-related but can be
+applied to any language as well.&lt;/p&gt;
+&lt;p&gt;For instance: RootFactory creating basic objects and a LoggedFactory creating
+objects once the user is logged in which translates that we’re sure we can
+provide a User and that we don’t need to make it optional, etc.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/bAokeFxW2fo&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Swift Strings Seven Ways - Mattt&lt;/h2&gt;
+&lt;p&gt;A storytelling kind of talk about how we take strings for granted and we think
+they’re simple but they’re not. The guy is a big name in the iOS scene — among
+others, creator of &lt;a href=&quot;https://nshipster.com&quot;&gt;NSHipster&lt;/a&gt; —, and it was surprising
+to see a talk that was sometimes borderline spiritual (he digs the Cherokee
+language a lot).&lt;/p&gt;
+&lt;p&gt;But the 2nd half was way more practical about string jargons, struggles, and
+tips on how to process them safely (ie override string by other types for
+identifiers for instance in order to hide the complexity of string for a simple
+usage, use Base64 for exchanging in a safe way, etc.)&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/linHwUqeagU&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The 700 next devices - Chris Eidhof&lt;/h2&gt;
+&lt;p&gt;Again, a big figure in iOS development since he started
+&lt;a href=&quot;https://www.objc.io&quot;&gt;objc.io&lt;/a&gt;. He gave a live-coding presentation of a layout
+library he build for Swift that is going to be introduced in
+&lt;a href=&quot;https://talk.objc.io&quot;&gt;Swift Talks&lt;/a&gt;. The library is really useful and has a nice
+API and seems somewhat influenced by flex box as a complement to AutoLayout. It
+will be even more useful once UIKit gets on macOS. Tip: when using the
+Accessibility inspector during development, the simulator seems super
+responsive.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/OLDHgg0uh6A&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Underestimated Power of KeyPaths - Vincent Pradeilles&lt;/h2&gt;
+&lt;p&gt;Lightning talk about how to use key paths to improve Swift convenience, in
+particular to avoid dumb closures.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/jpAT5DoSUgw&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Improving your Developer Experience with Open-Source Swift - Dimitri Dupuis-Latour&lt;/h2&gt;
+&lt;p&gt;Interesting short talk to make contributing to Swift and its environment not as
+scary as it seems. Empowering mode ✊.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/olS5w9fBxog&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:</summary></entry><entry><title type="html">Notes from FrenchKit 2017</title><link href="https://bootstragram.com/blog/frenchkit-2017/" rel="alternate" type="text/html" title="Notes from FrenchKit 2017" /><published>2018-01-12T00:00:00+00:00</published><updated>2018-01-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2017</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2017/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2017 was awesome. I recommend it to any
+iOS/Swift developer around.&lt;/p&gt;
+&lt;p&gt;I wrote many notes during the two days of the conference but I forgot to process
+them right afterwards when things were still fresh. Bummer.&lt;/p&gt;
+&lt;p&gt;Finally, I went through the notes today and decided to make a blog post out of
+them anyway. Raw and undetailed, 2018-style!&lt;/p&gt;
+&lt;h2&gt;My favorite talks&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/DrdxSNG-_DE&quot;&gt;Playground Driven Development&lt;/a&gt; by Brandon
+Williams (quite more detailed than the
+&lt;a href=&quot;https://talk.objc.io/episodes/S01E51-playground-driven-development-at-kickstarter&quot;&gt;objc.io&lt;/a&gt;’s
+one)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/e9NI5XnEqHA&quot;&gt;May the Code Review Be with You&lt;/a&gt; by Egor
+Tolstoy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/3ia3ngqM2mM&quot;&gt;You Deserve Nice Things&lt;/a&gt; by Soroush Khanlou&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/dYWE2d4_IPY&quot;&gt;Core Data Custom Store&lt;/a&gt; by Rew Islam&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/WM6WECv4B2E&quot;&gt;Scaling Open Source Communities&lt;/a&gt; by Felix
+Krause&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Side note to mention that a big theme of the conference was &lt;strong&gt;code generation&lt;/strong&gt;.
+It was frenquently quoted as something you should try out and be ready to use
+when relevant. I’m in.&lt;/p&gt;
+&lt;h2&gt;What could be improved next time?&lt;/h2&gt;
+&lt;h3&gt;France, we need to become better public speakers&lt;/h3&gt;
+&lt;p&gt;As you can see above, not a single French speaker made it to my favorite talks.
+This is hard to explain but for some reasons, French speakers are often nervous,
+awkward or even uncharismatic. I rarely gave public talks but when I did, these
+all applied to me as well. Not sure where this is coming from but fellow French
+developers, we need to address this! 🇫🇷💪&lt;/p&gt;
+&lt;h3&gt;Let’s be better with jokes&lt;/h3&gt;
+&lt;p&gt;I’m sick of jokes filled of condescending notes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Core Data sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Or:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cocoapods sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I don’t remember the exact jokes but I felt some were patronizing and
+misleading. Core Data and Cocoapods are awesome tools. They have flaws but
+nobody should be embarassed using them.&lt;/p&gt;
+&lt;p&gt;Also, enough with cat memes. As most overused material, they lost everything
+that made them cool/cute/funny in the first place.&lt;/p&gt;
+&lt;h2&gt;My TODO list until FrenchKit 2018&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;☐ Try &lt;a href=&quot;https://github.com/krzysztofzablocki/Sourcery&quot;&gt;Sourcery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☒ Check out BuddyBuild &lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out Swift 4’s
+&lt;a href=&quot;https://developer.apple.com/documentation/swift/codable&quot;&gt;Codable&lt;/a&gt; protocol&lt;/li&gt;
+&lt;li&gt;☒ Check out the &lt;a href=&quot;https://www.jetbrains.com/objc/&quot;&gt;AppCode&lt;/a&gt; IDE&lt;/li&gt;
+&lt;li&gt;☐ The &lt;code&gt;rethrows&lt;/code&gt; keyword?&lt;/li&gt;
+&lt;li&gt;☐ Play a little with the &lt;code&gt;Sequence&lt;/code&gt;, &lt;code&gt;IteratorProtocol&lt;/code&gt; protocols&lt;/li&gt;
+&lt;li&gt;☑︎ Start using GitHub’s global search&lt;/li&gt;
+&lt;li&gt;☑︎ Follow &lt;a href=&quot;https://twitter.com/PublicExtension&quot;&gt;PublicExtension&lt;/a&gt; on Twitter&lt;/li&gt;
+&lt;li&gt;☐ Check out Server-side Swift
+&lt;ul&gt;
+&lt;li&gt;☑︎ Kitura&lt;/li&gt;
+&lt;li&gt;☑︎ Vapor&lt;/li&gt;
+&lt;li&gt;☐ &lt;a href=&quot;https://perfect.org&quot;&gt;Perfect&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;☐ Play with &lt;code&gt;NSAtomicStore&lt;/code&gt; (good for a small data set)&lt;/li&gt;
+&lt;li&gt;☒ Check out [Dashlane/CustomStores]&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☐ Have a clearer understanding of static vs dynamic libraries&lt;/li&gt;
+&lt;li&gt;☐ Is it possible to dual boot with a Linux distribution?&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/realm/SwiftLint&quot;&gt;SwiftLint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Read
+&lt;a href=&quot;https://github.com/apple/swift/blob/master/docs/Android.md&quot;&gt;Getting Started with Swift on Android&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/danger/danger&quot;&gt;Danger&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out &lt;a href=&quot;https://grafana.com&quot;&gt;Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Display Xcode build durations&lt;/li&gt;
+&lt;li&gt;☐ Checkout &lt;a href=&quot;https://michele.io/test-logs-in-xcode/&quot;&gt;xcactivitylog files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ There should be some direct mapping between graphql and core data.&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to Awesome iOS Newsletter&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to &lt;a href=&quot;https://swiftnews.curated.co&quot;&gt;this week in Swit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Things I wrote but forgot what it was about&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;detrace&lt;/li&gt;
+&lt;li&gt;Sirius : coordinator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you know what they could mean, please get in touch.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;Been bought by Apple since. &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;The code is still missing today, not sure it will ever show up. &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2017 was awesome. I recommend it to any iOS/Swift developer around.</summary></entry><entry><title type="html">DroidCon 2014</title><link href="https://bootstragram.com/blog/droidcon-2014/" rel="alternate" type="text/html" title="DroidCon 2014" /><published>2014-10-22T00:00:00+00:00</published><updated>2014-10-22T00:00:00+00:00</updated><id>https://bootstragram.com/blog/droidcon-2014</id><content type="html" xml:base="https://bootstragram.com/blog/droidcon-2014/">&lt;p&gt;You can watch all the videos on &lt;a href=&quot;https://www.youtube.com/channel/UCkatLlah5weIpN23LqMgdTg&quot;&gt;the Droidcon Paris Youtube
+channel&lt;/a&gt; but I especially recommend these 3 talks.&lt;/p&gt;
+&lt;h2&gt;&lt;em&gt;Scaling Android Development at Twitter&lt;/em&gt;&lt;/h2&gt;
+&lt;img alt=&quot;Scaling Android Development at Twitter&quot; src=&quot;/assets/droidcon-jan-chong-638a9dcbda59bc65f4113843a2f8ad232c59c72d93f0854ae713b623472db63456d0b848798f66cf39135f781cc16138e8a78b3454ca7cbe814c623e001c6eda.png&quot; integrity=&quot;sha512-Y4qdy9pZvGX0EThDovitIyxZxy2T8IVK5xO2I0cttjRW0LhIeY9mzzkTX3gcwWE46KeLNFTKfL6BTGI+ABxu2g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;This talk by &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_train&quot;&gt;Jan Chong&lt;/a&gt;, engineering manager at Twitter for
+Android, was about how Twitter’s mobile team transitioned from a 5-people team
+to a 70+ contributors effort. Here are some key points from the talk.&lt;/p&gt;
+&lt;p&gt;You can watch it &lt;a href=&quot;http://youtu.be/T5qEnillTHc&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Operations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;In 3 years, Twitter for Android went from a 8 to 12 weeks release schedule to
+1 release a week&lt;/li&gt;
+&lt;li&gt;The key quality indicator they’re following are crashed : they analyzed that
+when a user experienced a crash, his engagement would drop significantly for
+the next month (of course, they use &lt;a href=&quot;https://try.crashlytics.com&quot;&gt;Crashlytics&lt;/a&gt;, that they own)&lt;/li&gt;
+&lt;li&gt;API released for mobiles need to be supported for a loooooong time&lt;/li&gt;
+&lt;li&gt;They baked an API mechanism to support A/B testing within their apps that does
+not require republishing&lt;/li&gt;
+&lt;li&gt;They also have an interesting feature switch system where they remotely
+control a device/manufacturer/OS version matrix to swith features on and off,
+again to be able to tune their apps and avoir crashes without the need to
+republish&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Tools and processes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;They’re using Gradle and Android Studio&lt;/li&gt;
+&lt;li&gt;Twitter practice &lt;a href=&quot;http://en.wikipedia.org/wiki/Eating_your_own_dog_food&quot;&gt;dogfooding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They switched from &lt;a href=&quot;https://code.google.com/p/robotium/&quot;&gt;Robotium&lt;/a&gt; to &lt;a href=&quot;https://code.google.com/p/android-test-kit/wiki/Espresso&quot;&gt;Espresso&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They also use &lt;a href=&quot;https://developer.android.com/training/testing/ui-automator&quot;&gt;uiautomator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They use a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_train&quot;&gt;release train&lt;/a&gt; schedule to run their and
+transitioned from a single 4-week train to two concurrent 2-weeks trains to
+reduce the gap between deadlines&lt;/li&gt;
+&lt;li&gt;They also use a “+1/+2” code review system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;em&gt;How Open Source Powers Facebook on Android&lt;/em&gt;, by Simon Stewart&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/MT6bU9ofJDE&quot;&gt;📺&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;em&gt;Petit Design pour Grande Humanité&lt;/em&gt;, by Geoffrey Dome&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/mwF4qk9OMe8&quot;&gt;📺&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="android" /><category term="conf" /><summary type="html">You can watch all the videos on the Droidcon Paris Youtube channel but I especially recommend these 3 talks.</summary></entry><entry><title type="html">Notes from Paris Hacker Meetup #4</title><link href="https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4/" rel="alternate" type="text/html" title="Notes from Paris Hacker Meetup #4" /><published>2012-04-02T00:00:00+00:00</published><updated>2012-04-02T00:00:00+00:00</updated><id>https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4</id><content type="html" xml:base="https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4/">&lt;p&gt;Here are some random notes from the &lt;a href=&quot;http://www.meetup.com/ParisHackers/events/53314342/&quot;&gt;Paris Hacker Meetup #4&lt;/a&gt;, hosted in
+&lt;a href=&quot;http://joshfire.com/&quot;&gt;Joshfire&lt;/a&gt;’s great hall, a couple of weeks ago.&lt;/p&gt;
+&lt;p&gt;The first talk was from &lt;a href=&quot;http://twitter.com/#!/nitot&quot;&gt;Tristan Nitot&lt;/a&gt;, about the relevance of Mozilla
+in the web today. Mozilla’s point of view is pretty straightforward: the web
+needs a major non-profit actor to balance Apple/Google/Microsoft’s leadership.
+Fair enough. Although I left Firefox for Google Chrome about two years ago, I
+100% agree with this and keep an eye on Firefox’s new releases.&lt;/p&gt;
+&lt;p&gt;Nitot also introduced and demoed &lt;a href=&quot;http://www.mozilla.org/en-US/b2g/&quot;&gt;Mozilla’s Boot to Gecko project&lt;/a&gt;. I’m
+afraid Mozilla is kind of late to give the mobile road a ride. If Nitot
+mentioned a great interest from manufacturers and operators about this project
+(the project’s homepage specifically mentioning “Customization for OEMs &amp;amp;
+Operators”), he didn’t mention what would be the interest/difference from
+potential end users. As a matter of fact, I see OEMs &amp;amp; operators as the evil
+actors in the mobile world (all these shitty app layers that most non-hackers
+users can’t get rid off) more than Apple or Google can be.&lt;/p&gt;
+&lt;p&gt;Next was &lt;a href=&quot;https://twitter.com/#!/michelbartz&quot;&gt;Michel Bartz&lt;/a&gt; for a talk about his high-traffic web experience.
+The talk was both super interesting and entertaining: thumbs up. I had heard the
+name of most of the mentioned tools but have never used them. So although I
+can’t give valuable comments of these products, here’s the list in case it might
+help somebody and for personal bookmarking:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://redis.io/&quot;&gt;Redis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://nodejs.org/&quot;&gt;node.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.lighttpd.net/&quot;&gt;Lighttpd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.heroku.com/&quot;&gt;heroku&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Last but not least, Sacha Greif introduced his really interesting &lt;a href=&quot;https://sachagreif.com&quot;&gt;&lt;em&gt;Step by Step
+UI Design&lt;/em&gt; eBook&lt;/a&gt;, an eBook explaining how to design a UI, step by
+step… Just realizing the title of the eBook is really good.&lt;/p&gt;
+&lt;p&gt;Random list of things mentioned during the event :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://news.ycombinator.com/&quot;&gt;Hacker News&lt;/a&gt;: i was too ashamed to raise my
+hand during the event but I had never heard of this site, shame on me, it’s
+pretty cool&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://shop.oreilly.com/product/0636920018483.do&quot;&gt;&lt;em&gt;Machine Learning for Hackers&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tauday.com&quot;&gt;The Tau Manifesto&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="conf" /><category term="bookmarks" /><summary type="html">Here are some random notes from the Paris Hacker Meetup #4, hosted in Joshfire’s great hall, a couple of weeks ago.</summary></entry></feed>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Quatrième TP d’Information Design | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Quatrième TP d’Information Design" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à l’information design. Je pense en être arrivé à une étape décisive." />
+<meta property="og:description" content="Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à l’information design. Je pense en être arrivé à une étape décisive." />
+<link rel="canonical" href="https://bootstragram.com/blog/quatrieme-tp-d-information-design/" />
+<meta property="og:url" content="https://bootstragram.com/blog/quatrieme-tp-d-information-design/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2011-03-23T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Quatrième TP d’Information Design" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/quatrieme-tp-d-information-design/","@type":"BlogPosting","headline":"Quatrième TP d’Information Design","dateModified":"2011-03-23T00:00:00+00:00","datePublished":"2011-03-23T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/quatrieme-tp-d-information-design/"},"description":"Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à l’information design. Je pense en être arrivé à une étape décisive.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Quatrième TP d’Information Design</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2011-03-23T00:00:00+00:00" itemprop="datePublished">
+        March 23, 2011
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à
+l’information design. Je pense en être arrivé à une étape décisive.</p>
+<p>En attendant sa publication (il me reste 2, 3 trucs à régler concernant la
+license des polices utilisées pour les diffuser en font-face), voici quelques
+screenshots de l’état de la chose.</p>
+<h2>Le HTML</h2>
+<p><img src="../../assets/images/fff-selection-by-mick-html-code.png" alt="HTML code" /></p>
+<p>Le HTML est selon moi ok pour du web sémantique. Lors du dernier exercice,
+<a href="https://twitter.com/felixaverlant/status/36127907222913024">un commentateur Twitter m’avait répondu</a>
+:</p>
+<blockquote>
+<p>Ce n’est pas vraiment du web sémantique […] Plutôt de la visu
+d’informations.</p>
+</blockquote>
+<p>Ce sur quoi
+<a href="https://twitter.com/dirtyhenry/status/36452618351935488">je ne suis pas d’accord à 100%</a>.
+Je pense que le HTML sépare clairement mise en forme et contenu, et que le
+contenu est structuré de façon interprétable. Par contre, il est peut-être vrai
+que je n’utilise pas toutes les balises les plus précises, notamment celles
+introduites dans HTML5, mais toute aide sur ce point sera la bienvenue.</p>
+<h2>La feuille de style</h2>
+<p>Je parlais de la séparation contenu/style. Pour illustrer ce propos, voici le
+HTML tel qu’il est rendu dans Chrome quand la feuille de style n’est pas activée
+:</p>
+<p><img src="../../assets/images/fff-selection-before-css.png" alt="Before CSS" /></p>
+<p>Maintenant, voici la même page HTML, toujours dans Chrome, cette fois avec la
+feuille de style activée :</p>
+<p><img src="../../assets/images/fff-selection-after-css.png" alt="After CSS" /></p>
+<p>Où sont passées les photos des joueurs dans cette seconde version ? J’y viens…</p>
+<h2>Interaction via popovers</h2>
+<p>Dans <a href="/blog/troisieme-tp-d-information-design/">mon dernier post à ce sujet</a>, je promettais d’améliorer le design de
+la page en terme d’interactivité. C’est le sujet sur lequel je me suis le plus
+penché lors de cette session.</p>
+<p>Le prénom d’un joueur, sa photo, son club, son âge sont des informations de
+seconde importance dans mon exercice. En outre, le plupart des lecteurs
+potentiels de cette page les connaissent de toute façon. Il n’est donc pas
+nécessaire de les afficher par défaut, mais il est souhaitable de pouvoir y
+accéder facilement malgré tout.</p>
+<p>J’ai donc choisi de proposer ces informations lors du survol du nom d’un joueur
+par la souris :</p>
+<p><img src="../../assets/images/fff-selection-popover.png" alt="Popover" /></p>
+<p>Le terme consacré pour ce genre de fenêtre volante est <em>popover</em> ou <em>tooltip</em> et
+voici les ressources qui m’ont aidé à le réaliser :</p>
+<ul>
+<li><a href="http://kitgrose.tumblr.com/post/524802936/popover-tooltips-in-html-css"><em>Popover</em> tooltips in HTML/CSS</a></li>
+<li><a href="http://forum.alsacreations.com/topic-4-37258-1.html">Forum d’Alsacréations</a></li>
+</ul>
+<h2>Bilan</h2>
+<p>Le gros-oeuvre est terminé sur cet exercice. Encore quelques retouches par ci,
+par là (réglage des questions des droits et des licenses, tests
+multi-navigateurs, tests sur iPhone/iPad, etc.) et je publierai tout ça sur le
+web. Stay tuned et n’hésitez pas à partager vos impressions dans les
+commentaires !</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/quatrieme-tp-d-information-design/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/data/">
+          data
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/what-fonts-for-ios/">
+        What fonts for iOS?
+      </a>
+    </p>
+    <p class="related-page-date">February 23, 2011</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/my-ipad-top-5/">
+        My Top 5 iPad Applications
+      </a>
+    </p>
+    <p class="related-page-date">June 05, 2011</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

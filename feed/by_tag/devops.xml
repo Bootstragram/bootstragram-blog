@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/devops.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/devops.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">IPv6 Ready ?</title><link href="https://bootstragram.com/blog/ipv6-not-ready/" rel="alternate" type="text/html" title="IPv6 Ready ?" /><published>2015-11-13T00:00:00+00:00</published><updated>2015-11-13T00:00:00+00:00</updated><id>https://bootstragram.com/blog/ipv6-not-ready</id><content type="html" xml:base="https://bootstragram.com/blog/ipv6-not-ready/">&lt;p&gt;L’infrastructure réseau est-elle &lt;strong&gt;prête pour l’IPv6 ?&lt;/strong&gt; La question s’est posée
+très simplement pour nous à &lt;em&gt;Bootstragram&lt;/em&gt; au moment de chercher un hébergement
+pour nos serveurs. La réponse est simplement &lt;strong&gt;non&lt;/strong&gt; !&lt;/p&gt;
+&lt;h2&gt;IPv6 et Gandi VPS&lt;/h2&gt;
+&lt;p&gt;Ayant l’habitude de travailler avec &lt;a href=&quot;http://www.gandi.net/&quot;&gt;Gandi&lt;/a&gt; (noms de
+domaine et un serveur mi-pro / mi-perso), je suis allé voir leurs offres. Le
+serveur de base est à 7,96€ HT / mois&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; en proposant seulement une IPv6.
+Rajouter une IPv4 au serveur représente 3,53€ HT / mois en plus, soit 44%
+d’augmentation !&lt;/p&gt;
+&lt;p&gt;De là est né l’envie de tester un serveur IPv6 only et de vérifier si cela
+fonctionne correctement dans une infrastructure réseau à destination du grand
+public. Après tout pourquoi pas, on dit depuis des années qu’il faut passer à
+IPv6 pour palier à
+&lt;a href=&quot;https://fr.wikipedia.org/wiki/%C3%89puisement_des_adresses_IPv4&quot;&gt;l’épuisement des adresses IPv4&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Nous avons donc créé un petit serveur IPv6 only pour nos tests.&lt;/p&gt;
+&lt;h2&gt;IPv6 et la Freebox&lt;/h2&gt;
+&lt;p&gt;À la maison, mon fournisseur d’accès est Free, avec une Freebox V4 (firmware
+1.5.20). La configuration par défaut de cette Freebox n’accepte pas l’IPv6, ce
+qui est un très mauvais démarrage pour nos tests.&lt;/p&gt;
+&lt;p&gt;Il est possible d’activer le support de l’IPv6 en allant dans les réglages, mais
+cela implique qu’on se restreint à un public de connaisseurs. Et puis surtout,
+même après activation, on se rend vite compte que ça ne fonctionne pas tout le
+temps.&lt;/p&gt;
+&lt;p&gt;Un &lt;code&gt;ssh@ipv6.de.mon.serveur.io&lt;/code&gt;&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; va tourner dans le vide sans afficher de
+prompt, alors que le &lt;code&gt;ssh@ipv4.de.mon.serveur.io&lt;/code&gt; vers ce même serveur (qui a
+donc 2 IPs) va répondre tout de suite.&lt;/p&gt;
+&lt;p&gt;Et un peu plus tard, &lt;code&gt;ssh@ipv6.de.mon.serveur.io&lt;/code&gt;&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; va fonctionner…&lt;/p&gt;
+&lt;p&gt;Ce n’est peut-être pas Free le fautif, c’est peut-être un élément du réseau
+entre Free et Gandi, mais ce qui est sûr c’est qu’il y a 2 obstacles majeurs. Il
+faut déjà avoir une démarche volontaire d’activation de l’IPv6, et même dans ce
+cas, ça ne fonctionne pas tout le temps.&lt;/p&gt;
+&lt;h2&gt;IPv6 et la mobilité&lt;/h2&gt;
+&lt;p&gt;Notre &lt;a href=&quot;https://github.com/statium-io&quot;&gt;application &lt;em&gt;Statium&lt;/em&gt;&lt;/a&gt; est proposée sur mobile ; et pour
+notre &lt;a href=&quot;http://blog.statium.io/&quot;&gt;data-lab&lt;/a&gt; nous faisons particulièrement
+attention à ce qu’il soit compatible à 100% avec les smartphones.&lt;/p&gt;
+&lt;p&gt;Donc la 2ème question qui vient à l’esprit : est-ce que le réseau 3G et 4G
+supporte l’IPv6 ? Là encore c’est plutôt décevant.&lt;/p&gt;
+&lt;p&gt;Mon opérateur est Bouygues Telecom avec un abonnement 4G et mon associé a la
+même configuration. Nous avons effectué quelques tests pour accéder au serveur
+HTTP en IPv6&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn3&quot; id=&quot;fnref3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;, aucun n’a fonctionné (tests effectués avec Safari sur iOS 8).&lt;/p&gt;
+&lt;p&gt;De nouveau, ce n’est peut-être pas l’infrastructure Bouygues Telecom qui pose
+problème, c’est peut-être un élément d’interconnexion, mais le résultat est le
+même : si notre serveur est IPv6 only, on sait d’ores et déjà qu’on sera
+inaccessible à une partie importante du traffic mobile.&lt;/p&gt;
+&lt;h2&gt;IPv6 not ready&lt;/h2&gt;
+&lt;p&gt;En résumé, quand on est éditeur de services, de contenus ou d’applications avec
+une dépendance à internet (ce qui est une tautologie pléonasmique de nos jours),
+on ne peut pas se permettre d’exposer son infrastructure en IPv6 (sauf si on a
+l’envie d’être injoignable par la majorité de ses utilisateurs).&lt;/p&gt;
+&lt;p&gt;À l’heure du mouvement &lt;a href=&quot;http://www.lafrenchtech.com/&quot;&gt;French Tech&lt;/a&gt; lancé par le
+gouvernement, il serait intéressant d’accélérer le support de l’IPv6 chez les
+opérateurs, sans quoi rien ne pourra se mettre en place.&lt;/p&gt;
+&lt;p&gt;La
+&lt;a href=&quot;http://www.nextinpact.com/news/92774-fibre-ipv6-open-data-vote-premieres-mesures-loi-macron.htm&quot;&gt;tentative de loi de Corinne Erhel&lt;/a&gt;
+va dans ce sens, mais elle n’est pas encore passée.&lt;/p&gt;
+&lt;p&gt;Et même si cette loi passe bientôt ; elle oblige les équipementiers à délivrer
+des terminaux compatibles IPv6 à partir du 1er janvier 2017 ; le temps que le
+renouvellement se propage ensuite chez les utilisateurs finaux et dans les
+infrastructures réseaux, il faudra compter quelques années avant d’avoir un taux
+de couverture IPv6 assez intéressant pour que les éditeurs passent le pas.&lt;/p&gt;
+&lt;p&gt;On n’y est pas encore !&lt;/p&gt;
+&lt;p&gt;une URL avec une IPv6 a cet aspect :
+&lt;code&gt;http://[2001:4198:dc0:41:316:3eaf:fab8:b694]&lt;/code&gt;&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;en se basant sur l’achat d’un pack de 2 millions de crédits chez Gandi &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;une IPv6 a cet aspect : &lt;code&gt;2001:4198:dc0:41:316:3eaf:fab8:b694&lt;/code&gt; &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;
+&lt;a href=&quot;#fnref3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="devops" /><summary type="html">L’infrastructure réseau est-elle prête pour l’IPv6 ? La question s’est posée très simplement pour nous à Bootstragram au moment de chercher un hébergement pour nos serveurs. La réponse est simplement non !</summary></entry><entry><title type="html">Setting up a VPN Server with Mac OS X Mavericks</title><link href="https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/" rel="alternate" type="text/html" title="Setting up a VPN Server with Mac OS X Mavericks" /><published>2013-10-30T00:00:00+00:00</published><updated>2013-10-30T00:00:00+00:00</updated><id>https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks</id><content type="html" xml:base="https://bootstragram.com/blog/setting-up-a-vpn-server-on-mavericks/">&lt;p&gt;My company needed a way for people to access a local network server from home.
+The solution was to set up a VPN. That was fun and not that hard but I still ran
+into a couple of issues.&lt;/p&gt;
+&lt;h2&gt;Why a VPN?&lt;/h2&gt;
+&lt;p&gt;In case you’re still wondering what a VPN is at this point, let me explain.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/vpn-explain-1.png&quot; alt=&quot;Without a VPN&quot; title=&quot;Without a VPN&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;The typical usage of a VPN in a professional context is to create a bridge
+between your enterprise network and the rest of the Internet. And if the bridge
+can be secured, it’s better.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/vpn-explain-2.png&quot; alt=&quot;With a VPN&quot; title=&quot;With a VPN&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;OS X Server.app&lt;/h2&gt;
+&lt;p&gt;Our local server is a Mac Mini that was running Mountain Lion at the time. After
+some research, I realized the easiest solution to set up the VPN access was to
+use the OS X Server app (17,99€), which required the latest version of OS X
+&lt;em&gt;aka&lt;/em&gt; Mavericks.&lt;/p&gt;
+&lt;p&gt;After the app was installed, I was pleasantly surprised that the app included a
+step-by-step tutorial to setup its VPN feature. However, here are some tips that
+could help:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;make sure to create “local network users” and not “local users”&lt;/li&gt;
+&lt;li&gt;make sure &lt;strong&gt;not&lt;/strong&gt; to create a local directory for your VPN users&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you run into errors such as:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DSAuth plugin: MPPE key required, but its retrieval failed.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CHAP peer authentication failed for clinteastwood
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;you may not have followed these two guidelines and I would invite you to watch
+&lt;a href=&quot;http://www.youtube.com/watch?v=gG8HcsQuyjI&quot;&gt;this very helpful video&lt;/a&gt; as support.&lt;/p&gt;
+&lt;h2&gt;Configuring your set-top box&lt;/h2&gt;
+&lt;h3&gt;Port Forwarding&lt;/h3&gt;
+&lt;p&gt;The OS X Server.app’s tutorial is pretty clear about what you should do with
+your Internet provider box: ports 500, 1701 and 4500 should be redirected to
+your server.&lt;/p&gt;
+&lt;p&gt;With my Orange box though, I ran into a problem: the port 1701 could not be
+redirected at all. The message in the admin console was just: “reserved port”
+and I found no way to change that.&lt;/p&gt;
+&lt;p&gt;In my case, the somewhat satisfactory solution was to configure the VPN server
+for both L2TP and PPTP protocols.&lt;/p&gt;
+&lt;p&gt;PPTP is less secured than L2TP, but it will do the job.&lt;/p&gt;
+&lt;h3&gt;Local DNS&lt;/h3&gt;
+&lt;p&gt;The default for OS X Server’s VPN access is to use &lt;code&gt;192.168.1.1&lt;/code&gt; as the local
+DNS server, using a &lt;code&gt;.home&lt;/code&gt; domain to address the different machines of your
+LAN.&lt;/p&gt;
+&lt;p&gt;If you want to use names for your machines instead of their local IP adresses,
+make sure that you assigned names for your different machines in your local
+network on this &lt;code&gt;192.168.1.1&lt;/code&gt; machine.&lt;/p&gt;
+&lt;p&gt;In addition, you should probably assign static local IP adresses to your
+different machines as well.&lt;/p&gt;
+&lt;p&gt;Be aware too, that you should avoid creating conflicts between the VPN network
+and a typical home network for instance, where all local IPs could start by
+&lt;code&gt;192.168.1.***&lt;/code&gt;. Perhaps creating a VPN with IP like &lt;code&gt;192.168.11.***&lt;/code&gt; for
+instance could be a good idea.&lt;/p&gt;
+&lt;h3&gt;Dynamic IP&lt;/h3&gt;
+&lt;p&gt;In my case, Orange wouldn’t let me have a fixed IP address for my box. I
+considered creating an account with a dynamic DNS service provider but I thought
+it was a little overpriced and probably not necessary.&lt;/p&gt;
+&lt;p&gt;Eventually, I realized that my registrar, &lt;a href=&quot;http://www.gandi.net&quot;&gt;Gandi&lt;/a&gt;, provided an XML-RPC
+based API that could modify your DNS records. Then I found the script I needed:
+&lt;a href=&quot;https://github.com/Chralu/gandyn&quot;&gt;gandyn&lt;/a&gt; (python 3) that I just installed on my Mac, and scheduled to
+run every 5 minutes via &lt;code&gt;launchctl&lt;/code&gt;.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;So far, so good. The VPN is up and working correctly. Once connected, I can
+access any machines of the LAN via a &lt;code&gt;machine.home&lt;/code&gt; address in my browser. I’ll
+try to open a ticket to Orange support so that they may open the 1701 port of
+their boxes so that I can used the more secured L2TP protocol in the future.&lt;/p&gt;
+&lt;p&gt;Feel free to submit any addition/correction/remark on this post &lt;a href=&quot;https://github.com/dirtyhenry/bootstragram-blog/issues&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="devops" /><summary type="html">My company needed a way for people to access a local network server from home. The solution was to set up a VPN. That was fun and not that hard but I still ran into a couple of issues.</summary></entry><entry><title type="html">Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)</title><link href="https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/" rel="alternate" type="text/html" title="Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)" /><published>2012-01-30T00:00:00+00:00</published><updated>2012-01-30T00:00:00+00:00</updated><id>https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade</id><content type="html" xml:base="https://bootstragram.com/blog/troubleshooting-ubuntu-server-upgrade/">&lt;p&gt;This last week-end, I’ve tried to upgrade my &lt;a href=&quot;https://www.online.net/&quot;&gt;Dedibox&lt;/a&gt; running Ubuntu Server
+from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed
+to go well: no error messages, pretty easy, fast and straightforward process.
+Then came the required reboot.&lt;/p&gt;
+&lt;p&gt;Once the server was restarted, nothing would work, including &lt;code&gt;ping&lt;/code&gt;, &lt;code&gt;ssh&lt;/code&gt; and
+of course, all hosted websites.&lt;/p&gt;
+&lt;p&gt;It took me a couple of hours to fix the server and get everything running again.
+Here is what I did.&lt;/p&gt;
+&lt;p&gt;I first found &lt;del&gt;this URL&lt;/del&gt; which gave me the first steps of the process but
+actually didn’t work. Nevertheless, it helped identifying that grub was indeed
+the problem. Then I’ve applied &lt;a href=&quot;https://help.ubuntu.com/community/Grub2#ChRoot&quot;&gt;these guidelines&lt;/a&gt; from the Dedibox’
+rescue mode. A last step was missing (found from studying &lt;a href=&quot;http://forum.ubuntu-fr.org/viewtopic.php?id=444506&quot;&gt;this URL&lt;/a&gt;),
+applying:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sudo grub-install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now, everything was back to normal : the server booted correctly, Natty was up
+and running. Thanks David B. for the support! Feel free to leave a comment if
+you want more details.&lt;/p&gt;</content><author><name></name></author><category term="devops" /><summary type="html">This last week-end, I’ve tried to upgrade my Dedibox running Ubuntu Server from Maverick Meerkat (10.10) to Natty Narwhal (11.04). The install first seemed to go well: no error messages, pretty easy, fast and straightforward process. Then came the required reboot.</summary></entry></feed>

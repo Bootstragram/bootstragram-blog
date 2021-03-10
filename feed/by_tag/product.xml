@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/product.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/product.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Pomodoro CLI 1.0.0 Released 🎉</title><link href="https://bootstragram.com/blog/pomodoro-cli-swift/" rel="alternate" type="text/html" title="Pomodoro CLI 1.0.0 Released 🎉" /><published>2020-02-01T00:00:00+00:00</published><updated>2020-02-01T00:00:00+00:00</updated><id>https://bootstragram.com/blog/pomodoro-cli-swift</id><content type="html" xml:base="https://bootstragram.com/blog/pomodoro-cli-swift/">&lt;p&gt;A little more than two years after &lt;a href=&quot;/blog/swift-command-line-pomodoro/&quot;&gt;I started working on this&lt;/a&gt;, I am happy to
+annouce that &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli/releases&quot;&gt;&lt;code&gt;pomodoro-cli&lt;/code&gt; 1.0.0&lt;/a&gt; has been released today. I finally felt
+that it had enough features to decide a tag was needed.&lt;/p&gt;
+&lt;h2&gt;How Can You Install It?&lt;/h2&gt;
+&lt;p&gt;I still need to work on the distribution via Homebrew but the code and
+installation steps can be found on &lt;a href=&quot;https://dirtyhenry.github.io/pomodoro-cli/&quot; title=&quot;Jazzy docs for Pomodoro CLI&quot;&gt;the project website&lt;/a&gt; or &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli&quot; title=&quot;GitHub repository for Pomodoro CLI&quot;&gt;its GitHub
+repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;What on Earth Is Pomodoro?&lt;/h2&gt;
+&lt;p&gt;It is a time management technique that was created by Francesco Cirillo. He
+wrote &lt;a href=&quot;https://francescocirillo.com/products/the-pomodoro-technique-book-us-edition&quot; title=&quot;The Pomodoro Technique Book&quot;&gt;a book&lt;/a&gt; and &lt;a href=&quot;https://pomodorotechnique.com/&quot; title=&quot;The Pomodoro Technique Website&quot;&gt;a website&lt;/a&gt; about it. To summarize, it’s all about
+splitting up your work into 25-minutes chunks of time that are each full-focused
+on 1 objective. Pretty damn efficient when you can afford to stick to it I must
+say.&lt;/p&gt;
+&lt;h2&gt;Why the Hell Did You Do That?&lt;/h2&gt;
+&lt;p&gt;Sure, whether you’re talking CLI apps or whatever apps, there is nothing
+revolutionary with this tool. As a matter of fact, There is &lt;a href=&quot;https://github.com/search?q=pomodoro+cli&quot; title=&quot;GitHub search results for Pomodoro and CLI&quot;&gt;a crazy amount of
+alternatives on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;I made it.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This argument might only work for me, but it does count;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It is made in Swift.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As of today, it is the only result for &lt;a href=&quot;https://github.com/search?q=pomodoro+cli+language%3ASwift&quot; title=&quot;GitHub search results for Pomodoro, CLI AND Swift&quot;&gt;this other GitHub search&lt;/a&gt;;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It has hooks.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You can plug your own scripts when a pomodoro starts and when a pomodoro
+finishes. I used them to include a cool Italian voice making announcements
+and they put my display to sleep when a pomodoro is over. No excuse for not
+taking a break.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It keeps an history.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Every pomodoro starts by asking a simple question: what is the intent of the
+current pomodoro. When the pomodoro finishes, the dates and this intent are
+logged in a YAML file so I can track back how I spent my time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;A simple use case&lt;/h2&gt;
+&lt;p&gt;This blog post was written during 1 Pomodoro. Here is the associated log from
+the journal:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yml&quot;&gt;- - startDate: 01/02/2020 21:23:10
+  - endDate: 01/02/2020 21:48:10
+  - message: Write a blog post about Pomodoro 1.0.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What do you think? How do you like them tomatoes? 🍅&lt;/p&gt;</content><author><name></name></author><category term="swift" /><category term="product" /><summary type="html">A little more than two years after I started working on this, I am happy to annouce that pomodoro-cli 1.0.0 has been released today. I finally felt that it had enough features to decide a tag was needed.</summary></entry><entry><title type="html">Writing a Swift Pomodoro Timer Command-Line Tool</title><link href="https://bootstragram.com/blog/swift-command-line-pomodoro/" rel="alternate" type="text/html" title="Writing a Swift Pomodoro Timer Command-Line Tool" /><published>2017-11-04T00:00:00+00:00</published><updated>2017-11-04T00:00:00+00:00</updated><id>https://bootstragram.com/blog/swift-command-line-pomodoro</id><content type="html" xml:base="https://bootstragram.com/blog/swift-command-line-pomodoro/">&lt;p&gt;I wanted to experiment on writing command line tools with Swift, I wrote a
+simple command-line &lt;a href=&quot;https://en.wikipedia.org/wiki/Pomodoro_Technique&quot;&gt;pomodoro&lt;/a&gt; timer. I had to find answers to quite a
+number of questions to achieve this, but Internet is great at finding answers to
+things. So here we go.&lt;/p&gt;
+&lt;h2&gt;How to write a progress bar on the command line?&lt;/h2&gt;
+&lt;p&gt;I had never written a progress bar on the command line before and this
+&lt;a href=&quot;https://stackoverflow.com/questions/238073/how-to-add-a-progress-bar-to-a-shell-script&quot;&gt;StackOverflow question&lt;/a&gt; was of great help to understand how
+they work.&lt;/p&gt;
+&lt;h2&gt;How to start with Swift command-line tools?&lt;/h2&gt;
+&lt;p&gt;To get started, I recommend &lt;a href=&quot;https://talk.objc.io/episodes/S01E22-command-line-tools-with-swift&quot;&gt;this Swift Talk video&lt;/a&gt; (a little over 17
+minutes long). As I had trouble setting up dependencies right (the video is
+getting old and Swift changed in the meantime), &lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;this post about the Package
+Manager&lt;/a&gt; on Swift’s website, was also pretty useful to get a
+working Xcode project with the &lt;a href=&quot;https://github.com/kylef/Commander&quot;&gt;Commander&lt;/a&gt; dependency setup right.&lt;/p&gt;
+&lt;p&gt;Basically, everything you need to type in the terminal is:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;swift package init --type executable
+# Setting up dependencies in `Package.swift`
+swift package update
+swift package generate-xcodeproj
+swift build
+.build/debug/&amp;lt;name-of-your-target&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;How to output things to the standard output?&lt;/h2&gt;
+&lt;p&gt;Well &lt;code&gt;print()&lt;/code&gt; is the easy answer by it doesn’t manage escaping characters
+right. So &lt;code&gt;FileHandle.standardOutput&lt;/code&gt; was what I was looking for to manage a
+proper terminal progress bar.&lt;/p&gt;
+&lt;h2&gt;What does the results look like?&lt;/h2&gt;
+&lt;p&gt;Try it &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;What are the next steps?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Ask for the description of the task before starting the pomodoro&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Log the pomodoro in a file for archives and time-reporting&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Notify the user in the notification center or by a sound when the timer
+ends.&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Integrate with other stuff via &lt;strong&gt;Shell&lt;/strong&gt; scripts.&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;Use the full width of the terminal window instead of a fixed length (which
+should mean
+&lt;a href=&quot;https://stackoverflow.com/questions/36219597/referring-to-environment-variables-in-swift&quot;&gt;reading environment variables&lt;/a&gt;);&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Build for release&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;Distribute.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="swift" /><category term="product" /><summary type="html">I wanted to experiment on writing command line tools with Swift, I wrote a simple command-line pomodoro timer. I had to find answers to quite a number of questions to achieve this, but Internet is great at finding answers to things. So here we go.</summary></entry><entry><title type="html">Bookmarklets for Jira OnDemand</title><link href="https://bootstragram.com/blog/making-scrum-cards-from-jira-with-jquery-and-css/" rel="alternate" type="text/html" title="Bookmarklets for Jira OnDemand" /><published>2013-01-04T00:00:00+00:00</published><updated>2013-01-04T00:00:00+00:00</updated><id>https://bootstragram.com/blog/making-scrum-cards-from-jira-with-jquery-and-css</id><content type="html" xml:base="https://bootstragram.com/blog/making-scrum-cards-from-jira-with-jquery-and-css/">&lt;p&gt;Sometimes you run out of Post-Its. Shit happens. Let’s keep the task board busy
+anyway…&lt;/p&gt;
+&lt;p&gt;It happened to me in real-life. We just agreed on our Sprint backlog and are
+willing to display it proudly on our walls but… there’s no Post-Its left.&lt;/p&gt;
+&lt;p&gt;If you’re using OnDemand Jira, here is an option to help you.&lt;/p&gt;
+&lt;h2&gt;The Magic of jQuery and CSS&lt;/h2&gt;
+&lt;p&gt;Click &lt;a href=&quot;https://dirtyhenry.github.io/jira-to-agile-cards/&quot;&gt;here&lt;/a&gt; to access the
+two bookmarklets I created for OnDemand Jira.&lt;/p&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;WTF?!&lt;/strong&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Bookmarklet&quot;&gt;What’s a bookmarklet?!&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;The Post-It Bookmarklet&lt;/h3&gt;
+&lt;p&gt;Head on your OnDemand Jira instance, and choose a filter view. Click on the
+&lt;code&gt;Post-It&lt;/code&gt; bookmarklet. Tada!&lt;/p&gt;
+&lt;p&gt;You get a printable page that you can print, cut and paste on your task board!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/scrum_board.png&quot; alt=&quot;A scrum board full of cards&quot; title=&quot;The beautiful final result&quot; /&gt;&lt;/p&gt;
+&lt;h3&gt;The Burndown Chart Bookmarklet&lt;/h3&gt;
+&lt;p&gt;Refresh your page to get the usual filter view and click on the &lt;code&gt;Burndown Chart&lt;/code&gt;
+bookmarklet. Depending on your issues’ statuses, you’re informed of how much is
+done compared to your sprint overall point amount. (To work properly, the filter
+view must show the optional &lt;code&gt;Story Points&lt;/code&gt; column).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/sprint-points.png&quot; alt=&quot;Screenshot of the alert you get&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Troubleshooting&lt;/h2&gt;
+&lt;p&gt;If the “tada” moment is more of a “nothing happened” moment, try to get some
+context and yell at me
+&lt;a href=&quot;https://github.com/dirtyhenry/jira-to-agile-cards/issues&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Full disclosure: other solutions could be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://marketplace.atlassian.com/plugins/com.spartez.scrumprint.scrumplugin&quot;&gt;Agile Cards for JIRA plugin by Spartez&lt;/a&gt;
+but you won’t be able to get it if you run the OnDemand version of Jira&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jhollingworth/jira-cards&quot;&gt;This open-source Ruby gem&lt;/a&gt; by
+jhollingworth&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="tools" /><category term="product" /><summary type="html">Sometimes you run out of Post-Its. Shit happens. Let’s keep the task board busy anyway…</summary></entry><entry><title type="html">First Hackathon Experience: Introducing Green Room Radio</title><link href="https://bootstragram.com/blog/introducing-green-room-radio/" rel="alternate" type="text/html" title="First Hackathon Experience: Introducing Green Room Radio" /><published>2011-11-20T00:00:00+00:00</published><updated>2011-11-20T00:00:00+00:00</updated><id>https://bootstragram.com/blog/introducing-green-room-radio</id><content type="html" xml:base="https://bootstragram.com/blog/introducing-green-room-radio/">&lt;p&gt;Yesterday, I went to my first Hackathon: the &lt;a href=&quot;http://mobileappbos.eventbrite.com/&quot;&gt;AT&amp;amp;T Mobile App Hackathon in
+Boston&lt;/a&gt;. It was a very fun event (thanks to the organizers) that I recommend
+to every people interested in new technologies, being a developer or not.&lt;/p&gt;
+&lt;p&gt;My team was composed of Alki (from &lt;a href=&quot;http://wattnow.org/&quot;&gt;wattnow&lt;/a&gt;), Ming and Charles. Here was our
+idea. Living in big cities, many gigs happen every night, mostly with local
+bands you’re not familiar with. Exploring the local scene is an exciting
+adventure but it requires a lot of work and can be time-consuming. What if an
+app could automatically create and play a playlist of the bands playing in your
+neighborhood tonight? We worked on that app. We called it Green Room Radio.&lt;/p&gt;
+&lt;h2&gt;Geolocation + Songkick + Bandcamp&lt;/h2&gt;
+&lt;p&gt;Technically speaking, we created a native iOS app, running on iPad, iPhone and
+iPod Touch executing the following tasks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;geolocation of the user&lt;/li&gt;
+&lt;li&gt;fetching of JSON data of all concerts near the user position from the
+&lt;a href=&quot;http://www.songkick.com/developer&quot;&gt;Songkick API&lt;/a&gt; (thanks to &lt;a href=&quot;https://twitter.com/saleandro&quot;&gt;Sabrina&lt;/a&gt; for providing us an API key so
+quickly on a saturday)&lt;/li&gt;
+&lt;li&gt;fetching of JSON data from the artists playing from the &lt;a href=&quot;http://bandcamp.com/developer&quot;&gt;Bandcamp API&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;highlighting artists know from Bandcamp for which a track was available to be
+streamed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We started from scratch, wrote the first line of code at 1.30pm and by 7pm, were
+ready for our demo of a functional-but-ugly app. Here are some screenshots:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/screenshot-green-room-radio-1.png&quot; alt=&quot;Screenshot of the geolocation feature&quot; title=&quot;Geolocation and list of tonight's concerts in the area&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/screenshot-green-room-radio-2.png&quot; alt=&quot;rezertezr&quot; title=&quot;rezr&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;What happens next?&lt;/h2&gt;
+&lt;p&gt;Of course, the app needs some design work. Then we’d love to get some feedback
+from Songkick and Bandcamp. Eventually, we could add many new features:
+integrating other services, featuring social sharing options, providing links to
+purchase concert tickets or purchase music, etc.&lt;/p&gt;
+&lt;p&gt;And as we love the name “Green Room Radio”, we’re also aware that it might be
+pretty misleading for people who don’t know what a &lt;a href=&quot;http://en.wikipedia.org/wiki/Green_room&quot;&gt;green room&lt;/a&gt; is (I was
+part of them) so we might have to find a new name for it.&lt;/p&gt;
+&lt;p&gt;Hopefully, the app will end up on the App Store but in the meantime, if you want
+to try this app, have some feedback to share, or a name suggestion, feel free to
+&lt;a href=&quot;http://twitter.com/dirtyhenry&quot;&gt;contact me&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;More links about the event&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;del&gt;Recap post from Alex Donn&lt;/del&gt; (edit: 💀 link)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.facebook.com/media/set/?set=a.272239499489444.63625.151603081553087&amp;amp;type=1&quot;&gt;Facebook photo bucket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="product" /><summary type="html">Yesterday, I went to my first Hackathon: the AT&amp;amp;T Mobile App Hackathon in Boston. It was a very fun event (thanks to the organizers) that I recommend to every people interested in new technologies, being a developer or not.</summary></entry></feed>

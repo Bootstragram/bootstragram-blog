@@ -1,0 +1,155 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>A CSS Polaroid Effect With Flexbox | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="A CSS Polaroid Effect With Flexbox" />
+<meta name="author" content="Mick F" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Revisiting how to show images as if they were polaroids, in CSS, with technologies from 2021." />
+<meta property="og:description" content="Revisiting how to show images as if they were polaroids, in CSS, with technologies from 2021." />
+<link rel="canonical" href="https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/" />
+<meta property="og:url" content="https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-07T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A CSS Polaroid Effect With Flexbox" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/","@type":"BlogPosting","headline":"A CSS Polaroid Effect With Flexbox","dateModified":"2021-03-07T00:00:00+00:00","datePublished":"2021-03-07T00:00:00+00:00","author":{"@type":"Person","name":"Mick F"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/"},"description":"Revisiting how to show images as if they were polaroids, in CSS, with technologies from 2021.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">A CSS Polaroid Effect With Flexbox</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2021-03-07T00:00:00+00:00" itemprop="datePublished">
+        March 07, 2021
+      </time><span> • </span><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">Mick F</span></span><span> • </span>
+        <ul class="categories-list"><li>
+            <span>
+              <span class="p-category h-card" itemprop="name">
+                <a href="/category/journaling/">
+                Journaling
+                </a>
+              </span>
+              </span>
+            </li></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Back in 2010, after reading <a href="https://legacy-zurb.netlify.app/playground/css3-polaroids">Zurb’s Polaroids with CSS3 blog post</a>, I told
+myself it could be a really cool effect to present Dead Rooster’s MP3
+selections<sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup> so I adapted the code and made it work with (at the time) very
+hot’n’sexy <em>fluid grids</em>.</p>
+<p>Flash forward to 2021.</p>
+<p>I’m migrating Dead Rooster to modern tools. Let’s revisit this effect to
+re-enable it.</p>
+<h2>Jekyll is a decent Sass/SCSS authoring tool</h2>
+<p>The original version of this post mentioned <a href="https://github.com/Compass/compass/"><strong>Compass</strong></a> as a good Sass
+authoring framework. It is no longer actively maintainted and nowadays, I rarely
+author any CSS outside of a Jekyll project or CSS-in-JS tools such as
+<a href="https://styled-components.com/">styled-components</a> or <a href="https://emotion.sh/docs/introduction">Emotion</a>.</p>
+<p>We will use <a href="https://jekyllrb.com/docs/assets/#sassscss">Jekyll’s Sass/SCSS support</a> today.</p>
+<h2>The Polaroid Effect</h2>
+<ul class="polaroids">
+  <li class="polaroid" href="#" title="Guards">
+    <img src="https://picsum.photos/seed/Guards/200" />
+  </li>
+  <li class="polaroid" href="#" title="Women">
+    <img src="https://picsum.photos/seed/Women/200" />
+  </li>
+  <li class="polaroid" href="#" title="The Raveonettes">
+    <img src="https://picsum.photos/seed/The Raveonettes/200" />
+  </li>
+</ul>
+<h2>How it works</h2>
+<p>I created 2 codepens to compare the code from 2010 to the code of 2021:</p>
+<ul>
+<li><a href="https://codepen.io/dirtyhenry/pen/BaQPoRL">Polaroid Effects 2010</a></li>
+<li><a href="https://codepen.io/dirtyhenry/pen/vYyaNWE">Polaroid Effects 2021</a></li>
+</ul>
+<h2>What changed since 2010?</h2>
+<p>The old code used a lot of fixed sizes and maths, with a variable for the number
+of columns at compile time that became a constant at runtime. To mimic this
+behavior, we could have used a <a href="https://css-tricks.com/snippets/css/complete-guide-grid/"><strong>CSS Grid Layout</strong></a> since, on Dead Rooster,
+each post using this effect featured a 3 ⨉ 3 grid of images. But on smaller
+screens, the code made the images become too small so I decided <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/"><strong>CSS Flexbox
+Layout</strong></a> led to better results in terms of responsiveness.</p>
+<p><strong>Vendor prefixes</strong> are for the most part useless nowadays. I removed all their
+occurrences from the original code and the code behaves as expected on Safari,
+Chrome and Firefox on macOS, and on Safari Mobile on iOS.</p>
+<p>Finally, SCSS now has a fun <code>random</code> native method that can bring more
+unpredictability — which is the fun part of this effect — than the Fibonacci
+suite multiples that were used in the original code. The random value is only
+random at compile-time though, so we still need multiple classes using
+<code>:nth-child</code> to avoid all polaroids to all be tilted at the same angle.</p>
+<p>You can see the effect live on Dead Rooster <a href="https://deadrooster.org/compile-mp3-du-net-01/">here</a>, <a href="https://deadrooster.org/compile-mp3-du-net-05/">here</a> or <a href="https://deadrooster.org/compile-mp3-du-net-08/">here</a>.</p>
+<p>Rock on. 🤘</p>
+<section class="footnotes">
+<ol>
+<li id="fn1">
+<p><a href="https://deadrooster.org">Dead Rooster</a> is my blog, written in French, where
+I write about pop culture since 2005. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <a class="u-url" href="/blog/css-polaroid-effect-with-fluid-grids/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/css/">
+          CSS
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/sass/">
+          Sass
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/compass/">
+          Compass
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/jekyll/">
+          Jekyll
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/line-height-with-uikit/">
+        Pixel-Perfect Line Height With UIKit
+      </a>
+    </p>
+    <p class="related-page-date">February 04, 2021</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

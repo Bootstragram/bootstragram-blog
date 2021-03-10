@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/android.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/android.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">DroidCon 2014</title><link href="https://bootstragram.com/blog/droidcon-2014/" rel="alternate" type="text/html" title="DroidCon 2014" /><published>2014-10-22T00:00:00+00:00</published><updated>2014-10-22T00:00:00+00:00</updated><id>https://bootstragram.com/blog/droidcon-2014</id><content type="html" xml:base="https://bootstragram.com/blog/droidcon-2014/">&lt;p&gt;You can watch all the videos on &lt;a href=&quot;https://www.youtube.com/channel/UCkatLlah5weIpN23LqMgdTg&quot;&gt;the Droidcon Paris Youtube
+channel&lt;/a&gt; but I especially recommend these 3 talks.&lt;/p&gt;
+&lt;h2&gt;&lt;em&gt;Scaling Android Development at Twitter&lt;/em&gt;&lt;/h2&gt;
+&lt;img alt=&quot;Scaling Android Development at Twitter&quot; src=&quot;/assets/droidcon-jan-chong-638a9dcbda59bc65f4113843a2f8ad232c59c72d93f0854ae713b623472db63456d0b848798f66cf39135f781cc16138e8a78b3454ca7cbe814c623e001c6eda.png&quot; integrity=&quot;sha512-Y4qdy9pZvGX0EThDovitIyxZxy2T8IVK5xO2I0cttjRW0LhIeY9mzzkTX3gcwWE46KeLNFTKfL6BTGI+ABxu2g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;This talk by &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_train&quot;&gt;Jan Chong&lt;/a&gt;, engineering manager at Twitter for
+Android, was about how Twitter’s mobile team transitioned from a 5-people team
+to a 70+ contributors effort. Here are some key points from the talk.&lt;/p&gt;
+&lt;p&gt;You can watch it &lt;a href=&quot;http://youtu.be/T5qEnillTHc&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Operations&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;In 3 years, Twitter for Android went from a 8 to 12 weeks release schedule to
+1 release a week&lt;/li&gt;
+&lt;li&gt;The key quality indicator they’re following are crashed : they analyzed that
+when a user experienced a crash, his engagement would drop significantly for
+the next month (of course, they use &lt;a href=&quot;https://try.crashlytics.com&quot;&gt;Crashlytics&lt;/a&gt;, that they own)&lt;/li&gt;
+&lt;li&gt;API released for mobiles need to be supported for a loooooong time&lt;/li&gt;
+&lt;li&gt;They baked an API mechanism to support A/B testing within their apps that does
+not require republishing&lt;/li&gt;
+&lt;li&gt;They also have an interesting feature switch system where they remotely
+control a device/manufacturer/OS version matrix to swith features on and off,
+again to be able to tune their apps and avoir crashes without the need to
+republish&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Tools and processes&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;They’re using Gradle and Android Studio&lt;/li&gt;
+&lt;li&gt;Twitter practice &lt;a href=&quot;http://en.wikipedia.org/wiki/Eating_your_own_dog_food&quot;&gt;dogfooding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They switched from &lt;a href=&quot;https://code.google.com/p/robotium/&quot;&gt;Robotium&lt;/a&gt; to &lt;a href=&quot;https://code.google.com/p/android-test-kit/wiki/Espresso&quot;&gt;Espresso&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They also use &lt;a href=&quot;https://developer.android.com/training/testing/ui-automator&quot;&gt;uiautomator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;They use a &lt;a href=&quot;http://en.wikipedia.org/wiki/Software_release_train&quot;&gt;release train&lt;/a&gt; schedule to run their and
+transitioned from a single 4-week train to two concurrent 2-weeks trains to
+reduce the gap between deadlines&lt;/li&gt;
+&lt;li&gt;They also use a “+1/+2” code review system&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;&lt;em&gt;How Open Source Powers Facebook on Android&lt;/em&gt;, by Simon Stewart&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/MT6bU9ofJDE&quot;&gt;📺&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;&lt;em&gt;Petit Design pour Grande Humanité&lt;/em&gt;, by Geoffrey Dome&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://youtu.be/mwF4qk9OMe8&quot;&gt;📺&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="android" /><category term="conf" /><summary type="html">You can watch all the videos on the Droidcon Paris Youtube channel but I especially recommend these 3 talks.</summary></entry><entry><title type="html">Service to Activity Communication With The Android SDK</title><link href="https://bootstragram.com/blog/android-service-activity-communication/" rel="alternate" type="text/html" title="Service to Activity Communication With The Android SDK" /><published>2014-01-28T00:00:00+00:00</published><updated>2014-01-28T00:00:00+00:00</updated><id>https://bootstragram.com/blog/android-service-activity-communication</id><content type="html" xml:base="https://bootstragram.com/blog/android-service-activity-communication/">&lt;p&gt;I’m an experienced iOS developer but still consider myself a noob regarding
+Android development. Never mind, I still want to share my latest experiment with
+the Android SDK: how to run a long operation in the background while still
+updating the UI regularly?&lt;/p&gt;
+&lt;h2&gt;Where AsyncTask won’t do the job…&lt;/h2&gt;
+&lt;p&gt;The Android SDK provides a convenient object to perform background operations
+that will need to provide a UI feedback: &lt;a href=&quot;https://developer.android.com/reference/android/os/AsyncTask.html&quot; title=&quot;AsyncTask Class API Reference&quot;&gt;&lt;code&gt;AsyncTask&lt;/code&gt;&lt;/a&gt;. But as
+&lt;a href=&quot;https://developer.android.com/reference/android/os/AsyncTask.html&quot; title=&quot;AsyncTask Class API Reference&quot;&gt;Android’s documentation&lt;/a&gt; says:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;AsyncTasks should ideally be used for short operations (a few seconds at the
+most.)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The question then arises: what should we use when a longer background operation
+is needed?&lt;/p&gt;
+&lt;h2&gt;Well, guess what? It depends…&lt;/h2&gt;
+&lt;p&gt;Searching for an answer to this question on services like StackOverflow ends up
+being more confusing than helpful. &lt;a href=&quot;https://stackoverflow.com/search?q=android+ui+communication+background&quot; title=&quot;Search for 'Android UI Communication Background' on StackOverflow&quot;&gt;Many questions&lt;/a&gt; are asked in
+this area but no clear answer appears. But depending on the specific aspects of
+each question, many keywords appear to help getting our quest further:
+&lt;code&gt;Services&lt;/code&gt;, &lt;code&gt;Handlers&lt;/code&gt;, etc.&lt;/p&gt;
+&lt;h2&gt;Let’s give Services a try&lt;/h2&gt;
+&lt;p&gt;Ideally, I wanted to find something similar to the &lt;a href=&quot;https://nshipster.com/key-value-observing/&quot;&gt;KVO&lt;/a&gt; mechanism in iOS.&lt;/p&gt;
+&lt;p&gt;I decided to give &lt;code&gt;Services&lt;/code&gt; a try and developed a &lt;a href=&quot;https://en.wikipedia.org/wiki/Proof_of_concept&quot; title=&quot;Proof of Concept&quot;&gt;POC&lt;/a&gt; you can find on
+&lt;a href=&quot;https://github.com/dirtyhenry/bootstragram-android&quot; title=&quot;My bootstragram-android repository on GitHub&quot;&gt;my bootstragram-android repository on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The main reason why I picked &lt;code&gt;Services&lt;/code&gt; over other solutions is that I wanted to
+be able to share &lt;em&gt;any kind of objects&lt;/em&gt;, not only &lt;code&gt;Serializable&lt;/code&gt; and &lt;code&gt;Parcelable&lt;/code&gt;
+ones. This constraint eliminated a solution based on a
+&lt;a href=&quot;https://developer.android.com/reference/android/support/v4/content/LocalBroadcastManager.html&quot; title=&quot;LocalBroadcastManager Class API Reference&quot;&gt;&lt;code&gt;LocalBroadcastManager&lt;/code&gt;&lt;/a&gt; as from my understanding,
+objects that can be passed with the &lt;code&gt;Intent&lt;/code&gt; (ie &lt;code&gt;Extra&lt;/code&gt;) have to be
+&lt;code&gt;Serializable&lt;/code&gt; or &lt;code&gt;Parcelable&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;My objectives for this POC were:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create a background operation that will live as long as my app, no less.&lt;/li&gt;
+&lt;li&gt;This operation must run continously and must update some kind of state at a
+relatively high-frequency.&lt;/li&gt;
+&lt;li&gt;The user must be able to get a UI representation of that state without being
+blocked on one activiy in particular.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Some notes about it went follow.&lt;/p&gt;
+&lt;h3&gt;The POC Story&lt;/h3&gt;
+&lt;p&gt;The pitch for the POC is as silly as can be. The app will generate in the
+background a new hex-string every 2 seconds. It will have to be displayed in a
+screen with a new color. Wow! I’m sure this app would be a hit on the Google
+Play Store!&lt;/p&gt;
+&lt;h3&gt;Create a Service&lt;/h3&gt;
+&lt;p&gt;When you create a &lt;code&gt;Service&lt;/code&gt;, you need to declare it in your app manifest. I made
+mine private to my app but it’s not required.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;&amp;lt;application ...&amp;gt;
+  ....
+  &amp;lt;service android:name=&amp;quot;.services.RandomEventsService&amp;quot;
+           android:exported=&amp;quot;false&amp;quot; &amp;gt;
+  &amp;lt;/service&amp;gt;
+  ....
+&amp;lt;/application&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The service itself is a subclass of &lt;a href=&quot;https://developer.android.com/reference/android/app/IntentService.html&quot; title=&quot;IntentService Class API Reference&quot;&gt;&lt;code&gt;IntentService&lt;/code&gt;&lt;/a&gt; (which
+provides a convenient &lt;code&gt;onHandleIntent&lt;/code&gt; method to override) doing very simple
+things:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;protected void onHandleIntent(Intent intent) {
+  while (true) {
+    final RandomSingleton singleton = RandomSingleton.getInstance();
+    singleton.increment();
+    long endTime = System.currentTimeMillis() + 2 * 1000;
+    while (System.currentTimeMillis() &amp;lt; endTime) {
+      synchronized (this) {
+        try {
+          wait(endTime - System.currentTimeMillis());
+        } catch (Exception e) {
+          Log.e(TAG, &amp;quot;Couldn't sleep in peace&amp;quot;, e);
+        }
+      }
+      singleton.increment();
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The service just runs continously and wakes up every 2 seconds to update the
+&lt;code&gt;RandomSingleton&lt;/code&gt; singleton object via the &lt;code&gt;increment()&lt;/code&gt; method: objectives 1
+and 2 are achieved.&lt;/p&gt;
+&lt;p&gt;Here is &lt;a href=&quot;https://github.com/dirtyhenry/bootstragram-android/blob/master/src/com/bootstragram/demo/services/RandomEventsService.java&quot; title=&quot;My RandomEventsService source code&quot;&gt;the full source code&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The service is started via a button in an activity:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public void onClick(View v) {
+  Intent intent = new Intent(ServiceFeedbackActivity.this, RandomEventsService.class);
+  startService(intent);
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;UI Representation and Notifications&lt;/h3&gt;
+&lt;p&gt;We still have objective 3 to achieve. To do so:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;I made my &lt;code&gt;RandomSingleton&lt;/code&gt; a subclass of
+&lt;a href=&quot;https://developer.android.com/reference/android/database/ContentObservable.html&quot; title=&quot;ContentObservable Class API Reference&quot;&gt;&lt;code&gt;ContentObservable&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I created an activity using a subclass of
+&lt;a href=&quot;https://developer.android.com/reference/android/database/ContentObserver.html&quot; title=&quot;ContentObserver Class API Reference&quot;&gt;&lt;code&gt;ContentObserver&lt;/code&gt;&lt;/a&gt;, observing &lt;code&gt;RandomSingleton&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Then I made &lt;code&gt;RandomSingleton&lt;/code&gt; call &lt;code&gt;dispatchChange(...)&lt;/code&gt; at the end of the
+&lt;code&gt;increment()&lt;/code&gt; method&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And that’s it.&lt;/p&gt;
+&lt;h3&gt;The Result&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/android-services-to-activity-communication.gif&quot; alt=&quot;The app updates the UI every 2s accordingly to the new singleton state&quot; title=&quot;The app updates the UI every 2s accordingly to the new singleton state&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;After a frustrating research that had made me more confused than confident about
+my problem, I found out that the actual implementation was pretty
+straightforward and easier to implement than I expected.&lt;/p&gt;
+&lt;p&gt;Nevertheless, I’m still curious of feedbacks you might have about this code and
+I invite you to get in touch via &lt;a href=&quot;https://github.com/dirtyhenry/bootstragram-blog/issues&quot; title=&quot;Issues&quot;&gt;GitHub&lt;/a&gt; or &lt;a href=&quot;https://twitter.com/dirtyhenry&quot;&gt;Twitter&lt;/a&gt; if you
+want to engage a discussion about this page (in particular if you know a better
+way to do a Service to UI communication).&lt;/p&gt;</content><author><name></name></author><category term="android" /><summary type="html">I’m an experienced iOS developer but still consider myself a noob regarding Android development. Never mind, I still want to share my latest experiment with the Android SDK: how to run a long operation in the background while still updating the UI regularly?</summary></entry></feed>

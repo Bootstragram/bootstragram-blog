@@ -1,0 +1,131 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>A same website for desktop and mobile? | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="A same website for desktop and mobile?" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Internet is turning mobile. So what should I do then? Make a desktop version and a mobile version of my website? Not really. CSS at the rescue." />
+<meta property="og:description" content="Internet is turning mobile. So what should I do then? Make a desktop version and a mobile version of my website? Not really. CSS at the rescue." />
+<link rel="canonical" href="https://bootstragram.com/blog/same-site-for-desktop-and-mobile/" />
+<meta property="og:url" content="https://bootstragram.com/blog/same-site-for-desktop-and-mobile/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2010-08-07T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="A same website for desktop and mobile?" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/same-site-for-desktop-and-mobile/","@type":"BlogPosting","headline":"A same website for desktop and mobile?","dateModified":"2010-08-07T00:00:00+00:00","datePublished":"2010-08-07T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/same-site-for-desktop-and-mobile/"},"description":"Internet is turning mobile. So what should I do then? Make a desktop version and a mobile version of my website? Not really. CSS at the rescue.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">A same website for desktop and mobile?</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2010-08-07T00:00:00+00:00" itemprop="datePublished">
+        August 07, 2010
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Internet is turning mobile. So what should I do then? Make a desktop version and
+a mobile version of my website? Not really. CSS at the rescue.</p>
+<h2>Fluid Grids</h2>
+<p>The first thing to do is to use <em>fluid grids</em>, which means using only relative
+sizes in your CSS, instead of absolute ones. You can setup sizes relative to the
+default browser font size, to the parent HTML blocks, etc.</p>
+<p>With this kind of relative sizing, when the user changes the size of the
+browser, all the elements keep the same proportions.</p>
+<h2>Media Queries</h2>
+<p>But what if a screen size gets to this critical point where keeping the same
+aspect and proportion is not relevant anymore? Then, you should use <em>media
+queries</em>.</p>
+<p>Here again, this is a CSS technique that you can use to reorganize the layout of
+your webpage upon certain conditions. For instance, if the width of the browser
+is below a certain size, you can give up a column layout and switch to a
+single-column layout where blocks are placed one upon another.</p>
+<h2>Fluid Images</h2>
+<p>Of course, this is not enough and new issues are going to rise when you’re going
+to put images, or YouTube embeds inside your pages.</p>
+<p>Some stuff can help (the CSS <code>max-width</code> attribute for instance), but it’s not
+universally supported yet.</p>
+<h2>What about iOS?</h2>
+<p>What’s interesting me most here is not Internet Explorer-compatibility though,
+but making websites that look good on iOS devices, the iPhone and the iPad. I’ve
+tried to give these techniques a try and here it is:</p>
+<img alt="A grid layout" src="/assets/grid-a4a86c0b59ce1bd1909d83195bc6c1bbd6d805e52e14e20030bfe1e8ed50f6ff0c24b426c0f824911973a85f699ffb173c1d009829ad54d069469c1977ec999d.png" integrity="sha512-pKhsC1nOG9GQnYMZW8bBu9bYBeUuFOIAML/h6O1Q9v8MJLQmwPgkkRlzqF9pn/sXPB0AmCmtVNBpRpwZd+yZnQ==" crossorigin="anonymous">
+<p>This is a 10-column layout of 82px each, separated by 20px gutters. With 2
+outside gutters of 12px each, we get a grid defined by a default width of
+1024px.</p>
+<p>To setup my CSS correctly, some math are required:</p>
+<img alt="Some grid math" src="/assets/grid-math-f8c80d3765baf8303de1280062936bf456a5c12849b6292f243b5c7658b4e4dd3b841f54d6946565cc9ed8cba28f8e00b3849b42366c0412f413590f2a894b78.png" integrity="sha512-+MgNN2W6+DA94SgAYpNr9FalwShJtikvJDtcdli05N07hB9U1pRlZcye2Muij44As4SbQjZsBBL0E1kPKolLeA==" crossorigin="anonymous">
+<p>Then I had all I needed to build the <a href="../../assets/grid.css">CSS</a> for <a href="../../assets/grid-demo.html">this demo page</a>.</p>
+<p>This demo page renders as follow on the iPhone, portrait and landscape:</p>
+<img alt="Grid page rendering on an iPhone with portrait orientation" src="/assets/grid-portrait-0ac542bdda91afe4c763306286a4ad44d5f191d4ed6004b4256b76f353e92541048922282be6bb10ab9575c6e6d9068b18607af2666e12a97d73b758209c0f2f.jpg" integrity="sha512-CsVCvdqRr+THYzBihqStRNXxkdTtYAS0JWt281PpJUEEiSIoK+a7EKuVdcbm2QaLGGB68mZuEql9c7dYIJwPLw==" crossorigin="anonymous">
+<img alt="Grid page rendering on an iPhone with landscape orientation" src="/assets/grid-landscape-c076057fa5647b803fc7dd36a9d6062da9f4111484a2b55eb149a68cd22472cabd983a3e517c24f8b27464a6b870951cfbe67280c2bef933dc124d5eb193a296.jpg" integrity="sha512-wHYFf6Vke4A/x902qdYGLan0ERSEorVesUmmjNIkcsq9mDo+UXwk+LJ0ZKa4cJUc++ZygMK++TPcEk1esZOilg==" crossorigin="anonymous">
+<h2>Conclusion</h2>
+<p>I’ll soon adapt this website, quickly put together with ZPIP so that it uses
+these methods and is adapted, with a nice design, to the iPhone and the iPad.
+Stay tuned.</p>
+<h2>Useful resources:</h2>
+<ul>
+<li><a href="http://www.alistapart.com/articles/fluidgrids/">Fluid Grids</a></li>
+<li><a href="http://www.alistapart.com/articles/responsive-web-design/">Responsive Web Design</a></li>
+<li><a href="http://unstoppablerobotninja.com/entry/fluid-images">Fluid Images</a></li>
+</ul>
+
+  </div>
+
+  <a class="u-url" href="/blog/same-site-for-desktop-and-mobile/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/web/">
+          web
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/ressources-pour-les-blocks-et-les-split-views/">
+        Ressources pour les blocks et les split views
+      </a>
+    </p>
+    <p class="related-page-date">August 03, 2010</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/adapter-un-site-spip-a-un-terminal-mobile/">
+        Adapter un site SPIP à un terminal mobile
+      </a>
+    </p>
+    <p class="related-page-date">August 24, 2010</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

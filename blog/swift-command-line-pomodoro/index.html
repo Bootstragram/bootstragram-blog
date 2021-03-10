@@ -1,0 +1,131 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Writing a Swift Pomodoro Timer Command-Line Tool | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Writing a Swift Pomodoro Timer Command-Line Tool" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="I wanted to experiment on writing command line tools with Swift, I wrote a simple command-line pomodoro timer. I had to find answers to quite a number of questions to achieve this, but Internet is great at finding answers to things. So here we go." />
+<meta property="og:description" content="I wanted to experiment on writing command line tools with Swift, I wrote a simple command-line pomodoro timer. I had to find answers to quite a number of questions to achieve this, but Internet is great at finding answers to things. So here we go." />
+<link rel="canonical" href="https://bootstragram.com/blog/swift-command-line-pomodoro/" />
+<meta property="og:url" content="https://bootstragram.com/blog/swift-command-line-pomodoro/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-11-04T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Writing a Swift Pomodoro Timer Command-Line Tool" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/swift-command-line-pomodoro/","@type":"BlogPosting","headline":"Writing a Swift Pomodoro Timer Command-Line Tool","dateModified":"2017-11-04T00:00:00+00:00","datePublished":"2017-11-04T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/swift-command-line-pomodoro/"},"description":"I wanted to experiment on writing command line tools with Swift, I wrote a simple command-line pomodoro timer. I had to find answers to quite a number of questions to achieve this, but Internet is great at finding answers to things. So here we go.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Writing a Swift Pomodoro Timer Command-Line Tool</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2017-11-04T00:00:00+00:00" itemprop="datePublished">
+        November 04, 2017
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>I wanted to experiment on writing command line tools with Swift, I wrote a
+simple command-line <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">pomodoro</a> timer. I had to find answers to quite a
+number of questions to achieve this, but Internet is great at finding answers to
+things. So here we go.</p>
+<h2>How to write a progress bar on the command line?</h2>
+<p>I had never written a progress bar on the command line before and this
+<a href="https://stackoverflow.com/questions/238073/how-to-add-a-progress-bar-to-a-shell-script">StackOverflow question</a> was of great help to understand how
+they work.</p>
+<h2>How to start with Swift command-line tools?</h2>
+<p>To get started, I recommend <a href="https://talk.objc.io/episodes/S01E22-command-line-tools-with-swift">this Swift Talk video</a> (a little over 17
+minutes long). As I had trouble setting up dependencies right (the video is
+getting old and Swift changed in the meantime), <a href="https://swift.org/package-manager/">this post about the Package
+Manager</a> on Swift’s website, was also pretty useful to get a
+working Xcode project with the <a href="https://github.com/kylef/Commander">Commander</a> dependency setup right.</p>
+<p>Basically, everything you need to type in the terminal is:</p>
+<pre><code class="language-bash">swift package init --type executable
+# Setting up dependencies in `Package.swift`
+swift package update
+swift package generate-xcodeproj
+swift build
+.build/debug/&lt;name-of-your-target&gt;
+</code></pre>
+<h2>How to output things to the standard output?</h2>
+<p>Well <code>print()</code> is the easy answer by it doesn’t manage escaping characters
+right. So <code>FileHandle.standardOutput</code> was what I was looking for to manage a
+proper terminal progress bar.</p>
+<h2>What does the results look like?</h2>
+<p>Try it <a href="https://github.com/dirtyhenry/pomodoro-cli/">here</a>.</p>
+<h2>What are the next steps?</h2>
+<ul>
+<li>✔︎ <del>Ask for the description of the task before starting the pomodoro</del>;</li>
+<li>✔︎ <del>Log the pomodoro in a file for archives and time-reporting</del>;</li>
+<li>✔︎ <del>Notify the user in the notification center or by a sound when the timer
+ends.</del>;</li>
+<li>✔︎ <del>Integrate with other stuff via <strong>Shell</strong> scripts.</del>;</li>
+<li>Use the full width of the terminal window instead of a fixed length (which
+should mean
+<a href="https://stackoverflow.com/questions/36219597/referring-to-environment-variables-in-swift">reading environment variables</a>);</li>
+<li>✔︎ <del>Build for release</del>;</li>
+<li>Distribute.</li>
+</ul>
+
+  </div>
+
+  <a class="u-url" href="/blog/swift-command-line-pomodoro/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/swift/">
+          swift
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/product/">
+          product
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/ios11-size-for-dynamic-collection-view-cell/">
+        Dynamic resizing of a UICollectionViewCell's height
+      </a>
+    </p>
+    <p class="related-page-date">October 19, 2017</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/frenchkit-2017/">
+        Notes from FrenchKit 2017
+      </a>
+    </p>
+    <p class="related-page-date">January 12, 2018</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

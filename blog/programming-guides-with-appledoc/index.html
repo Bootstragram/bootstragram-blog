@@ -1,0 +1,115 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>How to generate Programming Guides with Appledoc | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="How to generate Programming Guides with Appledoc" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="appledoc is a pretty awesome tool. It’s a command line tool that generates a very Apple-like documentation for your Objective-C projects. The documentation is a little short on details and isn’t clear if you can also create Apple-like Programming Guides or documentation pages decoupled from code. Well guess what? You can! And with Markdown support, which makes the whole thing even more awesome." />
+<meta property="og:description" content="appledoc is a pretty awesome tool. It’s a command line tool that generates a very Apple-like documentation for your Objective-C projects. The documentation is a little short on details and isn’t clear if you can also create Apple-like Programming Guides or documentation pages decoupled from code. Well guess what? You can! And with Markdown support, which makes the whole thing even more awesome." />
+<link rel="canonical" href="https://bootstragram.com/blog/programming-guides-with-appledoc/" />
+<meta property="og:url" content="https://bootstragram.com/blog/programming-guides-with-appledoc/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-02-19T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="How to generate Programming Guides with Appledoc" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/programming-guides-with-appledoc/","@type":"BlogPosting","headline":"How to generate Programming Guides with Appledoc","dateModified":"2014-02-19T00:00:00+00:00","datePublished":"2014-02-19T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/programming-guides-with-appledoc/"},"description":"appledoc is a pretty awesome tool. It’s a command line tool that generates a very Apple-like documentation for your Objective-C projects. The documentation is a little short on details and isn’t clear if you can also create Apple-like Programming Guides or documentation pages decoupled from code. Well guess what? You can! And with Markdown support, which makes the whole thing even more awesome.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">How to generate Programming Guides with Appledoc</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2014-02-19T00:00:00+00:00" itemprop="datePublished">
+        February 19, 2014
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p><a href="https://github.com/tomaz/appledoc">appledoc</a> is a pretty awesome tool. It’s a command line tool that
+generates a very Apple-like documentation for your Objective-C projects. The
+documentation is a little short on details and isn’t clear if you can also
+create Apple-like Programming Guides or documentation pages decoupled from code.
+Well guess what? You can! And with <a href="https://daringfireball.net/projects/markdown/">Markdown</a> support, which makes the
+whole thing even more awesome.</p>
+<h2>How do you do it then?</h2>
+<p>It’s pretty straightforward, you just need to create Markdown files, suffixed
+with <code>-template.md</code> and add a <code>--include</code> instruction in your appledoc call as
+in:</p>
+<pre><code>appledoc ... \
+  --include my-first-template.md \
+  --include My\ Second-template.md \
+  ...
+</code></pre>
+<p>Now, visit your index.html and you’ll get a new links section at the bottom of
+the page called <em>Programming Guides</em>!</p>
+<h2>Random Notes</h2>
+<ul>
+<li>The name of the guide will be the same than the prefix of your file, so feel
+free to add spaces in it to have a pretty programming guide filename. (Maybe,
+there would be some Jekyll-like metadata stuff support to add to support a
+better way to name your programming guide with a spaceless filename)</li>
+<li>Let’s all say a big <em>Thank You</em> to Tomaz for this awesome tool. If the doc is
+light, the length of <a href="https://github.com/tomaz/appledoc/issues/7">his</a>
+<a href="https://github.com/tomaz/appledoc/issues/66">comments</a> in
+<a href="https://github.com/tomaz/appledoc/issues/74">issues</a> pages are very detailed
+and gave me the solution for this problem.</li>
+</ul>
+
+  </div>
+
+  <a class="u-url" href="/blog/programming-guides-with-appledoc/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/android-service-activity-communication/">
+        Service to Activity Communication With The Android SDK
+      </a>
+    </p>
+    <p class="related-page-date">January 28, 2014</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/simulating-protected-modifier-with-objective-c/">
+        Simulating protected properties and selectors in Objective-C
+      </a>
+    </p>
+    <p class="related-page-date">March 19, 2014</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/fonts.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/fonts.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Activating OpenType Features in iOS</title><link href="https://bootstragram.com/blog/activating-open-type-features-ios/" rel="alternate" type="text/html" title="Activating OpenType Features in iOS" /><published>2021-01-03T00:00:00+00:00</published><updated>2021-01-03T00:00:00+00:00</updated><id>https://bootstragram.com/blog/activating-open-type-features-ios</id><content type="html" xml:base="https://bootstragram.com/blog/activating-open-type-features-ios/">&lt;p&gt;&lt;a href=&quot;https://rsms.me/inter/&quot;&gt;Inter&lt;/a&gt; is an awesome typeface. It is free, open-source, and on top of
+looking great by default, it provides &lt;a href=&quot;https://rsms.me/inter/#features&quot;&gt;many OpenType features&lt;/a&gt; that are
+really easy to use on a website. The &lt;a href=&quot;https://rsms.me/inter/#features/ss01&quot;&gt;alternate digits feature&lt;/a&gt; is one of
+them. Just add the following to a CSS style and you’re done.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;font-feature-settings: &amp;quot;ss01&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;How can we benefit from the same optional features with UIKit?&lt;/strong&gt; This post
+will recap my journey to activate the alternate digits feature on an iOS app.&lt;/p&gt;
+&lt;h2&gt;Adding a custom font and using it&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_apps&quot;&gt;Adding a custom font to your app&lt;/a&gt; is now pretty easy, compared to &lt;a href=&quot;/blog/what-fonts-for-ios/&quot;&gt;the old
+days&lt;/a&gt;. From there, the most obvious next step is to run &lt;a href=&quot;https://gist.github.com/dirtyhenry/c9fb50745491624fa75768d3149376f6&quot;&gt;a piece of
+code&lt;/a&gt; that I include in every project that use custom fonts. It simply
+prints a list of the font names that are available from your app.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    static func printAllFontNames() {
+        print(&amp;quot;# All Font Names\n&amp;quot;)
+        for familyName in UIFont.familyNames {
+            print(&amp;quot;- \(familyName)&amp;quot;)
+            for font in UIFont.fontNames(forFamilyName: familyName) {
+                print(&amp;quot;  - \(font)&amp;quot;)
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Listing features of a font&lt;/h2&gt;
+&lt;p&gt;Activating features with UIKit is described in the &lt;a href=&quot;https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW6&quot;&gt;&lt;em&gt;Activating Font Features&lt;/em&gt;
+section of the Text Programming Guide for iOS&lt;/a&gt;. The code that is presented
+there relies on Objective-C CoreText that you can wrap in modern Swift.&lt;/p&gt;
+&lt;p&gt;To list the features that are supported by a font, you can use the following
+code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    typealias FontFeatureInfo = [String: Any]
+
+    func listFeatures() {
+        guard let fontFeatures = CTFontCopyFeatures(self) as? [FontFeatureInfo] else {
+            debugPrint(&amp;quot;Could not copy font features.&amp;quot;)
+            return
+        }
+
+        fontFeatures.forEach { fontFeatureInfo in
+            print(fontFeatureInfo)
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is hard to predict how large the output of this command will be and really
+depends on the font. For the Inter font, &lt;a href=&quot;https://gist.github.com/dirtyhenry/875ebeac13882c5dad710f22f17be5c5&quot;&gt;the output looks pretty intense&lt;/a&gt;.
+It is not the most pleasant prose to read for humans, but scanning for the
+features we want will be pretty straightforward.&lt;/p&gt;
+&lt;p&gt;In my context, the part I was interested in was the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[&amp;quot;CTFeatureTypeName&amp;quot;: Alternative Stylistic Sets, &amp;quot;CTFeatureTypeIdentifier&amp;quot;: 35, &amp;quot;CTFeatureTypeSelectors&amp;quot;: &amp;lt;__NSArrayM 0x600002179f20&amp;gt;(
+{
+    CTFeatureSelectorIdentifier = 2;
+    CTFeatureSelectorName = &amp;quot;Open digits&amp;quot;;
+},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To activate the &lt;em&gt;Open digits&lt;/em&gt; feature, I had to use the &lt;strong&gt;feature type
+identifier 35&lt;/strong&gt;, with the &lt;strong&gt;feature selector identifier 2&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;Enabling the font features you want&lt;/h2&gt;
+&lt;p&gt;So far, the code I showed was to get your app in the starting blocks. It helps
+you to prepare for the big stage moment: &lt;strong&gt;actually&lt;/strong&gt; enabling the font
+features.&lt;/p&gt;
+&lt;p&gt;So I wrapped these 35 and 2 &lt;em&gt;magic numbers&lt;/em&gt; into something more meaningful: a
+simple struct trying to make sense of Apple’s documentation&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. It is pretty
+basic, aimed to be built on in the future, and I made use of this incredible
+&lt;a href=&quot;https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html&quot;&gt;Font Feature Registry&lt;/a&gt; resource&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; to find inspiration for an adequate
+naming:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;sprivate enum FeatureTypeSelectorPair {
+    typealias PairDescriptor = (Int, Int)
+
+    static let stylisticAlternativesStylisticAltOne: PairDescriptor = (35, 2)
+
+    static func attributeValue(for pairDescriptor: PairDescriptor) -&amp;gt; Any {
+        [
+            UIFontDescriptor.FeatureKey.featureIdentifier: pairDescriptor.0,
+            UIFontDescriptor.FeatureKey.typeIdentifier: pairDescriptor.1,
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once there, I was able to instanciate the &lt;code&gt;UIFont&lt;/code&gt; including the option I wanted
+like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;func createFontWithOptions(fontName: String, size: CGFloat) -&amp;gt; UIFont {
+    let resultFont = UIFontDescriptor(name: fontName, size: size)
+        .addingAttributes([
+            .featureSettings: [
+                FeatureTypeSelectorPair.attributeValue(
+                    for: FeatureTypeSelectorPair.stylisticAlternativesStylisticAltOne
+                ),
+            ],
+        ])
+
+    // 0.0 means the size from the descriptor will prevail.
+    return UIFont(descriptor: resultFont, size: 0.0)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;The outcome: an alternative digits style&lt;/h2&gt;
+&lt;p&gt;🎉 Tada! I was done. Here is what it looks like in the end: a label with the
+default Inter Bold font appears first, and the label with the Inter Bold with
+the alternate digits feature enabled appears last.&lt;/p&gt;
+&lt;img alt=&quot;A screenshot comparing the string '0123456789' with or without the option&quot; src=&quot;/assets/inter-font-with-or-without-options-fe77bf4be5d1c682d1903d1ab938e740092eb61c4a73cc376775cec32c78e4b104152c2e97f73c43a968db04084667b632afcf466836185b80994ad665fb0ce2.png&quot; integrity=&quot;sha512-/ne/S+XRxoLRkD0auTjnQAkuthxKc8w3Z3XOwyx45LEEFSwul/c8Q6lo2wQIRme2Mq/PRmg2GFuAmUrWZfsM4g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;A playground using all this code is available &lt;a href=&quot;https://github.com/dirtyhenry/xcode-playgrounds/tree/master/activating-opentype-features.playground&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;⚠️ Note:
+&lt;a href=&quot;https://developer.apple.com/documentation/uikit/uifontdescriptor/featurekey&quot;&gt;the documentation of &lt;code&gt;UIFontDescriptor.FeatureKey&lt;/code&gt;&lt;/a&gt;
+was one of the most confusing I met. It said (1) that &lt;code&gt;featureIdentifier&lt;/code&gt;
+was a key for identifying a font feature type such as ligature or character
+shape and (2) &lt;code&gt;typeIdentifier&lt;/code&gt; was a key for identifying the font feature
+selector. So &lt;code&gt;featureIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureTypeIdentifier&lt;/code&gt; while
+&lt;code&gt;typeIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureSelectorIdentifier&lt;/code&gt;. Of course, I had
+it switched the wrong way the first time I ran the code. Confusing you said?
+🤯 &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;I never considered myself an expert in typefaces or fonts design and
+abilities but this resource was so humbling that I definitely decreased the
+perception of my own level in that skill by quite some orders of magnitude
+😂 &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="Journaling" /><category term="swift" /><category term="ios" /><category term="fonts" /><summary type="html">Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let's see how.</summary></entry></feed>

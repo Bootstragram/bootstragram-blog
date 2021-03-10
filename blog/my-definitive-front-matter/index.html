@@ -1,0 +1,221 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>My Definitive Front Matter | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="My Definitive Front Matter" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="After years of making static sites with Jekyll, here is my template for a solid front matter for your next static site project." />
+<meta property="og:description" content="After years of making static sites with Jekyll, here is my template for a solid front matter for your next static site project." />
+<link rel="canonical" href="https://bootstragram.com/blog/my-definitive-front-matter/" />
+<meta property="og:url" content="https://bootstragram.com/blog/my-definitive-front-matter/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-17T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="My Definitive Front Matter" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/my-definitive-front-matter/","@type":"BlogPosting","headline":"My Definitive Front Matter","dateModified":"2021-01-17T00:00:00+00:00","datePublished":"2021-01-17T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/my-definitive-front-matter/"},"description":"After years of making static sites with Jekyll, here is my template for a solid front matter for your next static site project.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">My Definitive Front Matter</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2021-01-17T00:00:00+00:00" itemprop="datePublished">
+        January 17, 2021
+      </time><span> • </span>
+        <ul class="categories-list"><li>
+            <span>
+              <span class="p-category h-card" itemprop="name">
+                <a href="/category/web-publishing/">
+                Web Publishing
+                </a>
+              </span>
+              </span>
+            </li></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>With every static site generator, you can write your posts or pages with
+Markdown or CommonMark files in which you can include some structured metadata
+called a <em>Front Matter</em>.</p>
+<p><em>Jekyll</em> has <a href="https://jekyllrb.com/docs/front-matter/">it</a>. <em>Hugo</em> has <a href="https://gohugo.io/content-management/front-matter/">it</a>. <em>Gatsby</em> has <a href="https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files">it</a>. <em>Publish</em> takes
+distance from the naming<sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup> but definitely has <a href="https://github.com/JohnSundell/Publish/blob/master/Documentation/HowTo/custom-markdown-metadata-values.md">it</a>.</p>
+<p>When you start building a website with any of these products — I’m most familiar
+with Jekyll by far —, the default scaffolding will prepare sample posts using
+front matter keys that it considers as required. From this basic starting point,
+users will have the liberty to add any additional keys of their liking. Over
+time, after running many Jekyll projects, I came to rely mostly on the following
+set:</p>
+<pre><code class="language-yaml">layout: post
+id: 61C15587-6353-4F0B-B7EA-5FB936E1B7B2
+title: Hey Jude
+author: Paul McCartney
+excerpt: &gt;-
+  *Hey Jude* is a song by the English rock band the Beatles that was released as
+  a non-album single in August 1968.
+image: hey-jude-single.jpg
+category: Past Masters
+tags:
+  - 1968
+  - Julian Lennon
+  - Na na na nananana
+revisions:
+  &quot;2021-01-18&quot;: Fixed typos
+alert:
+  level: info
+  content: This is one of the greatest songs ever.
+</code></pre>
+<p>I’ll detail each field now, having Jekyll in mind, but I’m pretty sure this can
+be applied to any static generator.</p>
+<h2>Layout</h2>
+<p>This is pretty basic. With Jekyll, you can include a default layout in the site
+configuration but I like to keep it explicit.</p>
+<h2>ID</h2>
+<p>This is optional, but if you intend to change URL over time, it can be useful to
+keep consistent feed since an ID is required by both Atom feeds and JSON feeds.</p>
+<h2>Title</h2>
+<p>Titles are important since you don’t want to rely on filenames to get your
+posts’ names from. Some useful links to get capitalization right:</p>
+<ul>
+<li>in English, I like <a href="https://thecapitalizer.com/">The Capitalizer</a>;</li>
+<li>in French, I couldn’t find a good tool but <a href="https://www.axl.cefan.ulaval.ca/monde/regles-2TITRES.htm">this page</a> from an academic in
+Quebec has a good overview of the rules to respect.</li>
+</ul>
+<h2>Author</h2>
+<p>This is optional since it will be relevant only if the website has more than 1
+contributor. Also, most plugins allow it to be changed to <code>authors</code> in case an
+article is written by more than 1 person. In case you want to attach rich data
+for each author, the <a href="https://github.com/jekyll/jekyll-feed#author-information"><em>Author information</em></a> section from jekyll-feed’s
+<code>README</code> has good tips.</p>
+<h2>Excerpt</h2>
+<p>This is optional. By default the first paragraph of the post will be used. But
+it’s good to keep control over what will probably appear on the home page’s
+reference to your post or social networks. I like <em>excerpt</em> better than
+<em>description</em> because it is more specific and explicit.</p>
+<h2>Image</h2>
+<p>This is the cover of your post or page. I was using <em>cover</em> for a while before
+realizing <em>jekyll-feed</em> was using <em>image</em> by default so I converted.</p>
+<h2>Categories and Tags</h2>
+<p>As for the author, most plugins and themes will support singular or plural forms
+of these tags.</p>
+<p><strong>What is the difference between the two?</strong></p>
+<p>I would say that <em>categories</em> are the paths of the navigation tree for your
+website (just like folders and subfolders where you would store your files).
+That’s what would be used to build a <a href="https://bulma.io/documentation/components/breadcrumb/">breadcrumb</a>.</p>
+<p><em>Tags</em> on the other hand can be whatever and don’t involve any kind of structure
+for your data.</p>
+<p>To put it another way, categories form a relatively rigid tree, while tags form
+a free-form cloud.</p>
+<h2>Revisions</h2>
+<p>This section was <del>stolen</del> inspired by the front matter of NSHipster’s articles (see
+the <a href="https://github.com/NSHipster/articles/blob/master/2014-07-21-xctestcase.md">source</a> for their <code>XCTestCase</code> post for instance). When you intend to
+keep your content relevant over time, it is very useful to let your users know
+you updated your content so the revisions feature, albeit specific, can become super
+useful.</p>
+<h2>Alerts</h2>
+<p>If you want to feature informative banners, in case you deprecate content, or
+want to include an update to a post, an alert front matter is probably a better
+way to go than modifying your content to include extra content (that would
+probably be HTML to include an alert styling anyway, which you should avoid as
+much as possible).</p>
+<h2>No date? No slug?</h2>
+<p>Unless you intend to post multiple times a day, I would say the date belongs to
+the filename only, and I don’t see the point of including the date with an
+additional time in the front matter since it seems to just add clutter to it.</p>
+<p>On a similar note, I like that the slug for the URL is also part of the
+filename. I don’t see any inconvenience doing so since Git does a pretty good
+job at identifying renamings now, and the <code>id</code> can help you tracking URL that
+changed over time so that they don’t get duplicated in feeds.</p>
+<p>Any thoughts? <a href="https://github.com/Bootstragram/bootstragram-blog/issues">Let me know.</a></p>
+<section class="footnotes">
+<ol>
+<li id="fn1">
+<p>It seems to come from the <a href="https://en.wikipedia.org/wiki/Book_design#Front_matter">printed book design</a> industry. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <a class="u-url" href="/blog/my-definitive-front-matter/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/commonmark/">
+          CommonMark
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/gatsby/">
+          Gatsby
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/jekyll/">
+          Jekyll
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/markdown/">
+          Markdown
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/nshipster/">
+          NSHipster
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/publish/">
+          Publish
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/static-site-generator/">
+          Static Site Generator
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/yaml/">
+          YAML
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/activating-open-type-features-ios/">
+        Activating OpenType Features in iOS
+      </a>
+    </p>
+    <p class="related-page-date">January 03, 2021</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/line-height-with-uikit/">
+        Pixel-Perfect Line Height With UIKit
+      </a>
+    </p>
+    <p class="related-page-date">February 04, 2021</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

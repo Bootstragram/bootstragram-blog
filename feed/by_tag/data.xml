@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/data.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/data.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Quatrième TP d’Information Design</title><link href="https://bootstragram.com/blog/quatrieme-tp-d-information-design/" rel="alternate" type="text/html" title="Quatrième TP d’Information Design" /><published>2011-03-23T00:00:00+00:00</published><updated>2011-03-23T00:00:00+00:00</updated><id>https://bootstragram.com/blog/quatrieme-tp-d-information-design</id><content type="html" xml:base="https://bootstragram.com/blog/quatrieme-tp-d-information-design/">&lt;p&gt;Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à
+l’information design. Je pense en être arrivé à une étape décisive.&lt;/p&gt;
+&lt;p&gt;En attendant sa publication (il me reste 2, 3 trucs à régler concernant la
+license des polices utilisées pour les diffuser en font-face), voici quelques
+screenshots de l’état de la chose.&lt;/p&gt;
+&lt;h2&gt;Le HTML&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-by-mick-html-code.png&quot; alt=&quot;HTML code&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Le HTML est selon moi ok pour du web sémantique. Lors du dernier exercice,
+&lt;a href=&quot;https://twitter.com/felixaverlant/status/36127907222913024&quot;&gt;un commentateur Twitter m’avait répondu&lt;/a&gt;
+:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Ce n’est pas vraiment du web sémantique […] Plutôt de la visu
+d’informations.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ce sur quoi
+&lt;a href=&quot;https://twitter.com/dirtyhenry/status/36452618351935488&quot;&gt;je ne suis pas d’accord à 100%&lt;/a&gt;.
+Je pense que le HTML sépare clairement mise en forme et contenu, et que le
+contenu est structuré de façon interprétable. Par contre, il est peut-être vrai
+que je n’utilise pas toutes les balises les plus précises, notamment celles
+introduites dans HTML5, mais toute aide sur ce point sera la bienvenue.&lt;/p&gt;
+&lt;h2&gt;La feuille de style&lt;/h2&gt;
+&lt;p&gt;Je parlais de la séparation contenu/style. Pour illustrer ce propos, voici le
+HTML tel qu’il est rendu dans Chrome quand la feuille de style n’est pas activée
+:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-before-css.png&quot; alt=&quot;Before CSS&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Maintenant, voici la même page HTML, toujours dans Chrome, cette fois avec la
+feuille de style activée :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-after-css.png&quot; alt=&quot;After CSS&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Où sont passées les photos des joueurs dans cette seconde version ? J’y viens…&lt;/p&gt;
+&lt;h2&gt;Interaction via popovers&lt;/h2&gt;
+&lt;p&gt;Dans &lt;a href=&quot;/blog/troisieme-tp-d-information-design/&quot;&gt;mon dernier post à ce sujet&lt;/a&gt;, je promettais d’améliorer le design de
+la page en terme d’interactivité. C’est le sujet sur lequel je me suis le plus
+penché lors de cette session.&lt;/p&gt;
+&lt;p&gt;Le prénom d’un joueur, sa photo, son club, son âge sont des informations de
+seconde importance dans mon exercice. En outre, le plupart des lecteurs
+potentiels de cette page les connaissent de toute façon. Il n’est donc pas
+nécessaire de les afficher par défaut, mais il est souhaitable de pouvoir y
+accéder facilement malgré tout.&lt;/p&gt;
+&lt;p&gt;J’ai donc choisi de proposer ces informations lors du survol du nom d’un joueur
+par la souris :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-popover.png&quot; alt=&quot;Popover&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Le terme consacré pour ce genre de fenêtre volante est &lt;em&gt;popover&lt;/em&gt; ou &lt;em&gt;tooltip&lt;/em&gt; et
+voici les ressources qui m’ont aidé à le réaliser :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://kitgrose.tumblr.com/post/524802936/popover-tooltips-in-html-css&quot;&gt;&lt;em&gt;Popover&lt;/em&gt; tooltips in HTML/CSS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://forum.alsacreations.com/topic-4-37258-1.html&quot;&gt;Forum d’Alsacréations&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Bilan&lt;/h2&gt;
+&lt;p&gt;Le gros-oeuvre est terminé sur cet exercice. Encore quelques retouches par ci,
+par là (réglage des questions des droits et des licenses, tests
+multi-navigateurs, tests sur iPhone/iPad, etc.) et je publierai tout ça sur le
+web. Stay tuned et n’hésitez pas à partager vos impressions dans les
+commentaires !&lt;/p&gt;</content><author><name></name></author><category term="data" /><summary type="html">Les matches de l’équipe de France sont toujours l’occasion de m’entraîner à l’information design. Je pense en être arrivé à une étape décisive.</summary></entry><entry><title type="html">Troisième TP d’Information Design</title><link href="https://bootstragram.com/blog/troisieme-tp-d-information-design/" rel="alternate" type="text/html" title="Troisième TP d’Information Design" /><published>2011-02-09T00:00:00+00:00</published><updated>2011-02-09T00:00:00+00:00</updated><id>https://bootstragram.com/blog/troisieme-tp-d-information-design</id><content type="html" xml:base="https://bootstragram.com/blog/troisieme-tp-d-information-design/">&lt;p&gt;Quelques mois après mon dernier exercice, je profite du match France-Brésil pour
+un nouveau TP.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;/blog/second-tp-d-information-design-toujours-sur-l-equipe-de-france/&quot;&gt;Lors de l’exercice précédent&lt;/a&gt;, j’avais fabriqué une infographie de
+l’équipe de France à la main : à partir de mes données, j’avais ouvert mon
+Photoshop et fait le placement des joueurs à la main.&lt;/p&gt;
+&lt;p&gt;C’est joli mais ça manque d’intéraction possible. Aussi, le sujet de mon nouveau
+TP était : puis-je faire la même chose en HTML ?&lt;/p&gt;
+&lt;p&gt;Le HTML présente de nombreux avantages :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;on peut y insérer du
+&lt;a href=&quot;http://fr.wikipedia.org/wiki/Web_s%C3%A9mantique&quot;&gt;web sémantique&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;on peut y ajouter de l’interactivité&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Aujourd’hui, je me suis principalement intéressé au web sémantique. Le résultat
+est le suivant (screenshot de Flickr) :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-by-mick-html.png&quot; alt=&quot;L’Equipe de France A sélectionnée par Laurent Blanc pour France-Brésil (amical)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Moins joli, mais prometteur, je l’améliorerai d’un point de vue design et
+intéractivité lors du prochain match de l’équipe de France !&lt;/p&gt;
+&lt;p&gt;Je ne partage pas encore le HTML, car il n’est pas d’assez bonne qualité pour le
+moment, mais voici un screenshot du code source, afin de vous donner une idée du
+web sémantique que j’y ai introduit (là aussi, il peut être largement améliorée)
+:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-by-mick-html-preview.png&quot; alt=&quot;Preview du HTML&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Pour rappel de l’historique de la chose :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/premiers-pas-en-design-de-l-information/&quot;&gt;1er TP : tentative ratée d’information design&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/second-tp-d-information-design-toujours-sur-l-equipe-de-france/&quot;&gt;2nd TP : rendre lisible de l’information, résultat plus convaincant&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="data" /><summary type="html">Quelques mois après mon dernier exercice, je profite du match France-Brésil pour un nouveau TP.</summary></entry><entry><title type="html">Second TP d’information design… toujours sur l’équipe de France</title><link href="https://bootstragram.com/blog/second-tp-d-information-design-toujours-sur-l-equipe-de-france/" rel="alternate" type="text/html" title="Second TP d’information design… toujours sur l’équipe de France" /><published>2010-10-04T00:00:00+00:00</published><updated>2010-10-04T00:00:00+00:00</updated><id>https://bootstragram.com/blog/second-tp-d-information-design-toujours-sur-l-equipe-de-france</id><content type="html" xml:base="https://bootstragram.com/blog/second-tp-d-information-design-toujours-sur-l-equipe-de-france/">&lt;p&gt;Quelques semaines après ma première tentative d’information design, les mêmes
+causes impliquent les mêmes conséquences : la nouvelle sélection de Laurent
+Blanc me redonne de l’inspiration pour un nouveau TP !&lt;/p&gt;
+&lt;p&gt;Cette fois, la lecture de l’Équipe et, plus particulièrement, celle du tableau
+ci-dessous m’a donné l’idée de chercher un moyen plus adapté de présenter la
+sélection.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-by-lequipe.png&quot; alt=&quot;Présentation de la sélection dans le journal L’Équipe&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Le résultat est le suivant :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/fff-selection-by-mick.png&quot; alt=&quot;L’Equipe de France A sélectionnée par Laurent Blanc pour France-Roumanie et France-Luxembourg (qualifications Euro 2012)&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;L’infographie est construite de la façon suivante :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;chaque joueur est &lt;strong&gt;placé selon son poste&lt;/strong&gt;, ou l’un de ses postes possibles&lt;/li&gt;
+&lt;li&gt;la &lt;strong&gt;taille de la police&lt;/strong&gt; utilisée dépend du temps de jeu que le joueur a
+obtenu en équipe de France depuis que Blanc en est le sélectionneur : de 24 pt
+de hauteur pour un joueur sans temps de jeu à 72 pt de hauteur pour un joueur
+avec 270 minutes de temps de jeu sur ces 3 matches&lt;/li&gt;
+&lt;li&gt;la saturation de &lt;strong&gt;la couleur du texte&lt;/strong&gt; représente l’expérience relative du
+joueur en équipe de France : d’une saturation de 0% (blanc) pour les joueurs
+sans sélection à une saturation de 100% (bleu intense) pour les joueurs à 59
+sélections (nombre de sélection de Malouda, le joueur le plus capé de cette
+sélection)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ainsi, en comparant les deux sources d’information, on a :&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;strong&gt;Information&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Tableau de L’Équipe&lt;/strong&gt;&lt;/th&gt;
+&lt;th&gt;&lt;strong&gt;Infographie&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Nom du joueur&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Poste du joueur&lt;/td&gt;
+&lt;td&gt;imprécis&lt;/td&gt;
+&lt;td&gt;précis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Club du joueur&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;td&gt;non&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Âge du joueur&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;td&gt;non&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nb de sélection&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;td&gt;couleur du texte&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nb de buts&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;td&gt;non&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Nb de joueurs par poste&lt;/td&gt;
+&lt;td&gt;imprécis&lt;/td&gt;
+&lt;td&gt;précis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tps de jeu récent&lt;/td&gt;
+&lt;td&gt;non&lt;/td&gt;
+&lt;td&gt;oui&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Le tableau de l’Equipe continue de donner plus d’information que l’infographie
+mais cette information supplémentaire est difficilement lisible.&lt;/p&gt;
+&lt;p&gt;L’infographie, quant à elle, offre &lt;strong&gt;une analyse&lt;/strong&gt; de la sélection en lecture
+immédiate :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;les noms les plus grands sont ceux du domaine défensif : (Rami, Mexès, Mvila,
+Clichy, Sagna, Lloris) : l’effort de Blanc se concentre pour l’instant à
+construire une défense stable&lt;/li&gt;
+&lt;li&gt;noms de petite taille et multitude de noms de taille similaire au milieu et en
+attaque : ces deux secteurs de jeu sont en chantier&lt;/li&gt;
+&lt;li&gt;la couleur des noms est majoritairement blanche, même pour les noms de grande
+taille : l’inexpérience globale est marquante, surtout si on comparait cette
+infographie à une infographie similaire pour une sélection précédente (celle
+de la coupe du monde par exemple, où les noms de grande taille seraient de
+couleur bien plus foncée)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;L’infographie présente malgré tout des défauts et quelques axes d’améliorations
+possibles. Ainsi, contrairement au tableau qui a une contrainte forte : son
+exploitabilité au format papier, l’infographie, pouvant s’en affranchir,
+pourrait être &lt;strong&gt;interactive&lt;/strong&gt; et apporter, par exemple, les informations
+manquantes du tableau lors du clic ou du survol d’un nom de joueur.&lt;/p&gt;
+&lt;p&gt;N’hésitez pas à me faire part de vos remarques, bonnes ou mauvaises, dans les
+commentaires.&lt;/p&gt;</content><author><name></name></author><category term="data" /><summary type="html">Quelques semaines après ma première tentative d’information design, les mêmes causes impliquent les mêmes conséquences : la nouvelle sélection de Laurent Blanc me redonne de l’inspiration pour un nouveau TP !</summary></entry><entry><title type="html">Un même graphe pour le bureau et le mobile ?</title><link href="https://bootstragram.com/blog/un-meme-graphe-pour-le-bureau-et-le-mobile/" rel="alternate" type="text/html" title="Un même graphe pour le bureau et le mobile ?" /><published>2010-08-31T00:00:00+00:00</published><updated>2010-08-31T00:00:00+00:00</updated><id>https://bootstragram.com/blog/un-meme-graphe-pour-le-bureau-et-le-mobile</id><content type="html" xml:base="https://bootstragram.com/blog/un-meme-graphe-pour-le-bureau-et-le-mobile/">&lt;p&gt;L’&lt;em&gt;information design&lt;/em&gt; est une tendance majeure du web (cf.
+&lt;a href=&quot;http://www.fleshmap.com/&quot;&gt;ici&lt;/a&gt;, &lt;a href=&quot;http://nmap.org/favicon/&quot;&gt;ici&lt;/a&gt; ou
+&lt;a href=&quot;http://flowingdata.com/2010/08/24/election-night-in-australia-relived/&quot;&gt;ici&lt;/a&gt;).
+Bref, il faut s’y mettre et la première étape est le chasse aux outils : quelles
+techno va-t-on utiliser ?&lt;/p&gt;
+&lt;p&gt;Chance pour nous, &lt;a href=&quot;http://flowingdata.com/&quot;&gt;flowingdata&lt;/a&gt; a communiqué &lt;a href=&quot;http://flowingdata.com/2008/10/20/40-essential-tools-and-resources-to-visualize-data/&quot; title=&quot;40 tools to visualize data&quot;&gt;son recensement des
+outils les plus utiles, tant pour la collecte des données, que pour la
+réalisation visuelle ou leur animation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ce recensement donne des pistes sur des outils très utiles (dont le bluffant
+&lt;a href=&quot;https://processing.org/&quot;&gt;processing&lt;/a&gt;) mais il y a un hic majeur : aucun de ces outils permet
+une visualisation &lt;em&gt;contemporaine&lt;/em&gt; polyvalente pour le bureau et le mobile,
+c’est-à-dire quelque chose de joli et si possible interactif ou animé.&lt;/p&gt;
+&lt;p&gt;Dans ce domaine, le point bloquant le plus important (et celui qui est mal parti
+pour être résolu) est le conflit entre Apple et Adobe au sujet de Flash. Safari
+pour iOS ne supporte pas Flash alors que c’est Flash qui est ultra
+majoritairement utilisé par les sites web proposant l’information design le plus
+intéressant. Quelle alternative alors pour proposer du contenu équivalent pour
+iOS ? Les applications bien sûr ! Point crucial pour Apple puisqu’il communique
+désormais davantage sur les applications disponibles sur iOS que sur les seules
+fonctionnalités de ses terminaux.&lt;/p&gt;
+&lt;p&gt;Le couple HTML5/CSS3, voire SVG ou OpenGL peuvent être des solutions acceptables
+pour l’avenir mais en l’état, si l’on veut éviter de créer du contenu différent
+pour le bureau et pour iOS, il faut réaliser &lt;em&gt;from scratch&lt;/em&gt;, ou presque.&lt;/p&gt;
+&lt;p&gt;Nul doute que les initiatives de développeurs ou de designers dans ce domaine
+seront les bienvenues.&lt;/p&gt;
+&lt;p&gt;Edit: Quand je disais que c’était dans l’air du temps ces histoires :
+&lt;a href=&quot;https://daringfireball.net/2010/08/judging_flash_battle&quot;&gt;https://daringfireball.net/2010/08/judging_flash_battle&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="data" /><summary type="html">L’information design est une tendance majeure du web (cf. ici, ici ou ici). Bref, il faut s’y mettre et la première étape est le chasse aux outils : quelles techno va-t-on utiliser ?</summary></entry><entry><title type="html">Premiers pas en design de l’information</title><link href="https://bootstragram.com/blog/premiers-pas-en-design-de-l-information/" rel="alternate" type="text/html" title="Premiers pas en design de l’information" /><published>2010-08-27T00:00:00+00:00</published><updated>2010-08-27T00:00:00+00:00</updated><id>https://bootstragram.com/blog/premiers-pas-en-design-de-l-information</id><content type="html" xml:base="https://bootstragram.com/blog/premiers-pas-en-design-de-l-information/">&lt;p&gt;Le design de l’information (ou plus naturellement, même quand on est français,
+&lt;em&gt;information design&lt;/em&gt;) est « l’art et la science de la préparation de
+l’information afin qu’elle puisse être utilisée par les êtres humains avec
+efficience et efficacité » (citation de &lt;a href=&quot;http://fr.wikipedia.org/wiki/Design_de_l%27information&quot;&gt;Wikipedia&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Plus concrètement, c’est l’habileté à présenter des informations de façon
+graphique et le plus immédiatement lisible possible. Les enseignants
+l’introduisent souvent grâce à la formule consacrée « un schéma vaudra mieux
+qu’un long discours ».&lt;/p&gt;
+&lt;p&gt;Bref, c’est un art/science qui m’intéresse beaucoup en ce moment puisqu’il est
+au cœur des tendances actuelles des technologies de l’information.&lt;/p&gt;
+&lt;p&gt;Aussi, je tente actuellement d’y faire mes premiers pas et aujourd’hui, j’ai
+exécuté des travaux pratiques autour de… la sélection de l’équipe de France
+faite par Laurent Blanc pour les qualifications à l’Euro 2012.&lt;/p&gt;
+&lt;p&gt;Partout dans la presse sportive, le débat est le suivant : après le mondial, à
+quoi va ressembler l’équipe de Blanc ? Quels mondialistes vont être
+sanctionnés ? Quels joueurs ont convaincu leur sélectionneur en Norvège ? etc.
+Et je trouvais qu’il manquait un bon vieux diagramme de Venn pour formaliser
+tout ça. Dont acte.&lt;/p&gt;
+&lt;p&gt;Le résultat me fait un peu rougir - le diagramme était bien plus beau dans ma
+tête - mais après tout, c’était une première fois et je pense qu’il est
+finalement assez honorable :&lt;/p&gt;
+&lt;img alt=&quot;Diagramme de Venn de la 1ère sélection post-mondial 2010&quot; src=&quot;/assets/fff-venn-diagram-af36b6ab910080bcf7c3a670d74b40a9521a0bb2776c9fcb7b8e317c768c85c71f04d7c1a27499303a81f13f5993ea7a8182841c71829879b5725a5f58856276.png&quot; integrity=&quot;sha512-rza2q5EAgLz3w6Zw10tAqVIaC7J3bJ/Le44xfHaMhccfBNfBonSZMDqB8T9Zk+p6gYKEHHGCmHm1clpfWIVidg==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;N’hésitez pas à me faire part de vos commentaires et si l’information design
+vous intéresse, je vous recommande le site suivant :
+&lt;a href=&quot;http://flowingdata.com/&quot;&gt;flowingdata.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Commentaire de Greek Goddess:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Nice implementation of the Venn diagram. Maybe I’ll send this to my boss and
+see what he thinks. Why is Gourcuff suspended???&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="data" /><summary type="html">Le design de l’information (ou plus naturellement, même quand on est français, information design) est « l’art et la science de la préparation de l’information afin qu’elle puisse être utilisée par les êtres humains avec efficience et efficacité » (citation de Wikipedia).</summary></entry><entry><title type="html">Analyse d’un tableau de bord du gouvernement des États-Unis</title><link href="https://bootstragram.com/blog/analyse-d-un-tableau-de-bord-du-gouvernement-des-etats-unis/" rel="alternate" type="text/html" title="Analyse d’un tableau de bord du gouvernement des États-Unis" /><published>2010-08-03T00:00:00+00:00</published><updated>2010-08-03T00:00:00+00:00</updated><id>https://bootstragram.com/blog/analyse-d-un-tableau-de-bord-du-gouvernement-des-etats-unis</id><content type="html" xml:base="https://bootstragram.com/blog/analyse-d-un-tableau-de-bord-du-gouvernement-des-etats-unis/">&lt;p&gt;Le gouvernement fédéral américain a un projet original et intéressant : proposer
+sur un site web ouvert à tous &lt;a href=&quot;https://itdashboard.gov/&quot;&gt;un tableau de bord de ses dépenses dans le monde
+des TIC&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Encore plus intéressant, des gens de Juice Analytics ont qualifié ce tableau de
+bord et &lt;a href=&quot;https://www.juiceanalytics.com/writing/better-federal-it-dashboard/&quot;&gt;livrent leur analyse sur leur site web&lt;/a&gt;. Celle-ci est très
+intéressante et propose même une proposition de tableau de bord amélioré.&lt;/p&gt;
+&lt;p&gt;À noter que cette même entreprise propose un White Paper &lt;a href=&quot;https://www.juiceanalytics.com/white-papers-guides-and-more&quot;&gt;&lt;em&gt;A Guide to Creating
+Dashboards People Love to Use&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="data" /><summary type="html">Le gouvernement fédéral américain a un projet original et intéressant : proposer sur un site web ouvert à tous un tableau de bord de ses dépenses dans le monde des TIC.</summary></entry></feed>

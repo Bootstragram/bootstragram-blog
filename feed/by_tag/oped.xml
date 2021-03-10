@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/oped.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/oped.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Code Reviews, a Checklist</title><link href="https://bootstragram.com/blog/code-review-checklist/" rel="alternate" type="text/html" title="Code Reviews, a Checklist" /><published>2013-08-01T00:00:00+00:00</published><updated>2013-08-01T00:00:00+00:00</updated><id>https://bootstragram.com/blog/code-review-checklist</id><content type="html" xml:base="https://bootstragram.com/blog/code-review-checklist/">&lt;p&gt;Reviewing code from fellow developers should be considered a best practice.
+While its main goal is to make sure your teammate didn’t lose track of what a
+good software developer should do, it can also help the reviewer extend his
+knowledge of a project and get inspired by other’s code.&lt;/p&gt;
+&lt;h2&gt;5 Golden Rules&lt;/h2&gt;
+&lt;p&gt;Things to have in mind/check when you review code include these 5 golden rules:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The code compiles on the reviewer’s environment without warnings and tests
+are not broken.&lt;/li&gt;
+&lt;li&gt;The new code implements the bug fix/feature it was supposed to.&lt;/li&gt;
+&lt;li&gt;The code remains &lt;a href=&quot;http://en.wikipedia.org/wiki/Don%27t_repeat_yourself&quot;&gt;DRY&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Things are kept small and simple, with a clear separation of concerns: &lt;a href=&quot;http://en.wikipedia.org/wiki/Single_responsibility_principle&quot;&gt;“each
+class should do only one thing, and do that one thing well”&lt;/a&gt;. If you don’t
+get what the new code is doing, something’s wrong.&lt;/li&gt;
+&lt;li&gt;The new code is tested.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;How to review code?&lt;/h2&gt;
+&lt;p&gt;My team is using &lt;a href=&quot;https://github.com/nvie/gitflow&quot;&gt;GitFlow&lt;/a&gt; on our own Git servers (i mean “no GitHub”, so no
+“pull request”). My way to actually review code is the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Checkout the branch to review&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Identify what is the delta between this branch and its base branch (let’s say
+&lt;code&gt;develop&lt;/code&gt;)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;First, get the base revision tag:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git merge-base branch-to-review develop
+ee682bdaf3a578a8de647006b500c87ca72c7ffc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Then, use your diff tool to visualize what changed (i personally use
+&lt;a href=&quot;http://www.kaleidoscopeapp.com/&quot;&gt;Kaleidoscope&lt;/a&gt;)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git difftool ee682bdaf3a578a8de647006b500c87ca72c7ffc HEAD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Give the review developer some feedback, ask questions about what is not clear&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;If necessary, fix the code by yourself if changes are fast to implement
+(letting the other know what you’re doing) or in pair programming with the
+reviewee if things are heavier&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Merge the code on the base branch&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Deploy on your staging environment to make sure things are ok&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Clean up Git branches behind you&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;git branch -d branch-to-review
+git push origin :branch-to-review
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;A note about testing&lt;/h2&gt;
+&lt;p&gt;Reviewing code that doesn’t include tests can be disappointing for a reviewer
+and adding some tests after an implementation feels like cheating. Here is a
+quote from Daniel Eggert - from the excellent &lt;a href=&quot;http://www.objc.io/issue-1/testing-view-controllers.html&quot;&gt;objc.io&lt;/a&gt; - that both reviewers
+and reviewees should have in mind when reviewing/developing:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Tests should help us speed up development and make things more fun. &lt;code&gt;[...]&lt;/code&gt;
+Generally, if you find something difficult to test, that’s a hint that your
+design may be broken and that you should refactor some of it. &lt;code&gt;[...]&lt;/code&gt; You’ll
+get diminishing returns as you add more tests. First and foremost, add simple
+tests. Branch into more sophisticated territory as you start to feel
+comfortable with it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Links&lt;/h2&gt;
+&lt;p&gt;Other resources discuss the subject:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://lifehacker.com/all-code-is-bad-so-dont-stress-if-yours-sucks-1569821801&quot;&gt;All Code Is Bad, So Don’t Stress If Yours Sucks&lt;/a&gt; (added in May 2014)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I’ll try to add some examples and additions to this page as I process code
+reviews in the future. Again, feel free to get in touch to provide some feedback
+and as &lt;a href=&quot;https://github.com/dirtyhenry/bootstragram-blog/blob/master/_posts/2013-08-01-code-review-checklist.md&quot;&gt;this page is open source and available on GitHub&lt;/a&gt;, pull requests are
+welcome. I’ll review them with a great pleasure.&lt;/p&gt;</content><author><name></name></author><category term="oped" /><summary type="html">Reviewing code from fellow developers should be considered a best practice. While its main goal is to make sure your teammate didn’t lose track of what a good software developer should do, it can also help the reviewer extend his knowledge of a project and get inspired by other’s code.</summary></entry><entry><title type="html">7 tips to create a safe and consistent backup strategy as a Mac user</title><link href="https://bootstragram.com/blog/backup-tips/" rel="alternate" type="text/html" title="7 tips to create a safe and consistent backup strategy as a Mac user" /><published>2013-03-17T00:00:00+00:00</published><updated>2013-03-17T00:00:00+00:00</updated><id>https://bootstragram.com/blog/backup-tips</id><content type="html" xml:base="https://bootstragram.com/blog/backup-tips/">&lt;p&gt;I’ve recently found myself in a very uncomfortable situation: my backup external
+hard drive (HDD) failed! I’ve suddenly realized my hot tea-cup was really close
+to my MacBook Pro. I drank my tea, put my laptop in a safe and started thinking
+about my backup strategy. Was it safe enough? I did a bit of research on the
+Internet and here are the results: 7 tips to create a safe and consistent backup
+strategy as a Mac user.&lt;/p&gt;
+&lt;h2&gt;1. Start backing up with Time Machine&lt;/h2&gt;
+&lt;p&gt;Time Machine is just great and is way more than just a backup of your data.
+Introduced in the Leopard version of Mac OS X, Time Machine is a great way to 1)
+back up your Mac on an external HDD and 2) keep an history of your file system.
+It is fast to set up, convenient to use, smart when dealing with storage space.
+If you’re a Mac user and don’t use Time Machine, just start using it right now.
+Get an external HDD with a little bigger storage than your computer’s and go
+ahead (for instance, I have a 320 Go HDD on my laptop and use a 500 Go HDD for
+Time Machine).&lt;/p&gt;
+&lt;h2&gt;2. And back up in the cloud as well&lt;/h2&gt;
+&lt;p&gt;If you’re a nomad user, you want to have your main Time Machine HDD with you all
+the time. What happens if your bag gets stolen? A Time Machine backup is not
+enough. You want another backup that you’re gonna keep away from your laptop
+most of the time, and that you’ll never carry away with both your computer and
+your primary Time Machine HDD.&lt;/p&gt;
+&lt;p&gt;A few years ago, I gave different options a try:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;switching between 2 Time Machine HDD: that was not a good solution. It was
+less convenient (switching and manually tell Time Machine you want to switch)
+and i ended up having two Time Machine partially comprehensive backups rather
+than one consistent as-comprehensive-as-can-be backup&lt;/li&gt;
+&lt;li&gt;copying my TimeMachine backup to another hard drive every week or so: it
+wasn’t super convenient. Based on &lt;a href=&quot;https://daringfireball.net/2010/03/ode_to_diskwarrior_superduper_dropbox&quot;&gt;Daring Fireball’s advices&lt;/a&gt;, I used
+&lt;a href=&quot;http://www.shirt-pocket.com/SuperDuper/SuperDuperDescription.html&quot;&gt;SuperDuper!&lt;/a&gt; to do that, but the problem is that its incremental backups
+algorithm couldn’t keep up with HDD the same size (a simple 2-pass algorithm:
+remove what’s gone then add what’s new would have solved this problem but the
+SuperDuper support people said it wasn’t their top priority)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Now, I’m using &lt;a href=&quot;http://www.backblaze.com/&quot;&gt;Backblaze&lt;/a&gt;’s cloud backup solution to keep a remote backup of
+my HDD. Of course, this solution has some major drawbacks:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;it’s using a lot of your upload bandwidth&lt;/li&gt;
+&lt;li&gt;the initial backup can take several months&lt;/li&gt;
+&lt;li&gt;you need to hope Backblaze will still be around when your HDD fails&lt;/li&gt;
+&lt;li&gt;it doesn’t keep an history of your files&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But it also ha big advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;both upfront cost and long run cost are probably cheaper than investing in an
+external HDD&lt;/li&gt;
+&lt;li&gt;it’s safer cause it’s never at the same location than your primary HDD&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;3. Create a Media Center HDD!&lt;/h2&gt;
+&lt;p&gt;With my laptop, I have a recurring problem: a lack of space in the internal HDD.
+To solve this permanently, I now try to keep my media files apart: music, photos
+and movies are on a dedicated external HDD. This strategy has many good points:
+you have a lot of space on your internal HDD (which is very convenient when you
+use your computer in a professional context), you have a mediacenter HDD you can
+bring to your friends’ houses or that you can plug in a TV set, you can use it
+with a mediacenter server… It’s very useful.&lt;/p&gt;
+&lt;p&gt;One disadvantage of this strategy is when your iTunes library is on this
+external HDD and you want to synchronize your iOS devices when your mediacenter
+HDD is not around. This requires a lot of manual work (sorting files you want to
+have in a minimized iTunes library and files you want to have in the extensive
+iTunes library). iOS 5 might help with this very soon.&lt;/p&gt;
+&lt;h2&gt;4. And back up this Media Center HDD!&lt;/h2&gt;
+&lt;p&gt;Now, what if this HDD fails? That’s right, here comes Backblaze again. That’s
+your 3rd backup so far. You may think that’s a lot but if something bad happens,
+you’ll be glad for the little extra-money you’ll have spent on those external
+HDD.&lt;/p&gt;
+&lt;h2&gt;5. Forget CD and DVD&lt;/h2&gt;
+&lt;p&gt;CD and DVD backups belong to ancient times. You don’t want to do that anymore.
+They’re fragile, require a lot of work to keep track of what file’s on which
+disk. Imagine you backup these files you cherish on DVD. If your primary files
+get corrupted for some reason, how will you remember where you stored it? How
+can you be sure the DVD hasn’t quietly been damaged and became unreadable? Of
+course, HDD fail too but when they fail, they’re not quiet. They let you know
+they died. HDD are a bit over-dramatic but you should be grateful they are.&lt;/p&gt;
+&lt;h2&gt;6. Think of what you’re backing up&lt;/h2&gt;
+&lt;p&gt;I know storage is cheap. I know people can turn sentimental. But do you really
+need to backup this animated GIF image that you thought was funny back in 2003?
+Delete it. Don’t feel sad of the lack of backup. Keep on your HDD only the
+things that deserve to be backed up.&lt;/p&gt;
+&lt;h2&gt;7. And one last tiny USB key backup for the road&lt;/h2&gt;
+&lt;p&gt;On the opposite, some files are VERY important and you really don’t want to lose
+them or you want them with you all the time. Just get a USB key and &lt;a href=&quot;http://www.theinstructional.com/guides/encrypt-an-external-disk-or-usb-stick-with-a-password&quot;&gt;build a
+safe encrypted backup&lt;/a&gt; of files that really matter: password files, bank
+accounts files, critical professional documents…&lt;/p&gt;
+&lt;p&gt;Now I think you can feel safe about your data.&lt;/p&gt;
+&lt;h2&gt;Additional links:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.macgeneration.com/unes/voir/130252/un-guide-de-la-sauvegarde&quot;&gt;a backup strategy (in french) by MacGeneration.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.emptyage.com/post/28679875595/yes-i-was-hacked-hard&quot;&gt;this alarming post&lt;/a&gt; is another proof that backing up is very important.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.marco.org/2012/08/04/mat-hacked&quot;&gt;Marco Ament’s comments&lt;/a&gt; are also very valuable.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="oped" /><summary type="html">I’ve recently found myself in a very uncomfortable situation: my backup external hard drive (HDD) failed! I’ve suddenly realized my hot tea-cup was really close to my MacBook Pro. I drank my tea, put my laptop in a safe and started thinking about my backup strategy. Was it safe enough? I did a bit of research on the Internet and here are the results: 7 tips to create a safe and consistent backup strategy as a Mac user.</summary></entry><entry><title type="html">Should I renew my Scrum Master certification?</title><link href="https://bootstragram.com/blog/should-i-renew-my-scrum-master-certification/" rel="alternate" type="text/html" title="Should I renew my Scrum Master certification?" /><published>2011-06-11T00:00:00+00:00</published><updated>2011-06-11T00:00:00+00:00</updated><id>https://bootstragram.com/blog/should-i-renew-my-scrum-master-certification</id><content type="html" xml:base="https://bootstragram.com/blog/should-i-renew-my-scrum-master-certification/">&lt;p&gt;My Scrum Master certification, delivered by the Scrum Alliance, is expiring next
+June 29th. I have two weeks left to decide if I want to renew it or not, being
+aware that the renewal fee is $50 a year.&lt;/p&gt;
+&lt;p&gt;Right now, I don’t think I want to renew it for the following reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The certification can be obtained with a single 2 day training: it has not a
+lot of value to me;&lt;/li&gt;
+&lt;li&gt;In 2 years, people never got in touch with me via the Scrum Alliance website
+(90% of my new professional connections come from LinkedIn and Viadeo, 10%
+from this website);&lt;/li&gt;
+&lt;li&gt;$50 a year is not that pricy in itself, but it is pricy given the benefits
+it provides.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Feel free to let me know what you think on this subject but I’m going to
+transition from a &lt;em&gt;Certified Scrum Master&lt;/em&gt; status to a &lt;em&gt;Formerly Certified Scrum
+Master&lt;/em&gt; status.&lt;/p&gt;</content><author><name></name></author><category term="oped" /><summary type="html">My Scrum Master certification, delivered by the Scrum Alliance, is expiring next June 29th. I have two weeks left to decide if I want to renew it or not, being aware that the renewal fee is $50 a year.</summary></entry><entry><title type="html">Top 5 des outils du développeur indépendant</title><link href="https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant/" rel="alternate" type="text/html" title="Top 5 des outils du développeur indépendant" /><published>2010-07-26T00:00:00+00:00</published><updated>2010-07-26T00:00:00+00:00</updated><id>https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant</id><content type="html" xml:base="https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant/">&lt;p&gt;Réaliser des produits logiciels le plus efficacement possible en tant
+qu’indépendant ne peut se faire sans quelques outils permettant de gérer son
+effort. Voici mon top 5 des outils que j’utilise en tant qu’indépendant !&lt;/p&gt;
+&lt;h2&gt;1. Things&lt;/h2&gt;
+&lt;p&gt;Things est un logiciel de gestion de tâches, très simple mais très performant,
+qui repose sur la méthodologie &lt;a href=&quot;http://fr.wikipedia.org/wiki/Getting_Things_Done&quot;&gt;&lt;em&gt;GTD&lt;/em&gt;&lt;/a&gt; (&lt;em&gt;Getting Things Done&lt;/em&gt;). Auparavant,
+j’utilisais le logiciel gratuit iGTD, mais son développeur, Bartek, a ensuite
+cessé de maintenir le logiciel pour rejoindre l’équipe de… Things.&lt;/p&gt;
+&lt;img src=&quot;/assets/things-screenshot-0d53de692b895cb4ecb7ba6e1d7a9452fa071e87cba43d2f8f36eec3f5eaadedc2e3645ba1a38d081859b391b192edc3292010eea00aa9eafc471f45a45750f1.png&quot; integrity=&quot;sha512-DVPeaSuJXLTst7puHXqUUvoHHofLpD0vjzbuw/Xqre3C42RboaONCBhZs5Gxku3DKSAQ7qAKqer8Rx9FpFdQ8Q==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Sommairement, le GTD repose sur les principes suivants :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Se libérer sur le champ des idées qui nous arrivent en tête ou des actions qui
+doivent être réalisées&lt;/li&gt;
+&lt;li&gt;Identifier les items de sa todo liste par projet (par exemple : est-ce que ça
+concerne le développement de tel logiciel ou l’organisation des vacances) et
+par contexte (doit être faite au téléphone ? nécessite un accès internet ?)&lt;/li&gt;
+&lt;li&gt;Parcourir régulièrement sa todo liste pour actualiser les priorités et les
+échéances de ses tâches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Things permet de faire ça très efficacement, surtout lorsqu’on utilise aussi la
+version mobile de l’application, disponible sur iOS, et qui se synchronise via
+wifi avec la version bureau de l’application.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://culturedcode.com/things/&quot;&gt;Things by Cultured Code&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(En outre, pour ne rien gâcher, Cultured Code, l’éditeur du soft, a &lt;a href=&quot;http://culturedcode.com/status/&quot;&gt;quelques
+idées assez innovantes en matière de dashboarding&lt;/a&gt;)&lt;/p&gt;
+&lt;h2&gt;2. TimeBoxed&lt;/h2&gt;
+&lt;p&gt;TimeBoxed est une application extrêmement simple : c’est un minuteur pour Mac OS
+X, idéal pour le time boxing, c’est-à-dire définir un intervalle de temps pour
+travailler sur une tâche donnée.&lt;/p&gt;
+&lt;img src=&quot;/assets/timeboxed-screenshot-337c774938f815e510f9eef5f9307b8c4a888a44326e0d456212b68044a569361d9faa2ff27834400bceaf4a6bdaa20e3c2395daa06cd579d361a7dbe207adce.png&quot; integrity=&quot;sha512-M3x3STj4FeUQ+e71+TB7jEqIikQybg1FYhK2gESlaTYdn6ov8ng0QAvOr0pr2qIOPCOV2qBs1XnTYafb4getzg==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Associé à GTD, le time boxing est une excellente technique pour combattre les
+tendances à la procrastination, dont plusieurs articles de blog font l’apologie,
+parmi lesquels :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://litemind.com/time-boxing/&quot;&gt;15 Time Boxing Strategies to Get Things Done&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.qualitystreet.fr/2007/11/14/le-timeboxing-cest-super-mais/&quot;&gt;Le timeboxing, c’est super mais…&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://luc-jeanniard.blogspot.com/2009/12/la-puissance-du-time-boxing.html&quot;&gt;La puissance du time boxing&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Malgré son prix un peu élevé, TimeBoxed est un outil vraiment utile et qui aide
+à maîtriser son temps.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.macmation.com/TimeBoxed&quot;&gt;TimeBoxed&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;3. Klok&lt;/h2&gt;
+&lt;p&gt;Klok est une application de time tracking, qui aide à tracer ses activités de la
+semaine et, si besoin, à en faire le reporting.&lt;/p&gt;
+&lt;img src=&quot;/assets/klok-screenshot-6c89a244385f151a00f4b5000c942f0f79c1f18724ed9a4b1780bc896b1bd6ea81af8baad92cf487d381f5ca121f24e2bb64598c13c18bf5340694305bee6bb8.png&quot; integrity=&quot;sha512-bImiRDhfFRoA9LUADJQvD3nB8Yck7ZpLF4C8iWsb1uqBr4uq2Sz0h9OB9coSHyTiu2RZjBPBi/U0BpQwW+5ruA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Bien que son usage soit particulièrement utile dans les grosses sociétés où des
+relevés d’activité sont régulièrement demandés aux collaborateurs, c’est aussi
+un outil essentiel pour le travailleur indépendant (voire l’étudiant) afin
+d’analyser l’utilisation faite de son temps de travail.&lt;/p&gt;
+&lt;p&gt;En outre, pour ne rien gâcher, Klok, qui repose sur Abode Air, a un graphisme
+très réussi et propose une version gratuite.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.getklok.com/&quot;&gt;Klok&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;4. Bugzilla&lt;/h2&gt;
+&lt;p&gt;Un outil de bug tracking est également totalement indispensable. Plusieurs
+concurrents open source offrent les mêmes services que Bugzilla, notamment
+Mantis, et j’ai d’ailleurs choisi ce logiciel de manière un peu triviale : je
+tenais juste une occasion de l’essayer.&lt;/p&gt;
+&lt;img src=&quot;/assets/bugzilla-screenshot-21004bda55a7351536dac5466276655796ccaf75e4b93494401cf9682dd92d0d64c823b8df44f9b68ee29981d2530847e670890a2b96831242b71d4cb04d5295.png&quot; integrity=&quot;sha512-IQBL2lWnNRU22sVGYnZlV5bMr3XkuTSUQBz5aC3ZLQ1kyCO430T5to7imYHSUwhH5nCJCiuWgxJCtx1MsE1SlQ==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Le bug tracking est indispensable à n’importe quelle activité de développement
+d’un produit, qu’il soit logiciel ou autre, même lorsque cette activité est
+réalisée en solo. C’est un outil complémentaire aux outils de management de
+tâches (comme Things) en ce qu’il permet de gérer un cycle de vie de ses items
+(nouveau, assigné, en cours, fermé, validé), ainsi que (et surtout !) leur
+historisation.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bugzilla.org&quot;&gt;Bugzilla&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;5. SVN&lt;/h2&gt;
+&lt;p&gt;Un outil de gestion de version post-CVS, de type SVN ou GIT, est indispensable
+et rarement utilisé de manière optimale. Même si l’usage de ces logiciels est
+courant, il est important de rappeler leur utilité et leurs règles de bon usage.&lt;/p&gt;
+&lt;p&gt;Le tagging est une activité essentielle qui permet de pouvoir gérer proprement
+les retours en arrière, souvent nécessaires dans une activité de développement
+logiciel. Grâce à SVN, les multiples répertoires “sources”, “sources2”,
+“sources-temp”, “sources-old” n’ont plus de raison d’être sur des postes de
+développement : l’outil gère tous ces besoins d’historisation du code à notre
+place.&lt;/p&gt;
+&lt;p&gt;Là encore, l’usage de systèmes de gestion de version, même dans une pratique en
+solo me semble indispensable. Des commits fréquents, basés sur la réalisation de
+tâches unitaires (par exemple, un item de Bugzilla), permet d’avoir un suivi du
+code source très clair et la quasi assurance que chaque révision est
+fonctionnelle. En outre, le respect de ces bonnes pratiques participent aussi à
+optimiser son temps de travail.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://code.google.com/p/svnx/&quot;&gt;svnX&lt;/a&gt; (un client SVN sous Mac OS X)&lt;/p&gt;
+&lt;h2&gt;Remarques&lt;/h2&gt;
+&lt;p&gt;Les outils recensés dans cette page sont donc des outils de :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;task management&lt;/li&gt;
+&lt;li&gt;time boxing&lt;/li&gt;
+&lt;li&gt;time tracking&lt;/li&gt;
+&lt;li&gt;bug tracking&lt;/li&gt;
+&lt;li&gt;revision control&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Quelques suites logicielles existent permettant de gérer tous ces points (de
+type Atlassian). Je n’en parle pas ici pour deux raisons :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;malgré leur qualité apparente, je n’ai jamais eu l’occasion de tester ces
+logiciels, la plupart du temps payants;&lt;/li&gt;
+&lt;li&gt;en tant qu’utilisateur unique, je préfère maximiser le nombre d’applications
+qui tournent sur un poste client, permettant plus facilement un travail
+nomade.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="oped" /><category term="bookmark" /><summary type="html">Réaliser des produits logiciels le plus efficacement possible en tant qu’indépendant ne peut se faire sans quelques outils permettant de gérer son effort. Voici mon top 5 des outils que j’utilise en tant qu’indépendant !</summary></entry></feed>

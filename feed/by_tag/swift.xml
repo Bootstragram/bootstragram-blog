@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/swift.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/swift.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Activating OpenType Features in iOS</title><link href="https://bootstragram.com/blog/activating-open-type-features-ios/" rel="alternate" type="text/html" title="Activating OpenType Features in iOS" /><published>2021-01-03T00:00:00+00:00</published><updated>2021-01-03T00:00:00+00:00</updated><id>https://bootstragram.com/blog/activating-open-type-features-ios</id><content type="html" xml:base="https://bootstragram.com/blog/activating-open-type-features-ios/">&lt;p&gt;&lt;a href=&quot;https://rsms.me/inter/&quot;&gt;Inter&lt;/a&gt; is an awesome typeface. It is free, open-source, and on top of
+looking great by default, it provides &lt;a href=&quot;https://rsms.me/inter/#features&quot;&gt;many OpenType features&lt;/a&gt; that are
+really easy to use on a website. The &lt;a href=&quot;https://rsms.me/inter/#features/ss01&quot;&gt;alternate digits feature&lt;/a&gt; is one of
+them. Just add the following to a CSS style and you’re done.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;font-feature-settings: &amp;quot;ss01&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;How can we benefit from the same optional features with UIKit?&lt;/strong&gt; This post
+will recap my journey to activate the alternate digits feature on an iOS app.&lt;/p&gt;
+&lt;h2&gt;Adding a custom font and using it&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_apps&quot;&gt;Adding a custom font to your app&lt;/a&gt; is now pretty easy, compared to &lt;a href=&quot;/blog/what-fonts-for-ios/&quot;&gt;the old
+days&lt;/a&gt;. From there, the most obvious next step is to run &lt;a href=&quot;https://gist.github.com/dirtyhenry/c9fb50745491624fa75768d3149376f6&quot;&gt;a piece of
+code&lt;/a&gt; that I include in every project that use custom fonts. It simply
+prints a list of the font names that are available from your app.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    static func printAllFontNames() {
+        print(&amp;quot;# All Font Names\n&amp;quot;)
+        for familyName in UIFont.familyNames {
+            print(&amp;quot;- \(familyName)&amp;quot;)
+            for font in UIFont.fontNames(forFamilyName: familyName) {
+                print(&amp;quot;  - \(font)&amp;quot;)
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Listing features of a font&lt;/h2&gt;
+&lt;p&gt;Activating features with UIKit is described in the &lt;a href=&quot;https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW6&quot;&gt;&lt;em&gt;Activating Font Features&lt;/em&gt;
+section of the Text Programming Guide for iOS&lt;/a&gt;. The code that is presented
+there relies on Objective-C CoreText that you can wrap in modern Swift.&lt;/p&gt;
+&lt;p&gt;To list the features that are supported by a font, you can use the following
+code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    typealias FontFeatureInfo = [String: Any]
+
+    func listFeatures() {
+        guard let fontFeatures = CTFontCopyFeatures(self) as? [FontFeatureInfo] else {
+            debugPrint(&amp;quot;Could not copy font features.&amp;quot;)
+            return
+        }
+
+        fontFeatures.forEach { fontFeatureInfo in
+            print(fontFeatureInfo)
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is hard to predict how large the output of this command will be and really
+depends on the font. For the Inter font, &lt;a href=&quot;https://gist.github.com/dirtyhenry/875ebeac13882c5dad710f22f17be5c5&quot;&gt;the output looks pretty intense&lt;/a&gt;.
+It is not the most pleasant prose to read for humans, but scanning for the
+features we want will be pretty straightforward.&lt;/p&gt;
+&lt;p&gt;In my context, the part I was interested in was the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[&amp;quot;CTFeatureTypeName&amp;quot;: Alternative Stylistic Sets, &amp;quot;CTFeatureTypeIdentifier&amp;quot;: 35, &amp;quot;CTFeatureTypeSelectors&amp;quot;: &amp;lt;__NSArrayM 0x600002179f20&amp;gt;(
+{
+    CTFeatureSelectorIdentifier = 2;
+    CTFeatureSelectorName = &amp;quot;Open digits&amp;quot;;
+},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To activate the &lt;em&gt;Open digits&lt;/em&gt; feature, I had to use the &lt;strong&gt;feature type
+identifier 35&lt;/strong&gt;, with the &lt;strong&gt;feature selector identifier 2&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;Enabling the font features you want&lt;/h2&gt;
+&lt;p&gt;So far, the code I showed was to get your app in the starting blocks. It helps
+you to prepare for the big stage moment: &lt;strong&gt;actually&lt;/strong&gt; enabling the font
+features.&lt;/p&gt;
+&lt;p&gt;So I wrapped these 35 and 2 &lt;em&gt;magic numbers&lt;/em&gt; into something more meaningful: a
+simple struct trying to make sense of Apple’s documentation&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. It is pretty
+basic, aimed to be built on in the future, and I made use of this incredible
+&lt;a href=&quot;https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html&quot;&gt;Font Feature Registry&lt;/a&gt; resource&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; to find inspiration for an adequate
+naming:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;sprivate enum FeatureTypeSelectorPair {
+    typealias PairDescriptor = (Int, Int)
+
+    static let stylisticAlternativesStylisticAltOne: PairDescriptor = (35, 2)
+
+    static func attributeValue(for pairDescriptor: PairDescriptor) -&amp;gt; Any {
+        [
+            UIFontDescriptor.FeatureKey.featureIdentifier: pairDescriptor.0,
+            UIFontDescriptor.FeatureKey.typeIdentifier: pairDescriptor.1,
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once there, I was able to instanciate the &lt;code&gt;UIFont&lt;/code&gt; including the option I wanted
+like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;func createFontWithOptions(fontName: String, size: CGFloat) -&amp;gt; UIFont {
+    let resultFont = UIFontDescriptor(name: fontName, size: size)
+        .addingAttributes([
+            .featureSettings: [
+                FeatureTypeSelectorPair.attributeValue(
+                    for: FeatureTypeSelectorPair.stylisticAlternativesStylisticAltOne
+                ),
+            ],
+        ])
+
+    // 0.0 means the size from the descriptor will prevail.
+    return UIFont(descriptor: resultFont, size: 0.0)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;The outcome: an alternative digits style&lt;/h2&gt;
+&lt;p&gt;🎉 Tada! I was done. Here is what it looks like in the end: a label with the
+default Inter Bold font appears first, and the label with the Inter Bold with
+the alternate digits feature enabled appears last.&lt;/p&gt;
+&lt;img alt=&quot;A screenshot comparing the string '0123456789' with or without the option&quot; src=&quot;/assets/inter-font-with-or-without-options-fe77bf4be5d1c682d1903d1ab938e740092eb61c4a73cc376775cec32c78e4b104152c2e97f73c43a968db04084667b632afcf466836185b80994ad665fb0ce2.png&quot; integrity=&quot;sha512-/ne/S+XRxoLRkD0auTjnQAkuthxKc8w3Z3XOwyx45LEEFSwul/c8Q6lo2wQIRme2Mq/PRmg2GFuAmUrWZfsM4g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;A playground using all this code is available &lt;a href=&quot;https://github.com/dirtyhenry/xcode-playgrounds/tree/master/activating-opentype-features.playground&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;⚠️ Note:
+&lt;a href=&quot;https://developer.apple.com/documentation/uikit/uifontdescriptor/featurekey&quot;&gt;the documentation of &lt;code&gt;UIFontDescriptor.FeatureKey&lt;/code&gt;&lt;/a&gt;
+was one of the most confusing I met. It said (1) that &lt;code&gt;featureIdentifier&lt;/code&gt;
+was a key for identifying a font feature type such as ligature or character
+shape and (2) &lt;code&gt;typeIdentifier&lt;/code&gt; was a key for identifying the font feature
+selector. So &lt;code&gt;featureIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureTypeIdentifier&lt;/code&gt; while
+&lt;code&gt;typeIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureSelectorIdentifier&lt;/code&gt;. Of course, I had
+it switched the wrong way the first time I ran the code. Confusing you said?
+🤯 &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;I never considered myself an expert in typefaces or fonts design and
+abilities but this resource was so humbling that I definitely decreased the
+perception of my own level in that skill by quite some orders of magnitude
+😂 &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="Journaling" /><category term="swift" /><category term="ios" /><category term="fonts" /><summary type="html">Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let's see how.</summary></entry><entry><title type="html">Pomodoro CLI 1.0.0 Released 🎉</title><link href="https://bootstragram.com/blog/pomodoro-cli-swift/" rel="alternate" type="text/html" title="Pomodoro CLI 1.0.0 Released 🎉" /><published>2020-02-01T00:00:00+00:00</published><updated>2020-02-01T00:00:00+00:00</updated><id>https://bootstragram.com/blog/pomodoro-cli-swift</id><content type="html" xml:base="https://bootstragram.com/blog/pomodoro-cli-swift/">&lt;p&gt;A little more than two years after &lt;a href=&quot;/blog/swift-command-line-pomodoro/&quot;&gt;I started working on this&lt;/a&gt;, I am happy to
+annouce that &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli/releases&quot;&gt;&lt;code&gt;pomodoro-cli&lt;/code&gt; 1.0.0&lt;/a&gt; has been released today. I finally felt
+that it had enough features to decide a tag was needed.&lt;/p&gt;
+&lt;h2&gt;How Can You Install It?&lt;/h2&gt;
+&lt;p&gt;I still need to work on the distribution via Homebrew but the code and
+installation steps can be found on &lt;a href=&quot;https://dirtyhenry.github.io/pomodoro-cli/&quot; title=&quot;Jazzy docs for Pomodoro CLI&quot;&gt;the project website&lt;/a&gt; or &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli&quot; title=&quot;GitHub repository for Pomodoro CLI&quot;&gt;its GitHub
+repository&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;What on Earth Is Pomodoro?&lt;/h2&gt;
+&lt;p&gt;It is a time management technique that was created by Francesco Cirillo. He
+wrote &lt;a href=&quot;https://francescocirillo.com/products/the-pomodoro-technique-book-us-edition&quot; title=&quot;The Pomodoro Technique Book&quot;&gt;a book&lt;/a&gt; and &lt;a href=&quot;https://pomodorotechnique.com/&quot; title=&quot;The Pomodoro Technique Website&quot;&gt;a website&lt;/a&gt; about it. To summarize, it’s all about
+splitting up your work into 25-minutes chunks of time that are each full-focused
+on 1 objective. Pretty damn efficient when you can afford to stick to it I must
+say.&lt;/p&gt;
+&lt;h2&gt;Why the Hell Did You Do That?&lt;/h2&gt;
+&lt;p&gt;Sure, whether you’re talking CLI apps or whatever apps, there is nothing
+revolutionary with this tool. As a matter of fact, There is &lt;a href=&quot;https://github.com/search?q=pomodoro+cli&quot; title=&quot;GitHub search results for Pomodoro and CLI&quot;&gt;a crazy amount of
+alternatives on GitHub&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But!&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;I made it.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This argument might only work for me, but it does count;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It is made in Swift.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;As of today, it is the only result for &lt;a href=&quot;https://github.com/search?q=pomodoro+cli+language%3ASwift&quot; title=&quot;GitHub search results for Pomodoro, CLI AND Swift&quot;&gt;this other GitHub search&lt;/a&gt;;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It has hooks.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;You can plug your own scripts when a pomodoro starts and when a pomodoro
+finishes. I used them to include a cool Italian voice making announcements
+and they put my display to sleep when a pomodoro is over. No excuse for not
+taking a break.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;It keeps an history.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Every pomodoro starts by asking a simple question: what is the intent of the
+current pomodoro. When the pomodoro finishes, the dates and this intent are
+logged in a YAML file so I can track back how I spent my time.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;A simple use case&lt;/h2&gt;
+&lt;p&gt;This blog post was written during 1 Pomodoro. Here is the associated log from
+the journal:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yml&quot;&gt;- - startDate: 01/02/2020 21:23:10
+  - endDate: 01/02/2020 21:48:10
+  - message: Write a blog post about Pomodoro 1.0.0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What do you think? How do you like them tomatoes? 🍅&lt;/p&gt;</content><author><name></name></author><category term="swift" /><category term="product" /><summary type="html">A little more than two years after I started working on this, I am happy to annouce that pomodoro-cli 1.0.0 has been released today. I finally felt that it had enough features to decide a tag was needed.</summary></entry><entry><title type="html">Notes from FrenchKit 2019</title><link href="https://bootstragram.com/blog/frenchkit-2019/" rel="alternate" type="text/html" title="Notes from FrenchKit 2019" /><published>2019-10-10T00:00:00+00:00</published><updated>2019-10-10T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2019</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2019/">&lt;p&gt;&lt;a href=&quot;/blog/frenchkit-2018/&quot;&gt;&lt;strong&gt;Again&lt;/strong&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit 2019&lt;/a&gt; was awesome. Talks with 🌟 are the talks I
+recommend.&lt;/p&gt;
+&lt;h2&gt;Day 1&lt;/h2&gt;
+&lt;h3&gt;Animations with SwiftUI — &lt;a href=&quot;https://twitter.com/chriseidhof&quot;&gt;Chris Eidhof&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Using a basic animation example, namely creating a shaking effect on a rectangle
+view, Chris shows the hidden complexity of SwiftUI and how developers used to
+UIKit need to change their mental model about how to build views. Under the
+hood, SwiftUI seems very similar to React: a tree of views with wrappers all
+hover the place, with an efficient diffing algorithm deciding what to re-render.&lt;/p&gt;
+&lt;h3&gt;Understanding Combine — &lt;a href=&quot;https://twitter.com/dimsumthinking&quot;&gt;Daniel Steinberg&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;A good counterpart to Chris’ talk to mention how Apple frameworks evolved from
+using the delegation pattern, then closures and are now adopting Reactive
+Programming. Combine will probably become the &lt;em&gt;de facto&lt;/em&gt; framework to use, as
+opposed to RxSwift and ReactiveCococa, due to its 1st party nature. The only
+problem is that it is only available for iOS 13.&lt;/p&gt;
+&lt;h3&gt;SwiftUI &amp;amp; Redux — Thomas Ricouard&lt;/h3&gt;
+&lt;p&gt;Many frameworks are available to bring the Redux pattern to iOS development, ie
+dispatch actions, reducers, immutable states, mapStateToProps, etc. It could be
+a good idea to use one to keep having architectural conversations relevant to
+the mobile and web teams.&lt;/p&gt;
+&lt;h3&gt;Testing &amp;amp; Declarative UIs — &lt;a href=&quot;https://twitter.com/nataliya_bg&quot;&gt;Nataliya Patsovska&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Great talk promoting snapshot testing, something I tend to already do on ongoing
+projects 💪. Nataliya mentioned how we could benefit from a new feature of
+iOS/Xcode ie Previews. She wondered if tree inspecting libraries similar to
+&lt;code&gt;react-testing-library&lt;/code&gt; would eventually show up to inspect contents of SwiftUI
+tree representations. A cool idea for an OSS side-project 💡.&lt;/p&gt;
+&lt;h3&gt;Showcase Driven Development — &lt;a href=&quot;https://twitter.com/JegnuX/&quot;&gt;Jérôme Alves&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;This talk was about how Heetch created a browsing interface within the debug
+release version of their app to demo &lt;em&gt;work in progress&lt;/em&gt; to their product and
+quality teams as early as they could, building on &lt;a href=&quot;http://khanlou.com/2019/07/continuous-integration/&quot;&gt;the real continuous
+integration post&lt;/a&gt; by Soroush Khanlou.&lt;/p&gt;
+&lt;h3&gt;Slide to Unlock — &lt;a href=&quot;https://twitter.com/myunderpants&quot;&gt;Joel Kin&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: Building Custom UI with UIKit and Core Animation.&lt;/p&gt;
+&lt;p&gt;When something looks a little complicated, should you spend time looking for a
+library doing what you need, or should you spend time implementing it yourself?
+Building on UISlider, Joel shows a real-case scenario of what to assess to make
+the best informed decision. Notably, UISlider had a much better accessibility
+support that 3rd parties equivalents.&lt;/p&gt;
+&lt;h3&gt;Swiftly Swift manipulation… with Swift — Marcin Krzyzanowski&lt;/h3&gt;
+&lt;p&gt;Marcin shows up what’s under the hood of his &lt;em&gt;work in progress&lt;/em&gt; code reordering
+tool. While we could benefit from such a tool, it sounds too immature to be
+integrated in a CI, but worth trying and keeping an eye on. Or even
+contributing? It involves playing with SourceKitten and Swift AST.&lt;/p&gt;
+&lt;h3&gt;Empower Your UITableView DataSources with a Flexible Model — Denis Poifol&lt;/h3&gt;
+&lt;p&gt;A prescription of a model to write table view view models.&lt;/p&gt;
+&lt;h3&gt;When Did My View Layout? — Gaëtan Zanella&lt;/h3&gt;
+&lt;p&gt;The title of the talk is misleading. It was more about what is an iOS
+application in terms of entry point, event management, run loop, etc.&lt;/p&gt;
+&lt;h3&gt;Math &amp;amp; Map Masterclass — Daniel Steinberg&lt;/h3&gt;
+&lt;p&gt;Good simple exercises on how to implement an alternative version of &lt;code&gt;map&lt;/code&gt; for
+arrays, generics, optionals, results, and combine. Basic &amp;amp; deep at the same
+time.&lt;/p&gt;
+&lt;h3&gt;Swift Pills - &lt;a href=&quot;https://twitter.com/v_pradeilles&quot;&gt;Vincent Pradeilles&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Weakifiable&lt;/li&gt;
+&lt;li&gt;Autoclosure for log tooling&lt;/li&gt;
+&lt;li&gt;Use map instead of if let These 3 tips are very actionable and recommended.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Day 2&lt;/h2&gt;
+&lt;h3&gt;Swift Generics Topic — Rob Napier&lt;/h3&gt;
+&lt;p&gt;Don’t make things generic to early. Very similar to
+&lt;a href=&quot;https://kentcdodds.com/blog/aha-programming&quot;&gt;this AHA Programming&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Note encryption — &lt;a href=&quot;https://twitter.com/vixentael&quot;&gt;Anastasiia Voitova&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: 10 lines for encryption, 1500 lines for key management.&lt;/p&gt;
+&lt;p&gt;Anastasiia mentioned the real case of how her consulting company helped the Bear
+app to add security features in their app. What tradeoffs you should pick
+depending on the risks, threats, trust. Lots of recommended readings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cossack Labs / Implementing End-to-End encryption in Bear App:
+&lt;a href=&quot;https://t.co/oy5vJNCdvR?amp=1&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/OWASP/owasp-mstg&quot;&gt;OWASP/owasp-mstg&lt;/a&gt;: The Mobile Security
+Testing Guide (MSTG) is a comprehensive manual for mobile app security
+development, testing and reverse engineering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;SwiftPM’s New Resolver — Mert Buran&lt;/h3&gt;
+&lt;p&gt;Subtitle: Can it Resolve the Conflicts in my Relationship?.&lt;/p&gt;
+&lt;p&gt;Really fun and innovative format. Many analogies to explain how pubgrub works
+for SPM, and how algorithms we took for granted are under-appreciated.&lt;/p&gt;
+&lt;h3&gt;This is Not Rocket (Data) Science — Hervé Berenger&lt;/h3&gt;
+&lt;p&gt;Almost a star for this one. The idea was: how AI is actually hidden everywhere
+and how 1st party frameworks can already help with a lot of stuff. Example:
+using the background color of a messaging app to give a hint of the tone of the
+message that is being written to help think twice about the choice of words
+being used.&lt;/p&gt;
+&lt;h3&gt;Building Voice-First Apps — Elaine Dias Batista&lt;/h3&gt;
+&lt;p&gt;Elaine insisted how voice-first could be important for accessibility, and to do
+it properly with existing frameworks.&lt;/p&gt;
+&lt;h3&gt;An Introduction to Property-Based Testing — Vincent Pradeilles&lt;/h3&gt;
+&lt;p&gt;Another approach to test using random values that can auto-discover edge cases
+of input values that will reveal bugs in a codebase. It is not self sufficient
+but can be a good complement to other testing strategies. Also, it can lead to
+randomness in tests: for instance, a test could fail at the 10th execution. But
+frameworks handling these kind of tests will provide you the failing data and
+you can turn this failing scenario into a deterministic test case by adding it
+in traditional test cases.&lt;/p&gt;
+&lt;h3&gt;Shipping a Catalyst app: The Good, the Bad and the Ugly — Peter Steinberger&lt;/h3&gt;
+&lt;p&gt;The story of how &lt;a href=&quot;https://pdfviewer.io&quot;&gt;PDF Viewer&lt;/a&gt; was ported to macOS using a
+mix of AppKit, UIKit, private API, etc. The conclusion for me is that if you can
+invest on SwiftUI, it is not worth exploring Catalyst.&lt;/p&gt;
+&lt;h3&gt;And That’s A Wrap! — Olivier Halligon&lt;/h3&gt;
+&lt;p&gt;An exploration of property wrappers, a feature introduced by Swift 5.1. It is
+totally compatible with older version of iOS as it is interpreted at compile
+time. The idea is to DRY behaviors of some properties. Example use cases:
+clamping values into a range, handling UserDefaults with convenience,
+customizing how a type conform to Codable, database mapping, etc.&lt;/p&gt;
+&lt;h3&gt;Vapor Classroom — David Bonnet&lt;/h3&gt;
+&lt;p&gt;Key takeaways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apple now releases Swift Docker images on the same day new version of Swift
+are released;&lt;/li&gt;
+&lt;li&gt;Vapor allows to share DTO between an iOS client and a backend;&lt;/li&gt;
+&lt;li&gt;A lot of boilerplate code that should be made better via property wrapper in
+Vapor 4.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend.</summary></entry><entry><title type="html">Notes from FrenchKit 2018</title><link href="https://bootstragram.com/blog/frenchkit-2018/" rel="alternate" type="text/html" title="Notes from FrenchKit 2018" /><published>2018-11-19T00:00:00+00:00</published><updated>2018-11-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2018</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2018/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2018 was awesome. I recommend it
+&lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;again&lt;/a&gt; to any iOS/Swift developer around. Day 1 was much better than
+Day 2. Two recurring topics were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;code generation leveraging;&lt;/li&gt;
+&lt;li&gt;and the importance of a good product management policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Most speakers seemed to use &lt;a href=&quot;https://www.deckset.com&quot;&gt;Deckset&lt;/a&gt; for their
+presentations. As &lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;often&lt;/a&gt;, international speakers were much much better
+than French ones.&lt;/p&gt;
+&lt;p&gt;Here are the talks I recommend.&lt;/p&gt;
+&lt;h2&gt;brew create - Max Howell&lt;/h2&gt;
+&lt;p&gt;Storytelling of how Max came to create &lt;a href=&quot;https://brew.sh&quot;&gt;Homebrew&lt;/a&gt; and how he
+managed its huge success. It’s surprising he had such a product-oriented
+approach for such a tech product. The whole talk was really nicely put (very
+minimalist use of slides and a great video of the git activity to give a visual
+feeling to the growing popularity of Brew).&lt;/p&gt;
+&lt;p&gt;Two segments particularly stood out to me:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One about the importance of naming things (the whole brew, cellar, keg,
+formulae that Brew is using);&lt;/li&gt;
+&lt;li&gt;One about the feeling of code ownership and how to control it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/WMMPRS58n-o&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Going Prod with Server-Side Swift - Pim Stolk&lt;/h2&gt;
+&lt;p&gt;How an ING side-project (Banking of Things) is using server-side Swift. They
+picked &lt;a href=&quot;https://www.kitura.dev&quot;&gt;Kitura&lt;/a&gt; over &lt;a href=&quot;https://vapor.codes&quot;&gt;Vapor&lt;/a&gt;
+because they had a good vibe from the team and they seem to work very closely
+together. They had tips to use containers to be as cloud-provider agnostic as
+possible.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/tRakjsKwdg4&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Sharing Swift: writing code that scales - Florent Pillet&lt;/h2&gt;
+&lt;p&gt;This was a good counterpart to Pim’s talk. Florent is French and is using Vapor
+server-side. He’s really a big fan of
+&lt;a href=&quot;https://github.com/apple/swift-nio&quot;&gt;SwiftNIO&lt;/a&gt; and its performances. One of his
+tip was to make builds in containers locally so you can just deploy binaries to
+production containers (no need for Swift compilers). He seems to have insights
+straight from Apple saying that &lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;SPM&lt;/a&gt; is not
+coming to iOS anytime soon.&lt;/p&gt;
+&lt;p&gt;Both Florent &amp;amp; Pim consider &lt;strong&gt;server-side Swift is production ready&lt;/strong&gt;. Kitura &amp;amp;
+Vapor both provide &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; support which seems to be
+good enough for monitoring. One of the main pain point remaining seems to be
+debugging from Linux.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/1G63BKeNfjA&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Lost Art of System Design - John Sundell&lt;/h2&gt;
+&lt;p&gt;John is as a good showman and as energetic as reading
+&lt;a href=&quot;https://www.swiftbysundell.com&quot;&gt;his blog&lt;/a&gt; lets you think. The talk was about
+how to answer “where should we sit this piece of code?”. He was advocating
+towards decoupling, building frameworks, keys &amp;amp; lock-in to different parts of an
+application. Great practical tips that were somewhat Swift-related but can be
+applied to any language as well.&lt;/p&gt;
+&lt;p&gt;For instance: RootFactory creating basic objects and a LoggedFactory creating
+objects once the user is logged in which translates that we’re sure we can
+provide a User and that we don’t need to make it optional, etc.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/bAokeFxW2fo&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Swift Strings Seven Ways - Mattt&lt;/h2&gt;
+&lt;p&gt;A storytelling kind of talk about how we take strings for granted and we think
+they’re simple but they’re not. The guy is a big name in the iOS scene — among
+others, creator of &lt;a href=&quot;https://nshipster.com&quot;&gt;NSHipster&lt;/a&gt; —, and it was surprising
+to see a talk that was sometimes borderline spiritual (he digs the Cherokee
+language a lot).&lt;/p&gt;
+&lt;p&gt;But the 2nd half was way more practical about string jargons, struggles, and
+tips on how to process them safely (ie override string by other types for
+identifiers for instance in order to hide the complexity of string for a simple
+usage, use Base64 for exchanging in a safe way, etc.)&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/linHwUqeagU&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The 700 next devices - Chris Eidhof&lt;/h2&gt;
+&lt;p&gt;Again, a big figure in iOS development since he started
+&lt;a href=&quot;https://www.objc.io&quot;&gt;objc.io&lt;/a&gt;. He gave a live-coding presentation of a layout
+library he build for Swift that is going to be introduced in
+&lt;a href=&quot;https://talk.objc.io&quot;&gt;Swift Talks&lt;/a&gt;. The library is really useful and has a nice
+API and seems somewhat influenced by flex box as a complement to AutoLayout. It
+will be even more useful once UIKit gets on macOS. Tip: when using the
+Accessibility inspector during development, the simulator seems super
+responsive.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/OLDHgg0uh6A&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Underestimated Power of KeyPaths - Vincent Pradeilles&lt;/h2&gt;
+&lt;p&gt;Lightning talk about how to use key paths to improve Swift convenience, in
+particular to avoid dumb closures.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/jpAT5DoSUgw&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Improving your Developer Experience with Open-Source Swift - Dimitri Dupuis-Latour&lt;/h2&gt;
+&lt;p&gt;Interesting short talk to make contributing to Swift and its environment not as
+scary as it seems. Empowering mode ✊.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/olS5w9fBxog&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:</summary></entry><entry><title type="html">Notes from FrenchKit 2017</title><link href="https://bootstragram.com/blog/frenchkit-2017/" rel="alternate" type="text/html" title="Notes from FrenchKit 2017" /><published>2018-01-12T00:00:00+00:00</published><updated>2018-01-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2017</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2017/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2017 was awesome. I recommend it to any
+iOS/Swift developer around.&lt;/p&gt;
+&lt;p&gt;I wrote many notes during the two days of the conference but I forgot to process
+them right afterwards when things were still fresh. Bummer.&lt;/p&gt;
+&lt;p&gt;Finally, I went through the notes today and decided to make a blog post out of
+them anyway. Raw and undetailed, 2018-style!&lt;/p&gt;
+&lt;h2&gt;My favorite talks&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/DrdxSNG-_DE&quot;&gt;Playground Driven Development&lt;/a&gt; by Brandon
+Williams (quite more detailed than the
+&lt;a href=&quot;https://talk.objc.io/episodes/S01E51-playground-driven-development-at-kickstarter&quot;&gt;objc.io&lt;/a&gt;’s
+one)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/e9NI5XnEqHA&quot;&gt;May the Code Review Be with You&lt;/a&gt; by Egor
+Tolstoy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/3ia3ngqM2mM&quot;&gt;You Deserve Nice Things&lt;/a&gt; by Soroush Khanlou&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/dYWE2d4_IPY&quot;&gt;Core Data Custom Store&lt;/a&gt; by Rew Islam&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/WM6WECv4B2E&quot;&gt;Scaling Open Source Communities&lt;/a&gt; by Felix
+Krause&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Side note to mention that a big theme of the conference was &lt;strong&gt;code generation&lt;/strong&gt;.
+It was frenquently quoted as something you should try out and be ready to use
+when relevant. I’m in.&lt;/p&gt;
+&lt;h2&gt;What could be improved next time?&lt;/h2&gt;
+&lt;h3&gt;France, we need to become better public speakers&lt;/h3&gt;
+&lt;p&gt;As you can see above, not a single French speaker made it to my favorite talks.
+This is hard to explain but for some reasons, French speakers are often nervous,
+awkward or even uncharismatic. I rarely gave public talks but when I did, these
+all applied to me as well. Not sure where this is coming from but fellow French
+developers, we need to address this! 🇫🇷💪&lt;/p&gt;
+&lt;h3&gt;Let’s be better with jokes&lt;/h3&gt;
+&lt;p&gt;I’m sick of jokes filled of condescending notes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Core Data sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Or:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cocoapods sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I don’t remember the exact jokes but I felt some were patronizing and
+misleading. Core Data and Cocoapods are awesome tools. They have flaws but
+nobody should be embarassed using them.&lt;/p&gt;
+&lt;p&gt;Also, enough with cat memes. As most overused material, they lost everything
+that made them cool/cute/funny in the first place.&lt;/p&gt;
+&lt;h2&gt;My TODO list until FrenchKit 2018&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;☐ Try &lt;a href=&quot;https://github.com/krzysztofzablocki/Sourcery&quot;&gt;Sourcery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☒ Check out BuddyBuild &lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out Swift 4’s
+&lt;a href=&quot;https://developer.apple.com/documentation/swift/codable&quot;&gt;Codable&lt;/a&gt; protocol&lt;/li&gt;
+&lt;li&gt;☒ Check out the &lt;a href=&quot;https://www.jetbrains.com/objc/&quot;&gt;AppCode&lt;/a&gt; IDE&lt;/li&gt;
+&lt;li&gt;☐ The &lt;code&gt;rethrows&lt;/code&gt; keyword?&lt;/li&gt;
+&lt;li&gt;☐ Play a little with the &lt;code&gt;Sequence&lt;/code&gt;, &lt;code&gt;IteratorProtocol&lt;/code&gt; protocols&lt;/li&gt;
+&lt;li&gt;☑︎ Start using GitHub’s global search&lt;/li&gt;
+&lt;li&gt;☑︎ Follow &lt;a href=&quot;https://twitter.com/PublicExtension&quot;&gt;PublicExtension&lt;/a&gt; on Twitter&lt;/li&gt;
+&lt;li&gt;☐ Check out Server-side Swift
+&lt;ul&gt;
+&lt;li&gt;☑︎ Kitura&lt;/li&gt;
+&lt;li&gt;☑︎ Vapor&lt;/li&gt;
+&lt;li&gt;☐ &lt;a href=&quot;https://perfect.org&quot;&gt;Perfect&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;☐ Play with &lt;code&gt;NSAtomicStore&lt;/code&gt; (good for a small data set)&lt;/li&gt;
+&lt;li&gt;☒ Check out [Dashlane/CustomStores]&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☐ Have a clearer understanding of static vs dynamic libraries&lt;/li&gt;
+&lt;li&gt;☐ Is it possible to dual boot with a Linux distribution?&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/realm/SwiftLint&quot;&gt;SwiftLint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Read
+&lt;a href=&quot;https://github.com/apple/swift/blob/master/docs/Android.md&quot;&gt;Getting Started with Swift on Android&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/danger/danger&quot;&gt;Danger&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out &lt;a href=&quot;https://grafana.com&quot;&gt;Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Display Xcode build durations&lt;/li&gt;
+&lt;li&gt;☐ Checkout &lt;a href=&quot;https://michele.io/test-logs-in-xcode/&quot;&gt;xcactivitylog files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ There should be some direct mapping between graphql and core data.&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to Awesome iOS Newsletter&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to &lt;a href=&quot;https://swiftnews.curated.co&quot;&gt;this week in Swit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Things I wrote but forgot what it was about&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;detrace&lt;/li&gt;
+&lt;li&gt;Sirius : coordinator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you know what they could mean, please get in touch.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;Been bought by Apple since. &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;The code is still missing today, not sure it will ever show up. &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2017 was awesome. I recommend it to any iOS/Swift developer around.</summary></entry><entry><title type="html">Writing a Swift Pomodoro Timer Command-Line Tool</title><link href="https://bootstragram.com/blog/swift-command-line-pomodoro/" rel="alternate" type="text/html" title="Writing a Swift Pomodoro Timer Command-Line Tool" /><published>2017-11-04T00:00:00+00:00</published><updated>2017-11-04T00:00:00+00:00</updated><id>https://bootstragram.com/blog/swift-command-line-pomodoro</id><content type="html" xml:base="https://bootstragram.com/blog/swift-command-line-pomodoro/">&lt;p&gt;I wanted to experiment on writing command line tools with Swift, I wrote a
+simple command-line &lt;a href=&quot;https://en.wikipedia.org/wiki/Pomodoro_Technique&quot;&gt;pomodoro&lt;/a&gt; timer. I had to find answers to quite a
+number of questions to achieve this, but Internet is great at finding answers to
+things. So here we go.&lt;/p&gt;
+&lt;h2&gt;How to write a progress bar on the command line?&lt;/h2&gt;
+&lt;p&gt;I had never written a progress bar on the command line before and this
+&lt;a href=&quot;https://stackoverflow.com/questions/238073/how-to-add-a-progress-bar-to-a-shell-script&quot;&gt;StackOverflow question&lt;/a&gt; was of great help to understand how
+they work.&lt;/p&gt;
+&lt;h2&gt;How to start with Swift command-line tools?&lt;/h2&gt;
+&lt;p&gt;To get started, I recommend &lt;a href=&quot;https://talk.objc.io/episodes/S01E22-command-line-tools-with-swift&quot;&gt;this Swift Talk video&lt;/a&gt; (a little over 17
+minutes long). As I had trouble setting up dependencies right (the video is
+getting old and Swift changed in the meantime), &lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;this post about the Package
+Manager&lt;/a&gt; on Swift’s website, was also pretty useful to get a
+working Xcode project with the &lt;a href=&quot;https://github.com/kylef/Commander&quot;&gt;Commander&lt;/a&gt; dependency setup right.&lt;/p&gt;
+&lt;p&gt;Basically, everything you need to type in the terminal is:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;swift package init --type executable
+# Setting up dependencies in `Package.swift`
+swift package update
+swift package generate-xcodeproj
+swift build
+.build/debug/&amp;lt;name-of-your-target&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;How to output things to the standard output?&lt;/h2&gt;
+&lt;p&gt;Well &lt;code&gt;print()&lt;/code&gt; is the easy answer by it doesn’t manage escaping characters
+right. So &lt;code&gt;FileHandle.standardOutput&lt;/code&gt; was what I was looking for to manage a
+proper terminal progress bar.&lt;/p&gt;
+&lt;h2&gt;What does the results look like?&lt;/h2&gt;
+&lt;p&gt;Try it &lt;a href=&quot;https://github.com/dirtyhenry/pomodoro-cli/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;What are the next steps?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Ask for the description of the task before starting the pomodoro&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Log the pomodoro in a file for archives and time-reporting&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Notify the user in the notification center or by a sound when the timer
+ends.&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Integrate with other stuff via &lt;strong&gt;Shell&lt;/strong&gt; scripts.&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;Use the full width of the terminal window instead of a fixed length (which
+should mean
+&lt;a href=&quot;https://stackoverflow.com/questions/36219597/referring-to-environment-variables-in-swift&quot;&gt;reading environment variables&lt;/a&gt;);&lt;/li&gt;
+&lt;li&gt;✔︎ &lt;del&gt;Build for release&lt;/del&gt;;&lt;/li&gt;
+&lt;li&gt;Distribute.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="swift" /><category term="product" /><summary type="html">I wanted to experiment on writing command line tools with Swift, I wrote a simple command-line pomodoro timer. I had to find answers to quite a number of questions to achieve this, but Internet is great at finding answers to things. So here we go.</summary></entry><entry><title type="html">Dynamic resizing of a UICollectionViewCell’s height</title><link href="https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell/" rel="alternate" type="text/html" title="Dynamic resizing of a UICollectionViewCell’s height" /><published>2017-10-19T00:00:00+00:00</published><updated>2017-10-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell</id><content type="html" xml:base="https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell/">&lt;p&gt;Your cell includes dynamic text and you need to size it appropriately. I feel
+like I did that 1.000.000 times so here it is: my Swift 3 definitive method for
+not repeating myself. It works well with iOS 11 and below.&lt;/p&gt;
+&lt;p&gt;Here are the steps to make it work:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Make sure your cell has all the constraints required to be self-dependent to
+define its size&lt;/li&gt;
+&lt;li&gt;Add a dependency to constraint the width of the cell (which should be easy to
+compute, as most of the time you want to find the height of your cell)&lt;/li&gt;
+&lt;li&gt;Get inspired by the following code to create an equivalent method for your
+cell&lt;/li&gt;
+&lt;/ol&gt;
+&lt;script src=&quot;https://gist.github.com/dirtyhenry/1820b9cb07095c42f427e38a912477d4.js&quot;&gt;
+&lt;/script&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">Your cell includes dynamic text and you need to size it appropriately. I feel like I did that 1.000.000 times so here it is: my Swift 3 definitive method for not repeating myself. It works well with iOS 11 and below.</summary></entry><entry><title type="html">How to log and delete keychain items from your iOS app</title><link href="https://bootstragram.com/blog/deleting-keychain-items/" rel="alternate" type="text/html" title="How to log and delete keychain items from your iOS app" /><published>2017-06-26T00:00:00+00:00</published><updated>2017-06-26T00:00:00+00:00</updated><id>https://bootstragram.com/blog/deleting-keychain-items</id><content type="html" xml:base="https://bootstragram.com/blog/deleting-keychain-items/">&lt;h2&gt;How Keychain Items Can Slow Down Debugging&lt;/h2&gt;
+&lt;p&gt;Firebase, among other iOS libraries can install items in a device keychain and
+it can become pretty painful to test authentication without having to
+reinitialize the simulator, and it gets even more complicated on a real device.&lt;/p&gt;
+&lt;h2&gt;Some Debugging Code&lt;/h2&gt;
+&lt;p&gt;Here is a little piece of code that will output what are the items your app can
+access in the keychain, and will either output them, delete them or both.&lt;/p&gt;
+&lt;p&gt;⚠️ I want to insist this should be enabled for debug/development purposes only,
+you most likely don’t want to use this code in a production environment.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/dirtyhenry/46a87f9a3717532085974edcfa114051&quot;&gt;the gist&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;func iterateKeychainItems(log: Bool, delete: Bool) {
+    let secItemClasses = [
+        kSecClassGenericPassword,
+        kSecClassInternetPassword,
+        kSecClassCertificate,
+        kSecClassKey,
+        kSecClassIdentity
+    ]
+
+    if (log) {
+        for secItemClass in secItemClasses {
+            let query: [String: Any] = [
+                kSecReturnAttributes as String: kCFBooleanTrue,
+                kSecMatchLimit as String: kSecMatchLimitAll,
+                kSecClass as String: secItemClass
+            ]
+
+            var result: AnyObject?
+            let status = SecItemCopyMatching(query as CFDictionary, &amp;amp;result)
+            if status == noErr {
+                print(result as Any)
+            }
+        }
+        print(&amp;quot;AppUsageMetadata.iterateKeychainItems ended.&amp;quot;)
+    }
+
+    if (delete) {
+        for secItemClass in secItemClasses {
+            let dictionary = [kSecClass as String:secItemClass]
+            SecItemDelete(dictionary as CFDictionary)
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">How Keychain Items Can Slow Down Debugging</summary></entry><entry><title type="html">A FileManager Swift extension to manage iOS file systems basics with ease</title><link href="https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics/" rel="alternate" type="text/html" title="A FileManager Swift extension to manage iOS file systems basics with ease" /><published>2017-06-13T00:00:00+00:00</published><updated>2017-06-13T00:00:00+00:00</updated><id>https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics</id><content type="html" xml:base="https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics/">&lt;p&gt;I recently spent some time figuring out the best way to find the URL/paths of
+the &lt;a href=&quot;https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW12&quot;&gt;recommended iOS file system used directories&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I felt that iOS URL/paths was very confusing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;NSSearchPathForDirectoriesInDomains&lt;/code&gt; returns an array of paths&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FileManager&lt;/code&gt;’s
+&lt;code&gt;urls(for directory: FileManager.SearchPathDirectory, in domainMask: FileManager.SearchPathDomainMask)&lt;/code&gt;
+returns an array of URL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NSHomeDirectory()&lt;/code&gt; returns 1 &lt;code&gt;String&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;String&lt;/code&gt; (ie paths) are missing the URL management methods that &lt;code&gt;NSString&lt;/code&gt; had&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So I came up with this little &lt;code&gt;FileManager&lt;/code&gt;’s extension that could be useful to
+many:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension FileManager {
+    func homeDirectory() -&amp;gt; URL {
+        return URL(fileURLWithPath: NSHomeDirectory())
+    }
+
+    func homeDirectoryPath() -&amp;gt; String {
+        return NSHomeDirectory()
+    }
+
+    func tmpDirectory() -&amp;gt; URL {
+        return homeDirectory().appendingPathComponent(&amp;quot;tmp&amp;quot;)
+    }
+
+    // ...
+}
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">I recently spent some time figuring out the best way to find the URL/paths of the [recommended iOS file system used directories][ios-file-system-basics].</summary></entry></feed>

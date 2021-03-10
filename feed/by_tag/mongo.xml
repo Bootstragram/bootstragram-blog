@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/mongo.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/mongo.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Notes from 10 gen’s M101JS MongoDB for Developers courseware</title><link href="https://bootstragram.com/blog/notes-from-M101/" rel="alternate" type="text/html" title="Notes from 10 gen’s M101JS MongoDB for Developers courseware" /><published>2014-01-16T00:00:00+00:00</published><updated>2014-01-16T00:00:00+00:00</updated><id>https://bootstragram.com/blog/notes-from-M101</id><content type="html" xml:base="https://bootstragram.com/blog/notes-from-M101/">&lt;p&gt;I signed up for the online &lt;a href=&quot;https://education.mongodb.com/&quot;&gt;MongoDB University&lt;/a&gt;
+MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a
+promising technology and MongoDB’s courseware uses EdX’s excellent software that
+I had already used for the MIT 6.002x Electronics course so I was pretty
+confident of the usefulness of all this.&lt;/p&gt;
+&lt;div class=&quot;alert alert-info&quot;&gt;
+&lt;strong&gt;Work in Progress!&lt;/strong&gt;
+I switched from Python to Node.js and started over. I'm currently in:
+&lt;ul&gt;
+&lt;li&gt;Week 5, “Compound Grouping”.&lt;/li&gt;
+&lt;li&gt;Week 6, next video is “Connecting to a Replica Set from the Node.js driver”&lt;/li&gt;
+&lt;li&gt;Week 7, next video is “Introduction to Blog”
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Introduction to MongoDB&lt;/h2&gt;
+&lt;p&gt;MongoDB is a non relational datastore. It stores something close from JSON
+called &lt;a href=&quot;http://bsonspec.org&quot;&gt;BSON&lt;/a&gt;, which stands for Binary JSON. It is
+schemaless.&lt;/p&gt;
+&lt;p&gt;The tradeoff to gain scalability and performance is that you have to give up
+joins and transactions that relational databases provide.&lt;/p&gt;
+&lt;h3&gt;CRUD&lt;/h3&gt;
+&lt;p&gt;In MongoDB vocabulary:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create is &lt;code&gt;insert&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Read is &lt;code&gt;find&lt;/code&gt; (analogous to &lt;code&gt;count&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Update is &lt;code&gt;update&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Delete is &lt;code&gt;remove&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Table is &lt;code&gt;collection&lt;/code&gt;. &lt;code&gt;_id&lt;/code&gt; is created by default.&lt;/p&gt;
+&lt;h2&gt;Mongo Shell&lt;/h2&gt;
+&lt;p&gt;MongoShell is basically a JavaScript interpreter. You’ll be able to CRUD data
+but also run simple JavaScript instructions.&lt;/p&gt;
+&lt;p&gt;Features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Autocompletion via the &lt;code&gt;TAB&lt;/code&gt; key&lt;/li&gt;
+&lt;li&gt;Support of &lt;code&gt;.&lt;/code&gt; and &lt;code&gt;[]&lt;/code&gt; notation for JavaScript objects&lt;/li&gt;
+&lt;li&gt;Support of BSON datatypes&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Connextion to the shell: mongo&lt;/p&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; show dbs
+&amp;gt; use mydb
+
+&amp;gt; for (i = 0; i &amp;lt; 3; i++) print(&amp;quot;Hello Bootstragram&amp;quot;);
+Hello Bootstragram
+Hello Bootstragram
+Hello Bootstragram
+
+&amp;gt; help
+
+&amp;gt; obj = { &amp;quot;a&amp;quot; : 1, &amp;quot;b&amp;quot;: &amp;quot;hello&amp;quot;, &amp;quot;c&amp;quot;: [&amp;quot;apple&amp;quot;, &amp;quot;tomatoes&amp;quot;]}
+
+&amp;gt; NumberInt(1)
+
+&amp;gt; NumberLong(1)
+
+&amp;gt; new Date()
+
+&amp;gt; exit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Query Language&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;_id&lt;/code&gt; is returned by default with queries. &lt;code&gt;pretty()&lt;/code&gt; helps formatting answers
+in a readable way. The second argument tells MongoDB the name of the fields we
+want to fetch.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; db.collection.findOne()
+&amp;gt; db.collection.findOne({&amp;quot;name&amp;quot;: &amp;quot;Jones&amp;quot;})
+&amp;gt; db.collection.findOne({&amp;quot;name&amp;quot;: &amp;quot;Jones&amp;quot;}, {&amp;quot;name&amp;quot;: true, &amp;quot;_id&amp;quot;: false})
+&amp;gt; db.scores.find( { type: &amp;quot;essay&amp;quot;, score: 50 }, { student: true, _id: false } );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Query operators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;{ $gt : 95 }&lt;/code&gt;: greather than (&amp;gt;, NOT &amp;gt;=)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$gte&lt;/code&gt;, &lt;code&gt;$lt&lt;/code&gt;, &lt;code&gt;$lte&lt;/code&gt; are &lt;code&gt;&amp;gt;=&lt;/code&gt;, &lt;code&gt;&amp;lt;&lt;/code&gt; and &lt;code&gt;&amp;lt;=&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$exists&lt;/code&gt;: &lt;code&gt;true&lt;/code&gt;/&lt;code&gt;false&lt;/code&gt; filter documents where the specified field exists or
+not&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$type&lt;/code&gt; (example: 2 for String, cf. &lt;a href=&quot;http://bsonspec.org&quot;&gt;BSON specifications&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$regex&lt;/code&gt; (example: “^A$”)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; db.scores.find( { type: { $exists: true } } );
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Prefix Query operators&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$or&lt;/code&gt; + array&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$and&lt;/code&gt; + array (not as useful)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tricky : db.scores.find( { score : { $gt : 50 }, score : { $lt : 60 } } ); #
+only less than 60 are returned. Beware that $and is not used, but the 2nd score
+field value is replacing the 1st score field value (this is kind of a normal
+dictionary behavior).&lt;/p&gt;
+&lt;h3&gt;Querying inside arrays&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Polymorphism&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$all : [ elem1, elem2 ]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$in : [ enum1, enum2 ]&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Cursor Operations&lt;/h3&gt;
+&lt;p&gt;Processed on the server-side:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sort&lt;/li&gt;
+&lt;li&gt;limit&lt;/li&gt;
+&lt;li&gt;skip&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Update options&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;set, unset&lt;/li&gt;
+&lt;li&gt;push, pop, pull, pushAll, pullAll, addToSet&lt;/li&gt;
+&lt;li&gt;upsert, multi&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Error feedback&lt;/h3&gt;
+&lt;p&gt;db.runCommand( { getLastError: 1 } )&lt;/p&gt;
+&lt;h3&gt;Dot notation&lt;/h3&gt;
+&lt;p&gt;Don’t forget the double-quotes!&lt;/p&gt;
+&lt;h2&gt;Performance&lt;/h2&gt;
+&lt;h3&gt;Basic Usage of Indexes&lt;/h3&gt;
+&lt;h4&gt;Creating an index&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;db.collection.ensureIndex( { my_key: 1 }, opts ) # 1 is ascending, -1 is descinding
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;opts&lt;/code&gt; can be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;missing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{ unique: true }&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{ unique: true, dropDups: true }&lt;/code&gt; (RISKY!)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;{ sparse: true }&lt;/code&gt; (RISKY!)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Indexes can be created in the background.&lt;/p&gt;
+&lt;h4&gt;Finding existing indexex&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;db.system.indexes.find()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;db.collection.getIndexes()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Dropping an index&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;db.collection.dropIndex( { my_key: 1 } )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Fine Tuning&lt;/h3&gt;
+&lt;h4&gt;Explain&lt;/h4&gt;
+&lt;p&gt;Adding &lt;code&gt;.explain()&lt;/code&gt; on a query produces a document explaining how the request
+was executed. Some of the most relevant information of this document are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;cursor&lt;/code&gt;: it tells you if an index was used (&lt;code&gt;BtreeCursor&lt;/code&gt;) or not
+(&lt;code&gt;BasicCursor&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;millis&lt;/code&gt;: it tells you how long the request took in milliseconds&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;indexOnly&lt;/code&gt;: it tells you if the index was enough to return the result of the
+request&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Size of an index&lt;/h4&gt;
+&lt;p&gt;Calling &lt;code&gt;.stats()&lt;/code&gt; on a collection gives you a document with some interesting
+information. One particularly important information is the size of your index
+(you want your index to fit inside the memory) that you can also get directly
+via &lt;code&gt;.totalIndexSize()&lt;/code&gt;.&lt;/p&gt;
+&lt;h3&gt;Profiling&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://docs.mongodb.org/manual/reference/method/db.setProfilingLevel/&quot;&gt;http://docs.mongodb.org/manual/reference/method/db.setProfilingLevel/&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;db.system.profile.find({millis: { $gt: 1000 }}).sort({ts: -1})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&quot;http://docs.mongodb.org/manual/reference/program/mongotop/&quot;&gt;http://docs.mongodb.org/manual/reference/program/mongotop/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="mongo" /><summary type="html">I signed up for the online MongoDB University MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a promising technology and MongoDB’s courseware uses EdX’s excellent software that I had already used for the MIT 6.002x Electronics course so I was pretty confident of the usefulness of all this.</summary></entry></feed>

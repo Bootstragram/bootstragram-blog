@@ -1,0 +1,146 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Lessons learned from testing a React front with Cypress | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Lessons learned from testing a React front with Cypress" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="End-to-end testing is rarely the hot subject a team will fight about to tackle. But it is useful for at least 2 scenarios:" />
+<meta property="og:description" content="End-to-end testing is rarely the hot subject a team will fight about to tackle. But it is useful for at least 2 scenarios:" />
+<link rel="canonical" href="https://bootstragram.com/blog/testing-react-app-with-cypress/" />
+<meta property="og:url" content="https://bootstragram.com/blog/testing-react-app-with-cypress/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-02-27T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Lessons learned from testing a React front with Cypress" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/testing-react-app-with-cypress/","@type":"BlogPosting","headline":"Lessons learned from testing a React front with Cypress","dateModified":"2019-02-27T00:00:00+00:00","datePublished":"2019-02-27T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/testing-react-app-with-cypress/"},"description":"End-to-end testing is rarely the hot subject a team will fight about to tackle. But it is useful for at least 2 scenarios:","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Lessons learned from testing a React front with Cypress</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2019-02-27T00:00:00+00:00" itemprop="datePublished">
+        February 27, 2019
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>End-to-end testing is rarely the hot subject a team will fight about to tackle.
+But it is useful for at least 2 scenarios:</p>
+<ul>
+<li>basic tests objectives: detect regressions, bugs, crashes, etc.;</li>
+<li>automate &amp; speed up the process of seeding a system.</li>
+</ul>
+<h2>Why Cypress?</h2>
+<p>Here is a list of features that will help decide what the best solution is:</p>
+<ul>
+<li>Gitlab’s CI compatibility</li>
+<li>SauceLabs compatibility</li>
+<li>Visual regression tools</li>
+<li>Debugging tools</li>
+<li>Ease of maintenance of the tests</li>
+<li>Ease of use by non-technical people (ideally, it should be used by the Product
+team)</li>
+<li>Size of the community</li>
+<li>Confidence in the product long-term</li>
+</ul>
+<h3>Because Selenium is not the right choice</h3>
+<p>After spending a day poking around Selenium’s Node port:</p>
+<p>Selenium via Node is not mature (the doc of v4 is limited and hard to read) and
+quite buggy (submitting a form on Firefox just doesn’t work). When deciding to
+commit to Selenium, you must handle it via Java directly as it seems to work
+much better this way.</p>
+<p>The WebDriver protocol doesn’t allow to use <code>dom-testing-library</code>-like features:
+we can only fetch elements via id, name, etc. but not via visually appearing
+elements (except for links exclusively). There is no obvious workaround given
+the nature of how JS is injected in the browser to retrieve elements. As a
+consequence, I guess WebDriver.IO or Nightwatch or other layers on top of
+Selenium shouldn’t even be evaluated for the time being.</p>
+<h3>Cypress’ promises</h3>
+<p>Cypress is a modern solution that is compatible with <code>dom-testing-library</code>.
+Minus points for a non-compatibility with Sauce Labs for the time being but they
+promise it could work in the future (and they seem well-funded so promises could
+be resolved).</p>
+<h3>The tooling around it</h3>
+<ul>
+<li><a href="https://testing-library.com/docs/cypress-testing-library/intro">Cypress Testing Library</a></li>
+<li><a href="https://chancejs.com">Chance</a></li>
+<li><a href="https://github.com/cypress-io/eslint-plugin-cypress">eslint-plugin-cypress</a></li>
+</ul>
+<h2>Troubleshooting</h2>
+<h3>How to avoid unnecessary waits?</h3>
+<p>You can wait for a button to be enabled this way:</p>
+<pre><code class="language-js">1.  cy.getByText('Suivant').as('next');
+2.  cy.get('@next').should('be.enabled').click();
+</code></pre>
+<p>Here is a line-by-line explanation of how it works:</p>
+<ol>
+<li>Get the DOM element with our usual <code>getByTest</code> and <em>alias</em> for further
+reference;</li>
+<li>Use Cypress’ native <code>get</code> with the alias, assert/wait that the button is
+enabled, and then click on it.</li>
+</ol>
+<p>The difference between <code>getByText</code> and <code>get</code> is that <code>getByText</code> asserts
+<code>be.enable</code> right away and won’t wait the same way Cypress does. Cf.
+<a href="https://docs.cypress.io/guides/references/best-practices.html#Unnecessary-wait-for-cy-get">this doc</a>
+from Cypress:</p>
+<blockquote>
+<p>Whenever commands have an assertion they will not resolve until their
+associated assertions pass. This enables you to simply describe the state of
+your application without having to worry about when it gets there.</p>
+</blockquote>
+
+  </div>
+
+  <a class="u-url" href="/blog/testing-react-app-with-cypress/" hidden></a><ul class="tags-list"></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/frenchkit-2018/">
+        Notes from FrenchKit 2018
+      </a>
+    </p>
+    <p class="related-page-date">November 19, 2018</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/wwdc-2019-basic-wishlist/">
+        WWDC 2019, A Basic Wish List
+      </a>
+    </p>
+    <p class="related-page-date">May 29, 2019</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

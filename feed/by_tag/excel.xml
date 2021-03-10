@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/excel.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/excel.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Excel: exporting a chart as a PNG image</title><link href="https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image/" rel="alternate" type="text/html" title="Excel: exporting a chart as a PNG image" /><published>2009-02-12T00:00:00+00:00</published><updated>2009-02-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image</id><content type="html" xml:base="https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image/">&lt;p&gt;This Excel macro will help you export a chart to a PNG file to &lt;code&gt;d:/temp&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Sub exportChartAsPNG()
+Dim ChartName As String
+Dim File As String
+ChartName = ActiveChart.Name
+File = &amp;quot;d:/temp/&amp;quot;
+ActiveChart.Export Filename:=File &amp;amp; ChartName &amp;amp; &amp;quot;.png&amp;quot;, FilterName:=&amp;quot;PNG&amp;quot;
+End Sub
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="windows" /><category term="excel" /><summary type="html">This Excel macro will help you export a chart to a PNG file to d:/temp:</summary></entry></feed>

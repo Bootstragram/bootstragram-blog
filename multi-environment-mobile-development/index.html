@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Multi Environment Mobile Development</title>
+
+    <meta name="description" content="Why it is fun, hard, annoying and cool at the same time">
+    <meta name="author" content="Mickaël Floc'hlay">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+    document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+
+            <section>
+                <h1>Multi Environment Mobile Development</h1>
+                <h3>Why it is fun, hard, annoying and cool at the same time</h3>
+                <p>
+                    <small>Created by <a href="http://bootstragram.com">Mickaël Floc'hlay</a> / <a href="http://twitter.com/dirtyhenry">@dirtyhenry</a></small>
+                </p>
+            </section>
+
+            <section>
+                <h2>Designing for mobile</h2>
+                <ul>
+                    <li>User Interface</li>
+                    <li>User eXperience</li>
+                    <li>Development</li>
+                    <li>Content</li>
+                    <li>Business Plan</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Smartphones OS</h2>
+                <div id="os_market" style="width: 900px; height: 500px;"></div>
+                <p><small>Q3 2012 - Source: <a href="http://techcrunch.com/2012/11/02/idc-android-market-share-reached-75-worldwide-in-q3-2012/">IDC via TechCrunch</a></small></p>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Mobile Browsers</h2>
+                    <div id="mobile_browser_market_march_2013" style="width: 900px; height: 500px;"></div>
+                    <p>Mobile browsing: 13% of global browsing</p>
+                    <p><small>March 2013 - Source: <a href="http://arstechnica.com/information-technology/2013/03/chrome-hits-17-month-low-windows-8-still-only-creeping-upward/">ArsTechnica</a></small></p>
+                </section>
+                <section>
+                    <h2>Mobile Browsers</h2>
+                    <div id="mobile_browser_market_december_2012" style="width: 900px; height: 500px;"></div>
+                    <p>Mobile browsing: 10% of global browsing</p>
+                    <p><small>December 2012 - Source: <a href="http://arstechnica.com/information-technology/2013/01/internet-explorer-ends-the-year-on-a-high-windows-8-slow-to-get-noticed/">ArsTechnica</a></small></p>
+                </section>
+                <section>
+                    <h2>Mobile Browsers</h2>
+                    <div id="mobile_browser_market_october_2012" style="width: 900px; height: 500px;"></div>
+                    <p>Mobile browsing: 10% of global browsing</p>
+                    <p><small>October 2012 - Source: <a href="http://arstechnica.com/information-technology/2012/11/firefox-dips-below-20-percent-chrome-falls-internet-explorer-gains/">ArsTechnica</a></small></p>
+                </section>
+            </section>
+
+            <section>
+                <h2>Tablets</h2>
+                <p id="tablets_market" style="width: 900px; height: 350px;"></p>
+                <p>25% of adults American own a tablet</p>
+                <p>44% of Android tablets are Kindle Fire tablets</p>
+                <p>iPad share was 81% in 2011</p>
+                <p><small>October 2012 - Source: <a href="http://arstechnica.com/gadgets/2012/10/study-shows-25-of-americans-own-a-tablet/">ArsTechnica</a></small></p>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Weird...</h2>
+                    <p>Tim Cook: <small>when comparing the tablet market share (iPad 68%) with the tablet web traffic share (iPad 91%)</small></p>
+                    <blockquote>I don't know what these other tablets are doing</blockquote>
+                    <p><small><a href="http://www.apple.com/apple-events/september-2012/">Apple Special Event - September 12, 2012</a></small></p>
+                </section>
+
+                <section>
+                    <h2>Weird...</h2>
+                    <p>TNW Magazine stopped publishing on Android after noticing a <a href="http://uptake.co/who-is-reading-magazines-on-android">"80:1 ratio of iOS to Android downloads".</a></p>
+                    <p>Marco Ament, <a href="http://www.marco.org/2012/12/31/who-is-reading-magazines-on-android">commenting on this</a>:</p>
+                    <blockquote>Installed base isn’t everything — if it was, we’d all be writing Windows apps.</blockquote>
+                </section>
+
+                <section>
+                    <h2>Weird...</h2>
+                    <blockquote>For every 1 iOS version we’ve sold, 5 were sold on Android. The Android version also costs $1 more, so we’re making more per transaction as well. (...) it’s a fact.</blockquote>
+                    <p>- Russell Ivanovic on <a href="http://blog.shiftyjelly.com/2013/02/20/why-android-first/">shiftyjelly's blog</a></p>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h2>Supporting multiple screens</h2>
+                    <p>iOS Screens:
+                        <table>
+                            <tr><td><small>01/2007</small></td><td>iPhone + 3G + 3GS</td><td>480 &times; 320 px</td><td>163 dpi</td></tr>
+                            <tr><td><small>01/2010</small></td><td>iPad + 2 + Mini</td><td>1,024 &times; 768 px</td><td>132/163 dpi</td></tr>
+                            <tr><td><small>06/2010</small></td><td>iPhone 4 + 4S</td><td>960 &times; 640 px</td><td>326 dpi</td></tr>
+                            <tr><td><small>03/2010</small></td><td>iPad 3 + 4</td><td>2,048 &times; 1536 px</td><td>264 dpi</td></tr>
+                            <tr><td><small>09/2012</small></td><td>iPhone5</td><td>1136 &times; 640 px</td><td>326 dpi</td></tr>
+                        </table>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Supporting multiple screens</h2>
+                    <p>Android screens:<br>
+                        <img src="img/screens-ranges.png">
+                    </p>
+                    <p>
+                        <small>Source : <a href="http://developer.android.com/guide/practices/screens_support.html">developer.android.com</a></small>
+                    </p>
+                </section>
+
+                <section>
+                    <h2>Supporting multiple screens</h2>
+                    <div id="android_screens" style="width: 900px; height: 500px;"></div>
+                    <p>
+                        <small>October 2012 - Source: <a href="http://developer.android.com/about/dashboards/index.html">developer.android.com</a></small>
+                    </p>
+                </section>
+            </section>
+            
+            <section>
+                <h2>Supporting multiple OS versions</h2>
+                <div id="androidOSVersionsChart" style="width: 900px; height: 500px;"></div>
+                <p><small>Source: <a href="http://developer.android.com/about/dashboards/index.html">developer.android.com</a></small></p>
+            </section>
+
+            <section>
+                <h2>Solutions</h2>
+                <ul>
+                    <li>Web: responsive design (HTML5/CSS3)</li>
+                    <li>Apps: smart layout systems</li>
+                    <li>Shitty code:
+                        <pre><code>
+if ([device isIpad]) {
+    image.name = @"image~pad.png";
+} else if ([device isIphone5]) {
+    image.name = @"image-568h~phone.png";
+} else {
+    image.name = @"image~phone.png";
+}
+
+                        </code></pre>              
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>UX Design</h2>
+                <p>Interesting but...</p>
+                <ul>
+                    <li>Some useless games</li>
+                    <li>Some bad experiences</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>UX Design</h2>
+                <p>Quick list of UX mobile brought</p>
+                <ul>
+                    <li>Bounce at the end of a scroll (Apple)</li>
+                    <li>Pull to refresh (Loren Brichter)</li>
+                    <li>Some UI from Clear and Path</li>
+                </ul>
+                <p><a href="http://mysterioustrousers.com/news/2013/3/25/visceral-apps-and-you">Rob Foster</a>:</p>
+                <blockquote>
+                    I believe when properly done, a visceral app actually causes your body to release endorphins.
+                </blockquote>
+                <p><a href="http://daringfireball.net/linked/2013/03/25/visceral-apps">John Gruber</a>:</p>
+                <blockquote>
+                    I would call this designing for feel, or maybe even designing for affection.
+                </blockquote>
+            </section>
+
+            <section>
+                <h2>Time for Questions</h2>
+                <ul>
+                    <li>Web or App?</li>
+                    <li>What framework?</li>
+                    <li>Native or Multiplatform?</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Tools for Webapps</h2>
+                <ul>
+                    <li><a href="http://jquerymobile.com/">JQuery Mobile</a></li>
+                    <li>Responsive web frameworks:
+                        <ul>
+                            <li><a href="http://twitter.github.com/bootstrap/">Bootstrap</a></li>
+                            <li><a href="http://html5boilerplate.com/">HTML5 Boilerplate</a></li>
+                            <li>...</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Multiplatform Tools</h2>
+                <ul>
+                    <li><a href="http://phonegap.com/">PhoneGap</a>/<a href="http://incubator.apache.org/cordova">Cordova</a></li>
+                    <li><a href="http://www.sencha.com/products/touch">Sencha Touch</a></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Native Tools</h2>
+                <ul>
+                    <li><a href="http://developer.android.com/sdk/index.html">Android SDK (Eclipse ADT plugin)</a></li>
+                    <li><a href="https://developer.apple.com/devcenter/ios/index.action">iOS SDK (Xcode)</a></li>
+                </ul>
+                <p>
+                    <blockquote>
+                        Creating apps for both platforms is difficult; I have huge respect for the companies that nail it. 
+                        Nailing it means not taking a reductionist approach but instead being intimately familiar with the 
+                        platform so that you can build something that feels meant to be there.
+                    </blockquote>
+                    <a href="http://jackg.org/beyond-flat">Jack Groetzinger</a>
+                </p>
+            </section>
+
+            <section>
+                <h2>Rule of Thumb</h2>
+                <table>
+                    <tr><th>Technology</th><th>+</th><th>-</th></tr>
+                    <tr><td>Web App</td><td>Full online</td><td>Offline needs<br>Performance<br>Browser Fragmentation<br>Monetization</td></tr>
+                    <tr><td>Multiplatform App</td><td>Tests<br>Maintenance</td><td>Customization<br>Innovation TTM</td></tr>
+                    <tr><td>Native App</td><td>Full Control<br>Performance</td><td>Tests<br>V1 TTM</td></tr>
+                </table>
+                <p>Cf. <a href="http://en.wikipedia.org/wiki/Mobile_application_development">Wikipedia</a> for a maintained list of tools</p>
+            </section>
+
+            <section>
+                <h2>Testing</h2>
+                <ul>
+                    <li>Multiple screen sizes</li>
+                    <li>+ Multiple screen densities</li>
+                    <li>+ Multiple OS</li>
+                    <li>+ Multiple OS versions</li>
+                    <li>=</li>
+                </ul>
+                <p>
+                    <img src="img/horror.gif">
+                </p>
+            </section>
+
+            <section>
+                <h2>Testing</h2>
+                <p>but...</p>
+                <ul>
+                    <li>Good code practices</li>
+                    <li>Unit tests</li>
+                    <li>Continuous integration</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>A word on the server side</h2>
+                <p>Better stuff than Java/MySQL is coming...</p>
+                <ul>
+                    <li><a href="http://rubyonrails.org/">Ruby on Rails</a></li>
+                    <li><a href="http://www.mongodb.org/">mongoDB</a></li>
+                    <li><a href="http://nodejs.org/">Node.js</a></li>
+                    <li>etc.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What content</h2>
+                <p>A good story can be found <a href="http://www.alistapart.com/articles/your-content-now-mobile/">here</a>.</p>
+                <blockquote>When users search from a mobile device, United automatically redirects links from Google to its mobile website—without checking to see if the content is available on mobile. If the content doesn’t exist on mobile, the user gets unceremoniously dumped on the homepage of the mobile website. Mobile redirects that break search—how is that ever a good user experience?</blockquote>
+            </section>
+
+            <section>
+                <h2>How To Make A Living From Mobile?</h2>
+                <p>A good joke from <a href="http://theoatmeal.com/blog/apps">the Oatmeal</a> inspired <a href="http://www.joshlehman.com/thoughts/stop-using-the-cup-of-coffee-vs-0-99-cent-app-analogy/">Josh Lehman these motivation rules</a>:
+                    <ol>
+                        <li>Build an app experience that’s unique and doesn’t feel “easily replicated”</li>
+                        <li>Provide something the user sees as valuable to their daily life</li>
+                        <li>Package it such that it shows off its craftsmanship</li>
+                        <li>Find creative ways to profit off of a “free” version</li>
+                        <li>Quit complaining about money wasted on cups of coffee</li>
+                    </ol>
+                </p>
+            </section>
+
+            <section>
+                <h2>Candidates for your RSS feed</h2>
+                <ul>
+                    <li><a href="http://daringfireball.net/">Daring Fireball</a></li>
+                    <li><a href="http://www.marco.org/">Marco.org</a></li>
+                    <li><a href="http://www.alistapart.com/">A List Apart</a></li>
+                    <li><a href="http://www.webdesignerdepot.com/">Webdesigner Depot</a></li>
+                    <li><a href="http://arstechnica.com/">ars technica</a></li>
+                    <li><a href="http://theoatmeal.com/">The Oatmeal</a></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>What Now?</h2>
+                <p>
+                    Go develop your apps!
+                </p>
+            </section>
+
+            <section>
+                <h1>THE END</h1>
+                <h3><a href="https://twitter.com/dirtyhenry">#dirtyhenry</a></h3>
+                <h3><a href="http://bootstragram.com">bootstragram.com</a></h3>
+                <h3><a href="https://github.com/dirtyhenry/multi_environment_mobile_development">Sources on GitHub</a></h3>
+            </section>
+
+        </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+        { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+    </script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="js/charts.js"></script>
+    <script>
+    var _gaq=[['_setAccount','UA-37299595-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+</body>
+</html>

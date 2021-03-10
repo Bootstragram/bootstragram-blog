@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/Compass.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/Compass.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">A CSS Polaroid Effect With Flexbox</title><link href="https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/" rel="alternate" type="text/html" title="A CSS Polaroid Effect With Flexbox" /><published>2021-03-07T00:00:00+00:00</published><updated>2021-03-07T00:00:00+00:00</updated><id>https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids</id><content type="html" xml:base="https://bootstragram.com/blog/css-polaroid-effect-with-fluid-grids/">&lt;p&gt;Back in 2010, after reading &lt;a href=&quot;https://legacy-zurb.netlify.app/playground/css3-polaroids&quot;&gt;Zurb’s Polaroids with CSS3 blog post&lt;/a&gt;, I told
+myself it could be a really cool effect to present Dead Rooster’s MP3
+selections&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; so I adapted the code and made it work with (at the time) very
+hot’n’sexy &lt;em&gt;fluid grids&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Flash forward to 2021.&lt;/p&gt;
+&lt;p&gt;I’m migrating Dead Rooster to modern tools. Let’s revisit this effect to
+re-enable it.&lt;/p&gt;
+&lt;h2&gt;Jekyll is a decent Sass/SCSS authoring tool&lt;/h2&gt;
+&lt;p&gt;The original version of this post mentioned &lt;a href=&quot;https://github.com/Compass/compass/&quot;&gt;&lt;strong&gt;Compass&lt;/strong&gt;&lt;/a&gt; as a good Sass
+authoring framework. It is no longer actively maintainted and nowadays, I rarely
+author any CSS outside of a Jekyll project or CSS-in-JS tools such as
+&lt;a href=&quot;https://styled-components.com/&quot;&gt;styled-components&lt;/a&gt; or &lt;a href=&quot;https://emotion.sh/docs/introduction&quot;&gt;Emotion&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We will use &lt;a href=&quot;https://jekyllrb.com/docs/assets/#sassscss&quot;&gt;Jekyll’s Sass/SCSS support&lt;/a&gt; today.&lt;/p&gt;
+&lt;h2&gt;The Polaroid Effect&lt;/h2&gt;
+&lt;ul class=&quot;polaroids&quot;&gt;
+  &lt;li class=&quot;polaroid&quot; href=&quot;#&quot; title=&quot;Guards&quot;&gt;
+    &lt;img src=&quot;https://picsum.photos/seed/Guards/200&quot; /&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;polaroid&quot; href=&quot;#&quot; title=&quot;Women&quot;&gt;
+    &lt;img src=&quot;https://picsum.photos/seed/Women/200&quot; /&gt;
+  &lt;/li&gt;
+  &lt;li class=&quot;polaroid&quot; href=&quot;#&quot; title=&quot;The Raveonettes&quot;&gt;
+    &lt;img src=&quot;https://picsum.photos/seed/The Raveonettes/200&quot; /&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;How it works&lt;/h2&gt;
+&lt;p&gt;I created 2 codepens to compare the code from 2010 to the code of 2021:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://codepen.io/dirtyhenry/pen/BaQPoRL&quot;&gt;Polaroid Effects 2010&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://codepen.io/dirtyhenry/pen/vYyaNWE&quot;&gt;Polaroid Effects 2021&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What changed since 2010?&lt;/h2&gt;
+&lt;p&gt;The old code used a lot of fixed sizes and maths, with a variable for the number
+of columns at compile time that became a constant at runtime. To mimic this
+behavior, we could have used a &lt;a href=&quot;https://css-tricks.com/snippets/css/complete-guide-grid/&quot;&gt;&lt;strong&gt;CSS Grid Layout&lt;/strong&gt;&lt;/a&gt; since, on Dead Rooster,
+each post using this effect featured a 3 ⨉ 3 grid of images. But on smaller
+screens, the code made the images become too small so I decided &lt;a href=&quot;https://css-tricks.com/snippets/css/a-guide-to-flexbox/&quot;&gt;&lt;strong&gt;CSS Flexbox
+Layout&lt;/strong&gt;&lt;/a&gt; led to better results in terms of responsiveness.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Vendor prefixes&lt;/strong&gt; are for the most part useless nowadays. I removed all their
+occurrences from the original code and the code behaves as expected on Safari,
+Chrome and Firefox on macOS, and on Safari Mobile on iOS.&lt;/p&gt;
+&lt;p&gt;Finally, SCSS now has a fun &lt;code&gt;random&lt;/code&gt; native method that can bring more
+unpredictability — which is the fun part of this effect — than the Fibonacci
+suite multiples that were used in the original code. The random value is only
+random at compile-time though, so we still need multiple classes using
+&lt;code&gt;:nth-child&lt;/code&gt; to avoid all polaroids to all be tilted at the same angle.&lt;/p&gt;
+&lt;p&gt;You can see the effect live on Dead Rooster &lt;a href=&quot;https://deadrooster.org/compile-mp3-du-net-01/&quot;&gt;here&lt;/a&gt;, &lt;a href=&quot;https://deadrooster.org/compile-mp3-du-net-05/&quot;&gt;here&lt;/a&gt; or &lt;a href=&quot;https://deadrooster.org/compile-mp3-du-net-08/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Rock on. 🤘&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;&lt;a href=&quot;https://deadrooster.org&quot;&gt;Dead Rooster&lt;/a&gt; is my blog, written in French, where
+I write about pop culture since 2005. &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name>Mick F</name></author><category term="Journaling" /><category term="CSS" /><category term="Sass" /><category term="Compass" /><category term="Jekyll" /><summary type="html">Revisiting how to show images as if they were polaroids, in CSS, with technologies from 2021.</summary></entry></feed>

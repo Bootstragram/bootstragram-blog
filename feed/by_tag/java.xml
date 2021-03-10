@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/java.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/java.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry xml:lang="fr"><title type="html">Grails : introduction et tuyaux</title><link href="https://bootstragram.com/blog/grails-introduction-et-tuyaux/" rel="alternate" type="text/html" title="Grails : introduction et tuyaux" /><published>2009-11-18T00:00:00+00:00</published><updated>2009-11-18T00:00:00+00:00</updated><id>https://bootstragram.com/blog/grails-introduction-et-tuyaux</id><content type="html" xml:base="https://bootstragram.com/blog/grails-introduction-et-tuyaux/">&lt;p&gt;&lt;strong&gt;Grails&lt;/strong&gt; est un framework de développement qui permet de créer des
+applications web très rapidement. Ce produit, construit autour de Java et de
+&lt;a href=&quot;http://groovy-lang.org&quot;&gt;Groovy&lt;/a&gt; est particulièrement performant pour développer
+des applications qui sont très proches d’une simple manipulation d’un modèle de
+données.&lt;/p&gt;
+&lt;h2&gt;Rappels des commandes de base&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;grails help&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Obtenir de l’aide sur Grails&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;grails run-app&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Fait tourner l’application Grails dans Jetty&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Plugins indispensables&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;acegi&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Authentification et contrôles d’accès&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;image-tools&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Chargement, sauvegarde et manipulation d’images (crop, mask, création de
+thumbnail)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Quelques liens utiles&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://grails.org&quot;&gt;Le site officiel de Grails&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://grails.org/documentation.html&quot;&gt;La documentation de référence&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="java" /><category term="grails" /><summary type="html">Grails est un framework de développement qui permet de créer des applications web très rapidement. Ce produit, construit autour de Java et de Groovy est particulièrement performant pour développer des applications qui sont très proches d’une simple manipulation d’un modèle de données.</summary></entry><entry><title type="html">How to Add a JAR to a Local Maven Repository?</title><link href="https://bootstragram.com/blog/ajouter-un-jar-a-votre-repository-maven-local/" rel="alternate" type="text/html" title="How to Add a JAR to a Local Maven Repository?" /><published>2009-01-14T00:00:00+00:00</published><updated>2009-01-14T00:00:00+00:00</updated><id>https://bootstragram.com/blog/ajouter-un-jar-a-votre-repository-maven-local</id><content type="html" xml:base="https://bootstragram.com/blog/ajouter-un-jar-a-votre-repository-maven-local/">&lt;h2&gt;The command&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;mvn install:install-file \
+  -Dfile=&amp;lt;path-to-file&amp;gt; \
+  -DgroupId=&amp;lt;group-id&amp;gt; \
+  -DartifactId=&amp;lt;artifact-id&amp;gt; \
+  -Dversion=&amp;lt;version&amp;gt; \
+  -Dpackaging=&amp;lt;packaging&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Why we need it&lt;/h2&gt;
+&lt;p&gt;Not every JAR is available on Maven repositories by default. That makes sense
+since not every JAR is made to be public. However, if a JAR is required to
+compile your project, it might be necessary to add this JAR to your local
+repository.&lt;/p&gt;
+&lt;p&gt;More details can be found on this &lt;a href=&quot;https://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html&quot;&gt;Guide to installing 3rd party JARs&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="java" /><category term="maven" /><summary type="html">The command</summary></entry></feed>

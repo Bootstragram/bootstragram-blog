@@ -1,0 +1,178 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Notes from FrenchKit 2018 | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Notes from FrenchKit 2018" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:" />
+<meta property="og:description" content="FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:" />
+<link rel="canonical" href="https://bootstragram.com/blog/frenchkit-2018/" />
+<meta property="og:url" content="https://bootstragram.com/blog/frenchkit-2018/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-11-19T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Notes from FrenchKit 2018" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/frenchkit-2018/","@type":"BlogPosting","headline":"Notes from FrenchKit 2018","dateModified":"2018-11-19T00:00:00+00:00","datePublished":"2018-11-19T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/frenchkit-2018/"},"description":"FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Notes from FrenchKit 2018</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2018-11-19T00:00:00+00:00" itemprop="datePublished">
+        November 19, 2018
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p><a href="http://frenchkit.fr">FrenchKit</a> 2018 was awesome. I recommend it
+<a href="/blog/frenchkit-2017/">again</a> to any iOS/Swift developer around. Day 1 was much better than
+Day 2. Two recurring topics were:</p>
+<ul>
+<li>code generation leveraging;</li>
+<li>and the importance of a good product management policy.</li>
+</ul>
+<p>Most speakers seemed to use <a href="https://www.deckset.com">Deckset</a> for their
+presentations. As <a href="/blog/frenchkit-2017/">often</a>, international speakers were much much better
+than French ones.</p>
+<p>Here are the talks I recommend.</p>
+<h2>brew create - Max Howell</h2>
+<p>Storytelling of how Max came to create <a href="https://brew.sh">Homebrew</a> and how he
+managed its huge success. It’s surprising he had such a product-oriented
+approach for such a tech product. The whole talk was really nicely put (very
+minimalist use of slides and a great video of the git activity to give a visual
+feeling to the growing popularity of Brew).</p>
+<p>Two segments particularly stood out to me:</p>
+<ul>
+<li>One about the importance of naming things (the whole brew, cellar, keg,
+formulae that Brew is using);</li>
+<li>One about the feeling of code ownership and how to control it.</li>
+</ul>
+<p>— <a href="https://youtu.be/WMMPRS58n-o">📺 Watch</a></p>
+<h2>Going Prod with Server-Side Swift - Pim Stolk</h2>
+<p>How an ING side-project (Banking of Things) is using server-side Swift. They
+picked <a href="https://www.kitura.dev">Kitura</a> over <a href="https://vapor.codes">Vapor</a>
+because they had a good vibe from the team and they seem to work very closely
+together. They had tips to use containers to be as cloud-provider agnostic as
+possible.</p>
+<p>— <a href="https://youtu.be/tRakjsKwdg4">📺 Watch</a></p>
+<h2>Sharing Swift: writing code that scales - Florent Pillet</h2>
+<p>This was a good counterpart to Pim’s talk. Florent is French and is using Vapor
+server-side. He’s really a big fan of
+<a href="https://github.com/apple/swift-nio">SwiftNIO</a> and its performances. One of his
+tip was to make builds in containers locally so you can just deploy binaries to
+production containers (no need for Swift compilers). He seems to have insights
+straight from Apple saying that <a href="https://swift.org/package-manager/">SPM</a> is not
+coming to iOS anytime soon.</p>
+<p>Both Florent &amp; Pim consider <strong>server-side Swift is production ready</strong>. Kitura &amp;
+Vapor both provide <a href="https://prometheus.io">Prometheus</a> support which seems to be
+good enough for monitoring. One of the main pain point remaining seems to be
+debugging from Linux.</p>
+<p>— <a href="https://youtu.be/1G63BKeNfjA">📺 Watch</a></p>
+<h2>The Lost Art of System Design - John Sundell</h2>
+<p>John is as a good showman and as energetic as reading
+<a href="https://www.swiftbysundell.com">his blog</a> lets you think. The talk was about
+how to answer “where should we sit this piece of code?”. He was advocating
+towards decoupling, building frameworks, keys &amp; lock-in to different parts of an
+application. Great practical tips that were somewhat Swift-related but can be
+applied to any language as well.</p>
+<p>For instance: RootFactory creating basic objects and a LoggedFactory creating
+objects once the user is logged in which translates that we’re sure we can
+provide a User and that we don’t need to make it optional, etc.</p>
+<p>— <a href="https://youtu.be/bAokeFxW2fo">📺 Watch</a></p>
+<h2>Swift Strings Seven Ways - Mattt</h2>
+<p>A storytelling kind of talk about how we take strings for granted and we think
+they’re simple but they’re not. The guy is a big name in the iOS scene — among
+others, creator of <a href="https://nshipster.com">NSHipster</a> —, and it was surprising
+to see a talk that was sometimes borderline spiritual (he digs the Cherokee
+language a lot).</p>
+<p>But the 2nd half was way more practical about string jargons, struggles, and
+tips on how to process them safely (ie override string by other types for
+identifiers for instance in order to hide the complexity of string for a simple
+usage, use Base64 for exchanging in a safe way, etc.)</p>
+<p>— <a href="https://youtu.be/linHwUqeagU">📺 Watch</a></p>
+<h2>The 700 next devices - Chris Eidhof</h2>
+<p>Again, a big figure in iOS development since he started
+<a href="https://www.objc.io">objc.io</a>. He gave a live-coding presentation of a layout
+library he build for Swift that is going to be introduced in
+<a href="https://talk.objc.io">Swift Talks</a>. The library is really useful and has a nice
+API and seems somewhat influenced by flex box as a complement to AutoLayout. It
+will be even more useful once UIKit gets on macOS. Tip: when using the
+Accessibility inspector during development, the simulator seems super
+responsive.</p>
+<p>— <a href="https://youtu.be/OLDHgg0uh6A">📺 Watch</a></p>
+<h2>The Underestimated Power of KeyPaths - Vincent Pradeilles</h2>
+<p>Lightning talk about how to use key paths to improve Swift convenience, in
+particular to avoid dumb closures.</p>
+<p>— <a href="https://youtu.be/jpAT5DoSUgw">📺 Watch</a></p>
+<h2>Improving your Developer Experience with Open-Source Swift - Dimitri Dupuis-Latour</h2>
+<p>Interesting short talk to make contributing to Swift and its environment not as
+scary as it seems. Empowering mode ✊.</p>
+<p>— <a href="https://youtu.be/olS5w9fBxog">📺 Watch</a></p>
+
+  </div>
+
+  <a class="u-url" href="/blog/frenchkit-2018/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/conf/">
+          conf
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/swift/">
+          swift
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/frenchkit-2017/">
+        Notes from FrenchKit 2017
+      </a>
+    </p>
+    <p class="related-page-date">January 12, 2018</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/testing-react-app-with-cypress/">
+        Lessons learned from testing a React front with Cypress
+      </a>
+    </p>
+    <p class="related-page-date">February 27, 2019</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

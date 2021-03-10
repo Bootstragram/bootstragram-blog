@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/windows.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/windows.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry xml:lang="fr"><title type="html">1er diagnostic de performance sur Windows XP</title><link href="https://bootstragram.com/blog/1er-diagnostic-de-performance-sur-windows-xp/" rel="alternate" type="text/html" title="1er diagnostic de performance sur Windows XP" /><published>2009-11-10T00:00:00+00:00</published><updated>2009-11-10T00:00:00+00:00</updated><id>https://bootstragram.com/blog/1er-diagnostic-de-performance-sur-windows-xp</id><content type="html" xml:base="https://bootstragram.com/blog/1er-diagnostic-de-performance-sur-windows-xp/">&lt;p&gt;Les lenteurs inexpliquées sur un ordinateur ont de quoi exaspérer les
+utilisateurs d’ordinateurs novices en matière de technique. Cette page a pour
+but de les aider à trouver une première réponse à la question : &lt;strong&gt;“pourquoi mon
+ordinateur est-il si lent ?”&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Le gestionnaire des tâches à la rescousse&lt;/h2&gt;
+&lt;p&gt;La 1ère étape consiste à ouvrir l’onglet &lt;em&gt;Performances&lt;/em&gt; du &lt;em&gt;Gestionnaire des
+tâches&lt;/em&gt; grâce au raccourci clavier &lt;code&gt;Ctrl + Shift + Echap&lt;/code&gt;. Sur cette page se
+trouvent plusieurs indicateurs clé…&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Utilisation de l’UC&lt;/strong&gt; : il s’agit du taux d’utilisation du processeur de
+l’ordinateur en temps-réel. Si la valeur est grande, en permanence au-delà de
+80% par exemple, alors votre ordinateur a trop de travail pour assurer des
+performances satisfaisantes. Verdict : votre ordinateur n’est pas assez
+puissant pour vos besoins ou alors vous le surchargez de travail (fermer
+quelques applications doit vous aider à améliorer les performances).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Utilisation du fichier&lt;/strong&gt; : il s’agit de la mémoire RAM nécessaire pour que
+vos applications &lt;em&gt;tournent bien&lt;/em&gt;. Pour connaître la quantité de RAM de votre
+ordinateur, allez dans &lt;em&gt;Système&lt;/em&gt; dans le &lt;em&gt;Panneau de configuration&lt;/em&gt;. Votre
+quantité de RAM y est affichée. Si la valeur du gestionnaire de tâches est
+proche de la valeur du panneau de configuration, votre ordinateur n’a pas
+assez de mémoire : il vous faut fermer quelques applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Le processeur et la mémoire pour les nuls&lt;/h2&gt;
+&lt;p&gt;Le processeur et la mémoire sont deux ressources critiques d’un ordinateur. Pour
+se figurer ce que cela représente, imaginez un ouvrier devant assembler une
+maquette de voiture sur un plan de travail. Pour chaque assemblage, il doit
+aller chercher les pneus, carrosserie, etc. dans un stock, les ramener sur son
+plan de travail puis une fois qu’il a toutes les pièces sous les yeux, il peut
+les assembler :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;le processeur est la vitesse avec laquelle l’ouvrier agit&lt;/strong&gt;. Par exemple,
+plus ses bras sont rapides, plus il peut assembler de voitures;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;la mémoire est la taille de son plan de travail&lt;/strong&gt;. Si son plan de travail ne
+lui permet pas d’avoir toutes les pièces unitaires sous les yeux, il va
+nécessairement mettre davantage de temps à assembler une voiture.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Et après ?&lt;/h2&gt;
+&lt;p&gt;Bien sûr, des problèmes de performance peuvent avoir d’autres origines qu’un
+manque de processeur ou de mémoire. Mais dès lors, les choses se compliquent :
+entrées/sorties, problèmes réseaux, malwares, on passe à des choses nettement
+plus compliquées à identifier et à résoudre…&lt;/p&gt;
+&lt;p&gt;PS:
+&lt;a href=&quot;http://www.macgeneration.com/news/voir/171621/pourquoi-mon-mac-est-il-si-lent&quot;&gt;Une piste pour la même chose avec Mac OS X&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="windows" /><summary type="html">Les lenteurs inexpliquées sur un ordinateur ont de quoi exaspérer les utilisateurs d’ordinateurs novices en matière de technique. Cette page a pour but de les aider à trouver une première réponse à la question : “pourquoi mon ordinateur est-il si lent ?”</summary></entry><entry><title type="html">Excel: exporting a chart as a PNG image</title><link href="https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image/" rel="alternate" type="text/html" title="Excel: exporting a chart as a PNG image" /><published>2009-02-12T00:00:00+00:00</published><updated>2009-02-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image</id><content type="html" xml:base="https://bootstragram.com/blog/excel-exportation-d-un-graphe-sous-forme-d-image/">&lt;p&gt;This Excel macro will help you export a chart to a PNG file to &lt;code&gt;d:/temp&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Sub exportChartAsPNG()
+Dim ChartName As String
+Dim File As String
+ChartName = ActiveChart.Name
+File = &amp;quot;d:/temp/&amp;quot;
+ActiveChart.Export Filename:=File &amp;amp; ChartName &amp;amp; &amp;quot;.png&amp;quot;, FilterName:=&amp;quot;PNG&amp;quot;
+End Sub
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="windows" /><category term="excel" /><summary type="html">This Excel macro will help you export a chart to a PNG file to d:/temp:</summary></entry></feed>

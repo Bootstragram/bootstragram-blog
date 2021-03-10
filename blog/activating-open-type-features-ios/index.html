@@ -1,0 +1,226 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Activating OpenType Features in iOS | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Activating OpenType Features in iOS" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let’s see how." />
+<meta property="og:description" content="Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let’s see how." />
+<link rel="canonical" href="https://bootstragram.com/blog/activating-open-type-features-ios/" />
+<meta property="og:url" content="https://bootstragram.com/blog/activating-open-type-features-ios/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-03T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Activating OpenType Features in iOS" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/activating-open-type-features-ios/","@type":"BlogPosting","headline":"Activating OpenType Features in iOS","dateModified":"2021-01-03T00:00:00+00:00","datePublished":"2021-01-03T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/activating-open-type-features-ios/"},"description":"Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let’s see how.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Activating OpenType Features in iOS</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2021-01-03T00:00:00+00:00" itemprop="datePublished">
+        January 03, 2021
+      </time><span> • </span>
+        <ul class="categories-list"><li>
+            <span>
+              <span class="p-category h-card" itemprop="name">
+                <a href="/category/journaling/">
+                Journaling
+                </a>
+              </span>
+              </span>
+            </li></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p><a href="https://rsms.me/inter/">Inter</a> is an awesome typeface. It is free, open-source, and on top of
+looking great by default, it provides <a href="https://rsms.me/inter/#features">many OpenType features</a> that are
+really easy to use on a website. The <a href="https://rsms.me/inter/#features/ss01">alternate digits feature</a> is one of
+them. Just add the following to a CSS style and you’re done.</p>
+<pre><code class="language-css">font-feature-settings: &quot;ss01&quot;;
+</code></pre>
+<p><strong>How can we benefit from the same optional features with UIKit?</strong> This post
+will recap my journey to activate the alternate digits feature on an iOS app.</p>
+<h2>Adding a custom font and using it</h2>
+<p><a href="https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_apps">Adding a custom font to your app</a> is now pretty easy, compared to <a href="/blog/what-fonts-for-ios/">the old
+days</a>. From there, the most obvious next step is to run <a href="https://gist.github.com/dirtyhenry/c9fb50745491624fa75768d3149376f6">a piece of
+code</a> that I include in every project that use custom fonts. It simply
+prints a list of the font names that are available from your app.</p>
+<pre><code class="language-swift">extension UIFont {
+    static func printAllFontNames() {
+        print(&quot;# All Font Names\n&quot;)
+        for familyName in UIFont.familyNames {
+            print(&quot;- \(familyName)&quot;)
+            for font in UIFont.fontNames(forFamilyName: familyName) {
+                print(&quot;  - \(font)&quot;)
+            }
+        }
+    }
+}
+</code></pre>
+<h2>Listing features of a font</h2>
+<p>Activating features with UIKit is described in the <a href="https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW6"><em>Activating Font Features</em>
+section of the Text Programming Guide for iOS</a>. The code that is presented
+there relies on Objective-C CoreText that you can wrap in modern Swift.</p>
+<p>To list the features that are supported by a font, you can use the following
+code:</p>
+<pre><code class="language-swift">extension UIFont {
+    typealias FontFeatureInfo = [String: Any]
+
+    func listFeatures() {
+        guard let fontFeatures = CTFontCopyFeatures(self) as? [FontFeatureInfo] else {
+            debugPrint(&quot;Could not copy font features.&quot;)
+            return
+        }
+
+        fontFeatures.forEach { fontFeatureInfo in
+            print(fontFeatureInfo)
+        }
+    }
+}
+</code></pre>
+<p>It is hard to predict how large the output of this command will be and really
+depends on the font. For the Inter font, <a href="https://gist.github.com/dirtyhenry/875ebeac13882c5dad710f22f17be5c5">the output looks pretty intense</a>.
+It is not the most pleasant prose to read for humans, but scanning for the
+features we want will be pretty straightforward.</p>
+<p>In my context, the part I was interested in was the following:</p>
+<pre><code>[&quot;CTFeatureTypeName&quot;: Alternative Stylistic Sets, &quot;CTFeatureTypeIdentifier&quot;: 35, &quot;CTFeatureTypeSelectors&quot;: &lt;__NSArrayM 0x600002179f20&gt;(
+{
+    CTFeatureSelectorIdentifier = 2;
+    CTFeatureSelectorName = &quot;Open digits&quot;;
+},
+</code></pre>
+<p>To activate the <em>Open digits</em> feature, I had to use the <strong>feature type
+identifier 35</strong>, with the <strong>feature selector identifier 2</strong>.</p>
+<h2>Enabling the font features you want</h2>
+<p>So far, the code I showed was to get your app in the starting blocks. It helps
+you to prepare for the big stage moment: <strong>actually</strong> enabling the font
+features.</p>
+<p>So I wrapped these 35 and 2 <em>magic numbers</em> into something more meaningful: a
+simple struct trying to make sense of Apple’s documentation<sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup>. It is pretty
+basic, aimed to be built on in the future, and I made use of this incredible
+<a href="https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html">Font Feature Registry</a> resource<sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup> to find inspiration for an adequate
+naming:</p>
+<pre><code class="language-swift">sprivate enum FeatureTypeSelectorPair {
+    typealias PairDescriptor = (Int, Int)
+
+    static let stylisticAlternativesStylisticAltOne: PairDescriptor = (35, 2)
+
+    static func attributeValue(for pairDescriptor: PairDescriptor) -&gt; Any {
+        [
+            UIFontDescriptor.FeatureKey.featureIdentifier: pairDescriptor.0,
+            UIFontDescriptor.FeatureKey.typeIdentifier: pairDescriptor.1,
+        ]
+    }
+}
+</code></pre>
+<p>Once there, I was able to instanciate the <code>UIFont</code> including the option I wanted
+like so:</p>
+<pre><code class="language-swift">func createFontWithOptions(fontName: String, size: CGFloat) -&gt; UIFont {
+    let resultFont = UIFontDescriptor(name: fontName, size: size)
+        .addingAttributes([
+            .featureSettings: [
+                FeatureTypeSelectorPair.attributeValue(
+                    for: FeatureTypeSelectorPair.stylisticAlternativesStylisticAltOne
+                ),
+            ],
+        ])
+
+    // 0.0 means the size from the descriptor will prevail.
+    return UIFont(descriptor: resultFont, size: 0.0)
+}
+</code></pre>
+<h2>The outcome: an alternative digits style</h2>
+<p>🎉 Tada! I was done. Here is what it looks like in the end: a label with the
+default Inter Bold font appears first, and the label with the Inter Bold with
+the alternate digits feature enabled appears last.</p>
+<img alt="A screenshot comparing the string '0123456789' with or without the option" src="/assets/inter-font-with-or-without-options-fe77bf4be5d1c682d1903d1ab938e740092eb61c4a73cc376775cec32c78e4b104152c2e97f73c43a968db04084667b632afcf466836185b80994ad665fb0ce2.png" integrity="sha512-/ne/S+XRxoLRkD0auTjnQAkuthxKc8w3Z3XOwyx45LEEFSwul/c8Q6lo2wQIRme2Mq/PRmg2GFuAmUrWZfsM4g==" crossorigin="anonymous">
+<p>A playground using all this code is available <a href="https://github.com/dirtyhenry/xcode-playgrounds/tree/master/activating-opentype-features.playground">here</a>.</p>
+<section class="footnotes">
+<ol>
+<li id="fn1">
+<p>⚠️ Note:
+<a href="https://developer.apple.com/documentation/uikit/uifontdescriptor/featurekey">the documentation of <code>UIFontDescriptor.FeatureKey</code></a>
+was one of the most confusing I met. It said (1) that <code>featureIdentifier</code>
+was a key for identifying a font feature type such as ligature or character
+shape and (2) <code>typeIdentifier</code> was a key for identifying the font feature
+selector. So <code>featureIdentifier</code> refers to <code>CTFeatureTypeIdentifier</code> while
+<code>typeIdentifier</code> refers to <code>CTFeatureSelectorIdentifier</code>. Of course, I had
+it switched the wrong way the first time I ran the code. Confusing you said?
+🤯 <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2">
+<p>I never considered myself an expert in typefaces or fonts design and
+abilities but this resource was so humbling that I definitely decreased the
+perception of my own level in that skill by quite some orders of magnitude
+😂 <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <a class="u-url" href="/blog/activating-open-type-features-ios/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/swift/">
+          swift
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/fonts/">
+          fonts
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/pomodoro-cli-swift/">
+        Pomodoro CLI 1.0.0 Released 🎉
+      </a>
+    </p>
+    <p class="related-page-date">February 01, 2020</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/my-definitive-front-matter/">
+        My Definitive Front Matter
+      </a>
+    </p>
+    <p class="related-page-date">January 17, 2021</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

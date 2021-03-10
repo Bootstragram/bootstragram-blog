@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/svn.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/svn.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Ignorer des fichiers d’un projet XCode dans SVN</title><link href="https://bootstragram.com/blog/ignorer-des-fichiers-d-un-projet-xcode-dans-svn/" rel="alternate" type="text/html" title="Ignorer des fichiers d’un projet XCode dans SVN" /><published>2010-10-27T00:00:00+00:00</published><updated>2010-10-27T00:00:00+00:00</updated><id>https://bootstragram.com/blog/ignorer-des-fichiers-d-un-projet-xcode-dans-svn</id><content type="html" xml:base="https://bootstragram.com/blog/ignorer-des-fichiers-d-un-projet-xcode-dans-svn/">&lt;p&gt;À chaque nouveau projet XCode que j’insère dans mon SVN, une tâche est toujours
+la même : demander à SVN d’ignorer le répertoire &lt;code&gt;build&lt;/code&gt;, et mes fichiers de
+configuration personnels.&lt;/p&gt;
+&lt;p&gt;Ces fichiers/dossiers n’ont a priori rien à faire sur un SVN, et il est
+confortable de demander à son client, svnX par exemple, de ne plus les afficher
+à tout bout de champ.&lt;/p&gt;
+&lt;p&gt;Voilà, étape par étape, la procédure à effectuer, dans un Terminal.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;configurer un éditeur de texte (mon préféré étant emacs):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;export SVN_EDITOR=emacs
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;aller à la racine de votre projet XCode, et entrer :&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;svn propedit svn:ignore .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;là, votre éditeur s’ouvre : tapez simplement &lt;code&gt;build&lt;/code&gt; puis quittez votre
+éditeur&lt;/li&gt;
+&lt;li&gt;aller dans votre dossier &lt;code&gt;&amp;lt;Projet&amp;gt;.xcodeproj&lt;/code&gt; : des fichiers de configuration
+personnels se trouvent ici et ne doivent pas être ajoutés au SVN
+&lt;code&gt;cd Projet.xcodeproj&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;entrer à nouveau :&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;svn propedit svn:ignore .
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;puis quand votre éditeur s’ouvre, tapez une séquence de type &lt;code&gt;mick.*&lt;/code&gt; pour
+chaque utilisateur présent dans le répertoire&lt;/li&gt;
+&lt;li&gt;commiter ces modifications de propriété sur le SVN : svnX ne vous embêtera
+plus avec eux.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="svn" /><category term="ios" /><summary type="html">À chaque nouveau projet XCode que j’insère dans mon SVN, une tâche est toujours la même : demander à SVN d’ignorer le répertoire build, et mes fichiers de configuration personnels.</summary></entry><entry><title type="html">Supprimer les répertoires SVN</title><link href="https://bootstragram.com/blog/supprimer-les-repertoires-svn/" rel="alternate" type="text/html" title="Supprimer les répertoires SVN" /><published>2010-01-12T00:00:00+00:00</published><updated>2010-01-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/supprimer-les-repertoires-svn</id><content type="html" xml:base="https://bootstragram.com/blog/supprimer-les-repertoires-svn/">&lt;p&gt;Petit tuto très pratique trouvé
+&lt;a href=&quot;http://www.korben.info/supprimer-les-repertoires-svn-sous-linux.html&quot;&gt;ici&lt;/a&gt; pour
+supprimer récursivement les répertoires &lt;code&gt;.svn&lt;/code&gt; d’un répertoire :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;find . -name '.svn' -type d -exec rm -rf {} \;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ça marche pour Lunix, mais aussi pour Mac OS X et Windows si on a Cygwin.&lt;/p&gt;
+&lt;p&gt;Merci &lt;a href=&quot;http://www.korben.info/&quot;&gt;Korben&lt;/a&gt; !&lt;/p&gt;</content><author><name></name></author><category term="svn" /><summary type="html">Petit tuto très pratique trouvé ici pour supprimer récursivement les répertoires .svn d’un répertoire :</summary></entry><entry><title type="html">Jamais trop tard pour mettre des tags avec SVN</title><link href="https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/" rel="alternate" type="text/html" title="Jamais trop tard pour mettre des tags avec SVN" /><published>2009-12-29T00:00:00+00:00</published><updated>2009-12-29T00:00:00+00:00</updated><id>https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn</id><content type="html" xml:base="https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/">&lt;p&gt;Quand on livre une application logicielle, l’usage veut que l’on &lt;em&gt;tague&lt;/em&gt; le code
+source qui lui correspond dans son système de gestion de version. Oui mais
+voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne
+tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai
+utilisée pour taguer a posteriori, sur mon dépôt de source , des
+versions livrées il y a plusieurs semaines.&lt;/p&gt;
+&lt;h2&gt;Prérequis&lt;/h2&gt;
+&lt;p&gt;Cette opération ne fonctionne que si les hypothèses suivantes sont vérifiées :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;le code packagé a été commité sur le système de gestion de version;&lt;/li&gt;
+&lt;li&gt;les dates de livraison des logiciels sont connues, au moins de façon
+approximative.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;1ère étape : identifier les numéros de révision&lt;/h2&gt;
+&lt;p&gt;Pour identifier les numéros de révision, il faut utiliser la commande suivante :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;svn log &amp;lt;chemin-du-source-à-examiner&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Le résultat de cette commande permet d’identifier les numéros de révision et les
+dates associées de tous les commit réalisés sur le source examiné. A partir des
+dates de livraison, on sait alors à quel numéro de révision la livraison
+correspond.&lt;/p&gt;
+&lt;h2&gt;2ème étape : taguer les révisions identifiées&lt;/h2&gt;
+&lt;p&gt;Pour cela, utiliser la commande suivante :&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;svn copy -r &amp;lt;num-revision&amp;gt; &amp;lt;chemin-source&amp;gt; &amp;lt;chemin-cible&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pour rappel aux utilisateurs de SVN, la convention veut que :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;le chemin source soit le répertoire &lt;code&gt;trunk&lt;/code&gt; ou un sous-répertoire du
+répertoire &lt;code&gt;branches&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;le chemin cible soit un sous-répertoire du répertoire &lt;code&gt;tags&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="svn" /><summary type="html">Quand on livre une application logicielle, l’usage veut que l’on tague le code source qui lui correspond dans son système de gestion de version. Oui mais voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai utilisée pour taguer a posteriori, sur mon dépôt de source , des versions livrées il y a plusieurs semaines.</summary></entry><entry><title type="html">Using Subversion with Mac OS X</title><link href="https://bootstragram.com/blog/installing-subversion-with-mac-os-x/" rel="alternate" type="text/html" title="Using Subversion with Mac OS X" /><published>2009-05-17T00:00:00+00:00</published><updated>2009-05-17T00:00:00+00:00</updated><id>https://bootstragram.com/blog/installing-subversion-with-mac-os-x</id><content type="html" xml:base="https://bootstragram.com/blog/installing-subversion-with-mac-os-x/">&lt;ul&gt;
+&lt;li&gt;To create a repository:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;svnadmin create ~/Documents/MySVN
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Edit the &lt;code&gt;conf/&lt;/code&gt; files:
+&lt;ul&gt;
+&lt;li&gt;into &lt;code&gt;svnserve.conf&lt;/code&gt;, remove comments before:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;anon-access = read&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;auth-access = write&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;and &lt;code&gt;password-db = passwd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;add a user/password into &lt;code&gt;passwd&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;To run your SVN server, run:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;svnserve -d -r ~/Documents/MySVN
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="svn" /><summary type="html">To create a repository:</summary></entry></feed>

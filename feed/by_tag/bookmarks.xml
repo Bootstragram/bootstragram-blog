@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/bookmarks.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/bookmarks.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Notes from Paris Hacker Meetup #4</title><link href="https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4/" rel="alternate" type="text/html" title="Notes from Paris Hacker Meetup #4" /><published>2012-04-02T00:00:00+00:00</published><updated>2012-04-02T00:00:00+00:00</updated><id>https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4</id><content type="html" xml:base="https://bootstragram.com/blog/notes-from-paris-hacker-meetup-4/">&lt;p&gt;Here are some random notes from the &lt;a href=&quot;http://www.meetup.com/ParisHackers/events/53314342/&quot;&gt;Paris Hacker Meetup #4&lt;/a&gt;, hosted in
+&lt;a href=&quot;http://joshfire.com/&quot;&gt;Joshfire&lt;/a&gt;’s great hall, a couple of weeks ago.&lt;/p&gt;
+&lt;p&gt;The first talk was from &lt;a href=&quot;http://twitter.com/#!/nitot&quot;&gt;Tristan Nitot&lt;/a&gt;, about the relevance of Mozilla
+in the web today. Mozilla’s point of view is pretty straightforward: the web
+needs a major non-profit actor to balance Apple/Google/Microsoft’s leadership.
+Fair enough. Although I left Firefox for Google Chrome about two years ago, I
+100% agree with this and keep an eye on Firefox’s new releases.&lt;/p&gt;
+&lt;p&gt;Nitot also introduced and demoed &lt;a href=&quot;http://www.mozilla.org/en-US/b2g/&quot;&gt;Mozilla’s Boot to Gecko project&lt;/a&gt;. I’m
+afraid Mozilla is kind of late to give the mobile road a ride. If Nitot
+mentioned a great interest from manufacturers and operators about this project
+(the project’s homepage specifically mentioning “Customization for OEMs &amp;amp;
+Operators”), he didn’t mention what would be the interest/difference from
+potential end users. As a matter of fact, I see OEMs &amp;amp; operators as the evil
+actors in the mobile world (all these shitty app layers that most non-hackers
+users can’t get rid off) more than Apple or Google can be.&lt;/p&gt;
+&lt;p&gt;Next was &lt;a href=&quot;https://twitter.com/#!/michelbartz&quot;&gt;Michel Bartz&lt;/a&gt; for a talk about his high-traffic web experience.
+The talk was both super interesting and entertaining: thumbs up. I had heard the
+name of most of the mentioned tools but have never used them. So although I
+can’t give valuable comments of these products, here’s the list in case it might
+help somebody and for personal bookmarking:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://redis.io/&quot;&gt;Redis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://nodejs.org/&quot;&gt;node.js&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.lighttpd.net/&quot;&gt;Lighttpd&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.heroku.com/&quot;&gt;heroku&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Last but not least, Sacha Greif introduced his really interesting &lt;a href=&quot;https://sachagreif.com&quot;&gt;&lt;em&gt;Step by Step
+UI Design&lt;/em&gt; eBook&lt;/a&gt;, an eBook explaining how to design a UI, step by
+step… Just realizing the title of the eBook is really good.&lt;/p&gt;
+&lt;p&gt;Random list of things mentioned during the event :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://news.ycombinator.com/&quot;&gt;Hacker News&lt;/a&gt;: i was too ashamed to raise my
+hand during the event but I had never heard of this site, shame on me, it’s
+pretty cool&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://shop.oreilly.com/product/0636920018483.do&quot;&gt;&lt;em&gt;Machine Learning for Hackers&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://tauday.com&quot;&gt;The Tau Manifesto&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="conf" /><category term="bookmarks" /><summary type="html">Here are some random notes from the Paris Hacker Meetup #4, hosted in Joshfire’s great hall, a couple of weeks ago.</summary></entry><entry><title type="html">My Top 5 iPad Applications</title><link href="https://bootstragram.com/blog/my-ipad-top-5/" rel="alternate" type="text/html" title="My Top 5 iPad Applications" /><published>2011-06-05T00:00:00+00:00</published><updated>2011-06-05T00:00:00+00:00</updated><id>https://bootstragram.com/blog/my-ipad-top-5</id><content type="html" xml:base="https://bootstragram.com/blog/my-ipad-top-5/">&lt;p&gt;iPad are getting more and more popular and my friends start asking me what apps
+I recommend. Games apart, here are the ones I’m using the most (on an iPad
+usage, not iPhone usage).&lt;/p&gt;
+&lt;h2&gt;Reeder&lt;/h2&gt;
+&lt;p&gt;Reeder is my number 1 app on the iPad. That’s the one I’m using for my &lt;em&gt;morning
+coffee&lt;/em&gt;, my daily RSS feeds review (and by the way, &lt;del&gt;I publish the highlight on
+this website&lt;/del&gt;) (edit: I &lt;em&gt;used&lt;/em&gt; to publish…)&lt;/p&gt;
+&lt;p&gt;I feel people are not using RSS enough. Come on people, use RSS feeds, they’re
+awesome!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/reeder-screenshot.jpg&quot; alt=&quot;Reeder Screenshot&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Flipboard&lt;/h2&gt;
+&lt;p&gt;Flipboard makes a digital magazine out of your Facebook or Twitter accounts.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/flipboard-screenshot.jpg&quot; alt=&quot;Flipboard Screenshot&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Instapaper&lt;/h2&gt;
+&lt;p&gt;Instapaper is a distraction-free web pages reeder. No matter how shitty the
+original page typography is, Instapaper makes it beautiful, easy to read,
+removing all the content that could distract you from the core content that
+interests you (CSS, links, ad banners, …)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/instapaper-screenshot.jpg&quot; alt=&quot;Instapaper Screenshot&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;CANAL+&lt;/h2&gt;
+&lt;p&gt;This TV channel application is nicely made and allows to access all of Canal+
+free contents. If you’re a subscriber, there’s even the possibility to watch the
+TV live on the device.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/canal_plus_screenshot.jpg&quot; alt=&quot;Canal+ Screenshot&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;Allociné &amp;amp; IMDB&lt;/h2&gt;
+&lt;p&gt;These 2 apps are great. Classic content: you get access to all their website
+counterpart information, plus some nice features involving geolocation, etc.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/allocine_imdb_screenshot.jpg&quot; alt=&quot;Allociné and IMDB Screenshot&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;And two more for the road:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Friendly: the substitute of an official Facebook app&lt;/li&gt;
+&lt;li&gt;Flickpad Pro: browsing of pictures from your Facebook and Flickr contacts&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="tools" /><category term="bookmarks" /><summary type="html">iPad are getting more and more popular and my friends start asking me what apps I recommend. Games apart, here are the ones I’m using the most (on an iPad usage, not iPhone usage).</summary></entry></feed>

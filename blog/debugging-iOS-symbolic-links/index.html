@@ -1,0 +1,140 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Debugging Symbolic Links On iOS | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Debugging Symbolic Links On iOS" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Symbolic links are one of my favorite pragmatic best practice to manage a file system. Last week, I had a bug to fix in an iOS app. Soon enough, symbolic links became my number one suspect for the case. My problem was that Organizer has a poor support of symbolic links and it’s not very helpful when you want to check symbolic links targets on a full app file system." />
+<meta property="og:description" content="Symbolic links are one of my favorite pragmatic best practice to manage a file system. Last week, I had a bug to fix in an iOS app. Soon enough, symbolic links became my number one suspect for the case. My problem was that Organizer has a poor support of symbolic links and it’s not very helpful when you want to check symbolic links targets on a full app file system." />
+<link rel="canonical" href="https://bootstragram.com/blog/debugging-iOS-symbolic-links/" />
+<meta property="og:url" content="https://bootstragram.com/blog/debugging-iOS-symbolic-links/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2012-03-20T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Debugging Symbolic Links On iOS" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/debugging-iOS-symbolic-links/","@type":"BlogPosting","headline":"Debugging Symbolic Links On iOS","dateModified":"2012-03-20T00:00:00+00:00","datePublished":"2012-03-20T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/debugging-iOS-symbolic-links/"},"description":"Symbolic links are one of my favorite pragmatic best practice to manage a file system. Last week, I had a bug to fix in an iOS app. Soon enough, symbolic links became my number one suspect for the case. My problem was that Organizer has a poor support of symbolic links and it’s not very helpful when you want to check symbolic links targets on a full app file system.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Debugging Symbolic Links On iOS</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2012-03-20T00:00:00+00:00" itemprop="datePublished">
+        March 20, 2012
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Symbolic links are one of my favorite pragmatic best practice to manage a file
+system. Last week, I had a bug to fix in an iOS app. Soon enough, symbolic links
+became my number one suspect for the case. My problem was that Organizer has a
+poor support of symbolic links and it’s not very helpful when you want to check
+symbolic links targets on a full app file system.</p>
+<p>I had to develop some file system inspector code to help me debug the app and
+this is what I want to share here. However, as I fixed the bug as well, I’ll
+just issue this statement :</p>
+<p>⚠️ Never use absolute target paths for your symbolic links as your app’s file
+system will move it to another home directory every time you update your app on
+the App Store.</p>
+<p>(and now that i think of it, the simple fact that you can use absolute paths and
+not only paths relative to your home directory in an iOS app sounds like a
+sandboxing bug from Apple’s SDK to me).</p>
+<p>Anyway, I’ve created the <code>BSGFileSystemExplorer</code> class in <a href="https://github.com/Bootstragram/BSGUtilities/">my work-in-progress
+<em>BSGUtilities</em> Pod</a>, that will help you generate the following
+kind of output when you run it inside your app.</p>
+<p>Download <code>BSGFileSystemExplorer</code> here :</p>
+<ul>
+<li><a href="https://github.com/Bootstragram/BSGUtilities/blob/master/Pod/Classes/FileSystemUtils/BSGFileSystemExplorer.h"><code>BSGFileSystemExplorer.h</code></a></li>
+<li><a href="https://github.com/Bootstragram/BSGUtilities/blob/master/Pod/Classes/FileSystemUtils/BSGFileSystemExplorer.m"><code>BSGFileSystemExplorer.m</code></a></li>
+</ul>
+<p>Notice the —&gt; and -x-&gt; arrows which help you determine if items are
+symbolic links and whether the file they target still exist or not. Please leave
+a message if you found this bit of code helpful!</p>
+<p>Typical use case would probably to run
+<code>[BSGFileSystemExplorer exploreFileSystem];</code> from your app’s delegate’s
+<code>application:didFinishLaunchingWithOptions:</code>.</p>
+<pre><code>|- Documents
+|- help.html
+   |- Archives
+      |- 1321890697466 -x-&gt; 1328706604700
+      |- 1321890697467 ---&gt; 1328706604701
+      |- 1328697746363
+         |- images
+            |- screenshot.png
+            |- icon.png
+      |- 1328706604701
+         |- export.xml
+         |- html
+            |- help.html
+            |- index.html
+|- MyApp.app
+   |- etc
+|- Library
+   |- Caches
+      |- com.mycompany.myapp
+         |- Cache.db
+   |- Preferences
+      |- .GlobalPreferences.plist -x-&gt; /Users/user/.../Library/Preferences/.GlobalPreferences.plist
+      |- com.apple.PeoplePicker.plist ---&gt; /Users/user/.../Library/Preferences/com.apple.PeoplePicker.plist
+      |- com.mycompany.myapp.plist
+|- tmp
+</code></pre>
+
+  </div>
+
+  <a class="u-url" href="/blog/debugging-iOS-symbolic-links/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/troubleshooting-ubuntu-server-upgrade/">
+        Troubleshooting a Dedibox Upgrade From Maverick to Natty (Ubuntu Server)
+      </a>
+    </p>
+    <p class="related-page-date">January 30, 2012</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/notes-from-paris-hacker-meetup-4/">
+        Notes from Paris Hacker Meetup #4
+      </a>
+    </p>
+    <p class="related-page-date">April 02, 2012</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

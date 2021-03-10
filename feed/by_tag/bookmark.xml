@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/bookmark.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/bookmark.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Quel logiciel de capture vidéo d’écran ?</title><link href="https://bootstragram.com/blog/quel-logiciel-de-capture-video-d-ecran/" rel="alternate" type="text/html" title="Quel logiciel de capture vidéo d’écran ?" /><published>2011-02-16T00:00:00+00:00</published><updated>2011-02-16T00:00:00+00:00</updated><id>https://bootstragram.com/blog/quel-logiciel-de-capture-video-d-ecran</id><content type="html" xml:base="https://bootstragram.com/blog/quel-logiciel-de-capture-video-d-ecran/">&lt;p&gt;Je suis actuellement à la recherche de logiciels de capture vidéo pour réaliser
+des tutoriels vidéos d’utilisation d’applications.&lt;/p&gt;
+&lt;p&gt;Après quelques minutes de recherche, j’en suis sorti avec la liste de logiciels
+suivants :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Screenium (23,99€ sur le Mac App Store)&lt;/li&gt;
+&lt;li&gt;Snapz Pro X (69$)&lt;/li&gt;
+&lt;li&gt;Screenflick (25$)&lt;/li&gt;
+&lt;li&gt;iShowU (29,95$)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Si vous connaissez d’autres options ou si vous avez une opinion sur lequel de
+ces logiciels est le meilleur, n’hésitez pas à en faire part dans les
+commentaires !&lt;/p&gt;
+&lt;p&gt;Edit : Deux autres références : Screenflow (99$), avec un tutorial &lt;a href=&quot;http://telestreamblog.telestream.net/2011/01/tutorial-how-to-create-a-video-trailer-by-matthieu-blanco-2/&quot;&gt;ici&lt;/a&gt;, et
+&lt;a href=&quot;https://www.techsmith.com/screen-capture.html&quot;&gt;Snagit&lt;/a&gt; (gratuit, une version Pro existe).&lt;/p&gt;</content><author><name></name></author><category term="bookmark" /><summary type="html">Je suis actuellement à la recherche de logiciels de capture vidéo pour réaliser des tutoriels vidéos d’utilisation d’applications.</summary></entry><entry><title type="html">Expression régulière matchant les URL par John Gruber</title><link href="https://bootstragram.com/blog/expression-reguliere-matchant-les-url-par-john-gruber/" rel="alternate" type="text/html" title="Expression régulière matchant les URL par John Gruber" /><published>2010-07-29T00:00:00+00:00</published><updated>2010-07-29T00:00:00+00:00</updated><id>https://bootstragram.com/blog/expression-reguliere-matchant-les-url-par-john-gruber</id><content type="html" xml:base="https://bootstragram.com/blog/expression-reguliere-matchant-les-url-par-john-gruber/">&lt;p&gt;John Gruber a publié sur son fameux blog, Daring Fireball, un post contenant une
+expression régulière devant matcher toute URL.&lt;/p&gt;
+&lt;p&gt;Ça peut s’avérer assez pratique.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://daringfireball.net/2010/07/improved_regex_for_matching_urls&quot;&gt;An Improved Liberal, Accurate Regex Pattern for Matching URLs&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="bookmark" /><summary type="html">John Gruber a publié sur son fameux blog, Daring Fireball, un post contenant une expression régulière devant matcher toute URL.</summary></entry><entry><title type="html">Top 5 des outils du développeur indépendant</title><link href="https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant/" rel="alternate" type="text/html" title="Top 5 des outils du développeur indépendant" /><published>2010-07-26T00:00:00+00:00</published><updated>2010-07-26T00:00:00+00:00</updated><id>https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant</id><content type="html" xml:base="https://bootstragram.com/blog/top-5-des-outils-du-developpeur-independant/">&lt;p&gt;Réaliser des produits logiciels le plus efficacement possible en tant
+qu’indépendant ne peut se faire sans quelques outils permettant de gérer son
+effort. Voici mon top 5 des outils que j’utilise en tant qu’indépendant !&lt;/p&gt;
+&lt;h2&gt;1. Things&lt;/h2&gt;
+&lt;p&gt;Things est un logiciel de gestion de tâches, très simple mais très performant,
+qui repose sur la méthodologie &lt;a href=&quot;http://fr.wikipedia.org/wiki/Getting_Things_Done&quot;&gt;&lt;em&gt;GTD&lt;/em&gt;&lt;/a&gt; (&lt;em&gt;Getting Things Done&lt;/em&gt;). Auparavant,
+j’utilisais le logiciel gratuit iGTD, mais son développeur, Bartek, a ensuite
+cessé de maintenir le logiciel pour rejoindre l’équipe de… Things.&lt;/p&gt;
+&lt;img src=&quot;/assets/things-screenshot-0d53de692b895cb4ecb7ba6e1d7a9452fa071e87cba43d2f8f36eec3f5eaadedc2e3645ba1a38d081859b391b192edc3292010eea00aa9eafc471f45a45750f1.png&quot; integrity=&quot;sha512-DVPeaSuJXLTst7puHXqUUvoHHofLpD0vjzbuw/Xqre3C42RboaONCBhZs5Gxku3DKSAQ7qAKqer8Rx9FpFdQ8Q==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Sommairement, le GTD repose sur les principes suivants :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Se libérer sur le champ des idées qui nous arrivent en tête ou des actions qui
+doivent être réalisées&lt;/li&gt;
+&lt;li&gt;Identifier les items de sa todo liste par projet (par exemple : est-ce que ça
+concerne le développement de tel logiciel ou l’organisation des vacances) et
+par contexte (doit être faite au téléphone ? nécessite un accès internet ?)&lt;/li&gt;
+&lt;li&gt;Parcourir régulièrement sa todo liste pour actualiser les priorités et les
+échéances de ses tâches.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Things permet de faire ça très efficacement, surtout lorsqu’on utilise aussi la
+version mobile de l’application, disponible sur iOS, et qui se synchronise via
+wifi avec la version bureau de l’application.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://culturedcode.com/things/&quot;&gt;Things by Cultured Code&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;(En outre, pour ne rien gâcher, Cultured Code, l’éditeur du soft, a &lt;a href=&quot;http://culturedcode.com/status/&quot;&gt;quelques
+idées assez innovantes en matière de dashboarding&lt;/a&gt;)&lt;/p&gt;
+&lt;h2&gt;2. TimeBoxed&lt;/h2&gt;
+&lt;p&gt;TimeBoxed est une application extrêmement simple : c’est un minuteur pour Mac OS
+X, idéal pour le time boxing, c’est-à-dire définir un intervalle de temps pour
+travailler sur une tâche donnée.&lt;/p&gt;
+&lt;img src=&quot;/assets/timeboxed-screenshot-337c774938f815e510f9eef5f9307b8c4a888a44326e0d456212b68044a569361d9faa2ff27834400bceaf4a6bdaa20e3c2395daa06cd579d361a7dbe207adce.png&quot; integrity=&quot;sha512-M3x3STj4FeUQ+e71+TB7jEqIikQybg1FYhK2gESlaTYdn6ov8ng0QAvOr0pr2qIOPCOV2qBs1XnTYafb4getzg==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Associé à GTD, le time boxing est une excellente technique pour combattre les
+tendances à la procrastination, dont plusieurs articles de blog font l’apologie,
+parmi lesquels :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://litemind.com/time-boxing/&quot;&gt;15 Time Boxing Strategies to Get Things Done&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.qualitystreet.fr/2007/11/14/le-timeboxing-cest-super-mais/&quot;&gt;Le timeboxing, c’est super mais…&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://luc-jeanniard.blogspot.com/2009/12/la-puissance-du-time-boxing.html&quot;&gt;La puissance du time boxing&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Malgré son prix un peu élevé, TimeBoxed est un outil vraiment utile et qui aide
+à maîtriser son temps.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.macmation.com/TimeBoxed&quot;&gt;TimeBoxed&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;3. Klok&lt;/h2&gt;
+&lt;p&gt;Klok est une application de time tracking, qui aide à tracer ses activités de la
+semaine et, si besoin, à en faire le reporting.&lt;/p&gt;
+&lt;img src=&quot;/assets/klok-screenshot-6c89a244385f151a00f4b5000c942f0f79c1f18724ed9a4b1780bc896b1bd6ea81af8baad92cf487d381f5ca121f24e2bb64598c13c18bf5340694305bee6bb8.png&quot; integrity=&quot;sha512-bImiRDhfFRoA9LUADJQvD3nB8Yck7ZpLF4C8iWsb1uqBr4uq2Sz0h9OB9coSHyTiu2RZjBPBi/U0BpQwW+5ruA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Bien que son usage soit particulièrement utile dans les grosses sociétés où des
+relevés d’activité sont régulièrement demandés aux collaborateurs, c’est aussi
+un outil essentiel pour le travailleur indépendant (voire l’étudiant) afin
+d’analyser l’utilisation faite de son temps de travail.&lt;/p&gt;
+&lt;p&gt;En outre, pour ne rien gâcher, Klok, qui repose sur Abode Air, a un graphisme
+très réussi et propose une version gratuite.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.getklok.com/&quot;&gt;Klok&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;4. Bugzilla&lt;/h2&gt;
+&lt;p&gt;Un outil de bug tracking est également totalement indispensable. Plusieurs
+concurrents open source offrent les mêmes services que Bugzilla, notamment
+Mantis, et j’ai d’ailleurs choisi ce logiciel de manière un peu triviale : je
+tenais juste une occasion de l’essayer.&lt;/p&gt;
+&lt;img src=&quot;/assets/bugzilla-screenshot-21004bda55a7351536dac5466276655796ccaf75e4b93494401cf9682dd92d0d64c823b8df44f9b68ee29981d2530847e670890a2b96831242b71d4cb04d5295.png&quot; integrity=&quot;sha512-IQBL2lWnNRU22sVGYnZlV5bMr3XkuTSUQBz5aC3ZLQ1kyCO430T5to7imYHSUwhH5nCJCiuWgxJCtx1MsE1SlQ==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Le bug tracking est indispensable à n’importe quelle activité de développement
+d’un produit, qu’il soit logiciel ou autre, même lorsque cette activité est
+réalisée en solo. C’est un outil complémentaire aux outils de management de
+tâches (comme Things) en ce qu’il permet de gérer un cycle de vie de ses items
+(nouveau, assigné, en cours, fermé, validé), ainsi que (et surtout !) leur
+historisation.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bugzilla.org&quot;&gt;Bugzilla&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;5. SVN&lt;/h2&gt;
+&lt;p&gt;Un outil de gestion de version post-CVS, de type SVN ou GIT, est indispensable
+et rarement utilisé de manière optimale. Même si l’usage de ces logiciels est
+courant, il est important de rappeler leur utilité et leurs règles de bon usage.&lt;/p&gt;
+&lt;p&gt;Le tagging est une activité essentielle qui permet de pouvoir gérer proprement
+les retours en arrière, souvent nécessaires dans une activité de développement
+logiciel. Grâce à SVN, les multiples répertoires “sources”, “sources2”,
+“sources-temp”, “sources-old” n’ont plus de raison d’être sur des postes de
+développement : l’outil gère tous ces besoins d’historisation du code à notre
+place.&lt;/p&gt;
+&lt;p&gt;Là encore, l’usage de systèmes de gestion de version, même dans une pratique en
+solo me semble indispensable. Des commits fréquents, basés sur la réalisation de
+tâches unitaires (par exemple, un item de Bugzilla), permet d’avoir un suivi du
+code source très clair et la quasi assurance que chaque révision est
+fonctionnelle. En outre, le respect de ces bonnes pratiques participent aussi à
+optimiser son temps de travail.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://code.google.com/p/svnx/&quot;&gt;svnX&lt;/a&gt; (un client SVN sous Mac OS X)&lt;/p&gt;
+&lt;h2&gt;Remarques&lt;/h2&gt;
+&lt;p&gt;Les outils recensés dans cette page sont donc des outils de :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;task management&lt;/li&gt;
+&lt;li&gt;time boxing&lt;/li&gt;
+&lt;li&gt;time tracking&lt;/li&gt;
+&lt;li&gt;bug tracking&lt;/li&gt;
+&lt;li&gt;revision control&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Quelques suites logicielles existent permettant de gérer tous ces points (de
+type Atlassian). Je n’en parle pas ici pour deux raisons :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;malgré leur qualité apparente, je n’ai jamais eu l’occasion de tester ces
+logiciels, la plupart du temps payants;&lt;/li&gt;
+&lt;li&gt;en tant qu’utilisateur unique, je préfère maximiser le nombre d’applications
+qui tournent sur un poste client, permettant plus facilement un travail
+nomade.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="oped" /><category term="bookmark" /><summary type="html">Réaliser des produits logiciels le plus efficacement possible en tant qu’indépendant ne peut se faire sans quelques outils permettant de gérer son effort. Voici mon top 5 des outils que j’utilise en tant qu’indépendant !</summary></entry><entry><title type="html">Balsamiq Sketching/Mockup Tool</title><link href="https://bootstragram.com/blog/balsamiq-sketching-mockup-tool/" rel="alternate" type="text/html" title="Balsamiq Sketching/Mockup Tool" /><published>2010-04-28T00:00:00+00:00</published><updated>2010-04-28T00:00:00+00:00</updated><id>https://bootstragram.com/blog/balsamiq-sketching-mockup-tool</id><content type="html" xml:base="https://bootstragram.com/blog/balsamiq-sketching-mockup-tool/">&lt;p&gt;Un autre outil de mockup iPhone (et autres) :
+&lt;a href=&quot;http://www.balsamiq.com/&quot;&gt;http://www.balsamiq.com/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="bookmark" /><summary type="html">Un autre outil de mockup iPhone (et autres) : http://www.balsamiq.com/</summary></entry><entry><title type="html">OmniGraffe</title><link href="https://bootstragram.com/blog/omnigraffe/" rel="alternate" type="text/html" title="OmniGraffe" /><published>2010-03-25T00:00:00+00:00</published><updated>2010-03-25T00:00:00+00:00</updated><id>https://bootstragram.com/blog/omnigraffe</id><content type="html" xml:base="https://bootstragram.com/blog/omnigraffe/">&lt;p&gt;OmniGraffle est un outil de génération de diagrammes et de graphiques pour Mac.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.omnigroup.com/products/omnigraffle&quot;&gt;http://www.omnigroup.com/products/omnigraffle&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="bookmark" /><summary type="html">OmniGraffle est un outil de génération de diagrammes et de graphiques pour Mac.</summary></entry><entry><title type="html">PulpMotion</title><link href="https://bootstragram.com/blog/pulpmotion/" rel="alternate" type="text/html" title="PulpMotion" /><published>2010-03-25T00:00:00+00:00</published><updated>2010-03-25T00:00:00+00:00</updated><id>https://bootstragram.com/blog/pulpmotion</id><content type="html" xml:base="https://bootstragram.com/blog/pulpmotion/">&lt;p&gt;PulpMotion est un logiciel pour Mac qui permet de créer des animations en
+quelques clics. Il est édité par Aquafadas.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.aquafadas.com/fr/pulpmotion/&quot;&gt;http://www.aquafadas.com/fr/pulpmotion/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="bookmark" /><summary type="html">PulpMotion est un logiciel pour Mac qui permet de créer des animations en quelques clics. Il est édité par Aquafadas.</summary></entry></feed>

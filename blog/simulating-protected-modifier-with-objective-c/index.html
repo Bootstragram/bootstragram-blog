@@ -1,0 +1,221 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Simulating protected properties and selectors in Objective-C | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Simulating protected properties and selectors in Objective-C" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="There’s no protected modifier in Objective-C. In a sense, we should be grateful that Objective-C is not Java. On the other hand, sometimes it can suck. What’s the best way to deal with it? Let’s simulate protection!" />
+<meta property="og:description" content="There’s no protected modifier in Objective-C. In a sense, we should be grateful that Objective-C is not Java. On the other hand, sometimes it can suck. What’s the best way to deal with it? Let’s simulate protection!" />
+<link rel="canonical" href="https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/" />
+<meta property="og:url" content="https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-03-19T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Simulating protected properties and selectors in Objective-C" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/","@type":"BlogPosting","headline":"Simulating protected properties and selectors in Objective-C","dateModified":"2014-03-19T00:00:00+00:00","datePublished":"2014-03-19T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/"},"description":"There’s no protected modifier in Objective-C. In a sense, we should be grateful that Objective-C is not Java. On the other hand, sometimes it can suck. What’s the best way to deal with it? Let’s simulate protection!","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Simulating protected properties and selectors in Objective-C</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2014-03-19T00:00:00+00:00" itemprop="datePublished">
+        March 19, 2014
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>There’s no <code>protected</code> modifier in Objective-C. In a sense, we should be
+grateful that Objective-C is not Java. On the other hand, sometimes it can suck.
+What’s the best way to deal with it? Let’s simulate protection!</p>
+<h2>The problem is already asked and answered</h2>
+<p>When looking for a solution to this, I found these two StackOverflow posts:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/12633627/expose-a-private-objective-c-method-or-property-to-subclasses">Expose a private Objective-C method or property to subclasses</a></li>
+<li><a href="http://stackoverflow.com/questions/3725857/protected-methods-in-objective-c">Protected methods in objective-c</a></li>
+</ul>
+<p>which exposed the real case where the lack of <code>protected</code> sucks (ie subclassing)
+and also the solution to the problem (ie simulating protection) as used by Apple
+herself in classes such as
+<a href="https://developer.apple.com/library/ios/documentation/uikit/reference/UIGestureRecognizer_Class/Reference/Reference.html"><code>UIGestureRecognizer</code></a>.</p>
+<h2>A Concrete Example</h2>
+<h3>The public…</h3>
+<p>Let’s say I have a <code>BSDaddy</code> base class with only one publicly declared taskk:</p>
+<pre><code class="language-objc">@interface BSDaddy : NSObject
+- (NSString *)introduction;
+@end
+</code></pre>
+<p>Now I want a <code>BSSon</code> class, inheriting from <code>BSDaddy</code>.</p>
+<pre><code class="language-objc">#import &quot;BSDaddy.h&quot;
+
+@interface BSSon : BSDaddy
+
+@end
+</code></pre>
+<h3>… the protected…</h3>
+<p>Let’s say, Dad has information it should share with his son, like an address for
+instance. Let’s create a new file <code>BSDaddySubclass.h</code> in which we declared this
+kind of stuff.</p>
+<pre><code class="language-objc">@interface BSDaddy ()
+
+@property(nonatomic, strong) NSString *protectedAddress;
+
+- (NSString *)healthInsuranceId;
+
+@end
+</code></pre>
+<p>Please note that I’m using <code>()</code> instead of something more precise like
+<code>(subclass)</code> as, otherwise, the properties are not auto-synthetized.</p>
+<h3>… and the private</h3>
+<p>Here is a basic implementation of Dad, in which we also defined stuff we want to
+keep private from Son.</p>
+<pre><code class="language-objc">#import &quot;BSDaddy.h&quot;
+#import &quot;BSDaddySubclass.h&quot;
+
+@interface BSDaddy ()
+
+@property(weak, nonatomic) NSString *secretSexFantasy;
+
+- (NSNumber *)creditCardPinNumber;
+
+@end
+
+@implementation BSDaddy
+
+- (id)init {
+   self = [super init];
+   if (self) {
+      self.protectedAddress = @&quot;Hill Valley&quot;;
+      self.secretSexFantasy = @&quot;being disguised as an alien&quot;;
+   }
+   return self;
+}
+
+- (NSString *)introduction { return @&quot;Hi! My name is George McFly!&quot;; }
+
+- (NSString *)healthInsuranceId { return @&quot;123456789&quot;; }
+
+- (NSNumber *)creditCardPinNumber { return [NSNumber numberWithInteger:1234]; }
+</code></pre>
+<p>Please note that we reuse <code>()</code> for the new interface declaration, it will not
+conflict with the one in <code>BSDaddySubclass.h</code></p>
+<h3>Now let’s implement Son</h3>
+<p>Son is a rebel and want to share everything about his dad when he introduces
+himself.</p>
+<pre><code class="language-objc">#import &quot;BSSon.h&quot;
+#import &quot;BSDaddySubclass.h&quot;
+
+@implementation BSSon
+
+- (NSString *)introduction {
+   // Property 'secretSexFantasy' not found on object of type 'BSSon *'
+   // NSString *myDadSecretFantasy = self.secretSexFantasy;
+
+   #pragma clang diagnostic push
+   #pragma clang diagnostic ignored &quot;-Wundeclared-selector&quot;
+
+   NSString *myDadSecretFantasy = nil;
+   NSNumber *creditCardPinNumber = nil;
+
+   if ([self respondsToSelector:@selector(secretSexFantasy)]) {
+      myDadSecretFantasy = [self performSelector:@selector(secretSexFantasy)
+                                   withObject:nil];
+   }
+
+   if ([self respondsToSelector:@selector(creditCardPinNumber)]) {
+      creditCardPinNumber = [self performSelector:@selector(creditCardPinNumber)
+                                    withObject:nil];
+   }
+
+   #pragma clang diagnostic pop
+
+   return [NSString stringWithFormat:@&quot;Hi! I'm Marty. My dad says: “%@”. He'll be mad cause I'm making public that we live in %@ and his health insurance ID is %@. He'll be even madder after I tell you his secret sex fantasy is %@, and that his credit card PIN number is %@.&quot;, [super introduction], self.protectedAddress, [self healthInsuranceId], myDadSecretFantasy, creditCardPinNumber];
+}
+</code></pre>
+<p>Please note:</p>
+<ol>
+<li><code>BSDaddySubclass.h</code> is imported.</li>
+<li>The properties and tasks declared in <code>BSDad.m</code> can’t be used: you will get a
+compilation error if you try</li>
+<li>The properties and tasks declared in <code>BSDadSubclass.h</code> <strong>can</strong> be used
+normally without the need of an extra <code>@synthesize</code> or <code>@dynamic</code> for
+properties.</li>
+<li>Most importantly, please note that this is just <em>simulated protection</em>, which
+relies on a <strong>convention</strong>! If another class decides to import
+<code>BSDadSubclass.h</code>, nothing will prevent it to do so and use the protected
+methods as public ones. You just need to <em>establish the convention that this
+is bad programming</em> within your team. To make this even clearer, remember as
+well that <em>there is no such things as private methods</em> either. If you know a
+private method exists, you can still call it. That’s the power of Objective-C
+and remember what Uncle Ben said: “With great power comes great
+responsability”!</li>
+<li>Optional: notice also the several <code>#pragma</code> that will prevent you to get
+warnings when trying to perform private selectors in your code. If you need
+them, you should be aware maybe you’re doing something nasty.</li>
+</ol>
+<h2>Conclusion</h2>
+<p>This is how George and Marty will introduce themselves:</p>
+<img alt="Hello George and Marty" title="Nasty Marty" src="/assets/inheritance-1bcd6cb1a0eff58d0756f35980034591ec17394a1eb0cb86443470c81e7bc601c35e2896052e336c6afd90ecc24166f3cc9f090775ab3c14fb13056f1f4eee0d.png" integrity="sha512-G81ssaDv9Y0HVvNZgANFkewXOUoesMuGRDRwyB57xgHDXiiWBS4zbGr9kOzCQWbzzJ8JB3WrPBT7EwVvH07uDQ==" crossorigin="anonymous">
+<p>You can find the full source code of this example on <a href="https://github.com/Bootstragram/bootstragram-ios">my iOS Demo
+code</a> on GitHub.</p>
+<p>And again, if you want to address me some feedback or comments, it’s via
+<a href="http://twitter.com/dirtyhenry">Twitter</a> or <a href="https://github.com/Bootstragram/bootstragram-blog/issues" title="Issues">GitHub</a>.</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/simulating-protected-modifier-with-objective-c/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/programming-guides-with-appledoc/">
+        How to generate Programming Guides with Appledoc
+      </a>
+    </p>
+    <p class="related-page-date">February 19, 2014</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/droidcon-2014/">
+        DroidCon 2014
+      </a>
+    </p>
+    <p class="related-page-date">October 22, 2014</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>DroidCon 2014 | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="DroidCon 2014" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="You can watch all the videos on the Droidcon Paris Youtube channel but I especially recommend these 3 talks." />
+<meta property="og:description" content="You can watch all the videos on the Droidcon Paris Youtube channel but I especially recommend these 3 talks." />
+<link rel="canonical" href="https://bootstragram.com/blog/droidcon-2014/" />
+<meta property="og:url" content="https://bootstragram.com/blog/droidcon-2014/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-10-22T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="DroidCon 2014" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/droidcon-2014/","@type":"BlogPosting","headline":"DroidCon 2014","dateModified":"2014-10-22T00:00:00+00:00","datePublished":"2014-10-22T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/droidcon-2014/"},"description":"You can watch all the videos on the Droidcon Paris Youtube channel but I especially recommend these 3 talks.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">DroidCon 2014</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2014-10-22T00:00:00+00:00" itemprop="datePublished">
+        October 22, 2014
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>You can watch all the videos on <a href="https://www.youtube.com/channel/UCkatLlah5weIpN23LqMgdTg">the Droidcon Paris Youtube
+channel</a> but I especially recommend these 3 talks.</p>
+<h2><em>Scaling Android Development at Twitter</em></h2>
+<img alt="Scaling Android Development at Twitter" src="/assets/droidcon-jan-chong-638a9dcbda59bc65f4113843a2f8ad232c59c72d93f0854ae713b623472db63456d0b848798f66cf39135f781cc16138e8a78b3454ca7cbe814c623e001c6eda.png" integrity="sha512-Y4qdy9pZvGX0EThDovitIyxZxy2T8IVK5xO2I0cttjRW0LhIeY9mzzkTX3gcwWE46KeLNFTKfL6BTGI+ABxu2g==" crossorigin="anonymous">
+<p>This talk by <a href="http://en.wikipedia.org/wiki/Software_release_train">Jan Chong</a>, engineering manager at Twitter for
+Android, was about how Twitter’s mobile team transitioned from a 5-people team
+to a 70+ contributors effort. Here are some key points from the talk.</p>
+<p>You can watch it <a href="http://youtu.be/T5qEnillTHc">here</a>.</p>
+<h3>Operations</h3>
+<ul>
+<li>In 3 years, Twitter for Android went from a 8 to 12 weeks release schedule to
+1 release a week</li>
+<li>The key quality indicator they’re following are crashed : they analyzed that
+when a user experienced a crash, his engagement would drop significantly for
+the next month (of course, they use <a href="https://try.crashlytics.com">Crashlytics</a>, that they own)</li>
+<li>API released for mobiles need to be supported for a loooooong time</li>
+<li>They baked an API mechanism to support A/B testing within their apps that does
+not require republishing</li>
+<li>They also have an interesting feature switch system where they remotely
+control a device/manufacturer/OS version matrix to swith features on and off,
+again to be able to tune their apps and avoir crashes without the need to
+republish</li>
+</ul>
+<h3>Tools and processes</h3>
+<ul>
+<li>They’re using Gradle and Android Studio</li>
+<li>Twitter practice <a href="http://en.wikipedia.org/wiki/Eating_your_own_dog_food">dogfooding</a></li>
+<li>They switched from <a href="https://code.google.com/p/robotium/">Robotium</a> to <a href="https://code.google.com/p/android-test-kit/wiki/Espresso">Espresso</a></li>
+<li>They also use <a href="https://developer.android.com/training/testing/ui-automator">uiautomator</a></li>
+<li>They use a <a href="http://en.wikipedia.org/wiki/Software_release_train">release train</a> schedule to run their and
+transitioned from a single 4-week train to two concurrent 2-weeks trains to
+reduce the gap between deadlines</li>
+<li>They also use a “+1/+2” code review system</li>
+</ul>
+<h2><em>How Open Source Powers Facebook on Android</em>, by Simon Stewart</h2>
+<p><a href="https://youtu.be/MT6bU9ofJDE">📺</a></p>
+<h2><em>Petit Design pour Grande Humanité</em>, by Geoffrey Dome</h2>
+<p><a href="https://youtu.be/mwF4qk9OMe8">📺</a></p>
+
+  </div>
+
+  <a class="u-url" href="/blog/droidcon-2014/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/android/">
+          android
+          </a>
+        </li><li>
+          <a class="tag-link" href="/tag/conf/">
+          conf
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/simulating-protected-modifier-with-objective-c/">
+        Simulating protected properties and selectors in Objective-C
+      </a>
+    </p>
+    <p class="related-page-date">March 19, 2014</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/ipv6-not-ready/">
+        IPv6 Ready ?
+      </a>
+    </p>
+    <p class="related-page-date">November 13, 2015</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

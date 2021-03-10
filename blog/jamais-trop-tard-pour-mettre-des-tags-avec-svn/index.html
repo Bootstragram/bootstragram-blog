@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Jamais trop tard pour mettre des tags avec SVN | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Jamais trop tard pour mettre des tags avec SVN" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Quand on livre une application logicielle, l’usage veut que l’on tague le code source qui lui correspond dans son système de gestion de version. Oui mais voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai utilisée pour taguer a posteriori, sur mon dépôt de source , des versions livrées il y a plusieurs semaines." />
+<meta property="og:description" content="Quand on livre une application logicielle, l’usage veut que l’on tague le code source qui lui correspond dans son système de gestion de version. Oui mais voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai utilisée pour taguer a posteriori, sur mon dépôt de source , des versions livrées il y a plusieurs semaines." />
+<link rel="canonical" href="https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/" />
+<meta property="og:url" content="https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-12-29T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Jamais trop tard pour mettre des tags avec SVN" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/","@type":"BlogPosting","headline":"Jamais trop tard pour mettre des tags avec SVN","dateModified":"2009-12-29T00:00:00+00:00","datePublished":"2009-12-29T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/"},"description":"Quand on livre une application logicielle, l’usage veut que l’on tague le code source qui lui correspond dans son système de gestion de version. Oui mais voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai utilisée pour taguer a posteriori, sur mon dépôt de source , des versions livrées il y a plusieurs semaines.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Jamais trop tard pour mettre des tags avec SVN</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2009-12-29T00:00:00+00:00" itemprop="datePublished">
+        December 29, 2009
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Quand on livre une application logicielle, l’usage veut que l’on <em>tague</em> le code
+source qui lui correspond dans son système de gestion de version. Oui mais
+voilà, des fois, on n’a pas le temps alors on ne le fait pas. Qu’à cela ne
+tienne, il n’est jamais trop tard pour bien faire et voici la méthode que j’ai
+utilisée pour taguer a posteriori, sur mon dépôt de source , des
+versions livrées il y a plusieurs semaines.</p>
+<h2>Prérequis</h2>
+<p>Cette opération ne fonctionne que si les hypothèses suivantes sont vérifiées :</p>
+<ul>
+<li>le code packagé a été commité sur le système de gestion de version;</li>
+<li>les dates de livraison des logiciels sont connues, au moins de façon
+approximative.</li>
+</ul>
+<h2>1ère étape : identifier les numéros de révision</h2>
+<p>Pour identifier les numéros de révision, il faut utiliser la commande suivante :</p>
+<pre><code>svn log &lt;chemin-du-source-à-examiner&gt;
+</code></pre>
+<p>Le résultat de cette commande permet d’identifier les numéros de révision et les
+dates associées de tous les commit réalisés sur le source examiné. A partir des
+dates de livraison, on sait alors à quel numéro de révision la livraison
+correspond.</p>
+<h2>2ème étape : taguer les révisions identifiées</h2>
+<p>Pour cela, utiliser la commande suivante :</p>
+<pre><code>svn copy -r &lt;num-revision&gt; &lt;chemin-source&gt; &lt;chemin-cible&gt;
+</code></pre>
+<p>Pour rappel aux utilisateurs de SVN, la convention veut que :</p>
+<ul>
+<li>le chemin source soit le répertoire <code>trunk</code> ou un sous-répertoire du
+répertoire <code>branches</code></li>
+<li>le chemin cible soit un sous-répertoire du répertoire <code>tags</code></li>
+</ul>
+
+  </div>
+
+  <a class="u-url" href="/blog/jamais-trop-tard-pour-mettre-des-tags-avec-svn/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/svn/">
+          svn
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/developpement-ios-ressources-tuyaux-iphone-et-ipad/">
+        Développement iOS : ressources & tuyaux (iPhone et iPad)
+      </a>
+    </p>
+    <p class="related-page-date">November 19, 2009</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/conversion-de-fichiers-flac-en-mp3/">
+        Conversion de fichiers .flac en .mp3
+      </a>
+    </p>
+    <p class="related-page-date">January 09, 2010</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

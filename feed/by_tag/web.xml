@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/web.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/web.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Adapter un site SPIP à un terminal mobile</title><link href="https://bootstragram.com/blog/adapter-un-site-spip-a-un-terminal-mobile/" rel="alternate" type="text/html" title="Adapter un site SPIP à un terminal mobile" /><published>2010-08-24T00:00:00+00:00</published><updated>2010-08-24T00:00:00+00:00</updated><id>https://bootstragram.com/blog/adapter-un-site-spip-a-un-terminal-mobile</id><content type="html" xml:base="https://bootstragram.com/blog/adapter-un-site-spip-a-un-terminal-mobile/">&lt;p&gt;Le site vient d’être mis à jour et utilise un thème et un squelette ZPIP pour
+SPIP qui permet un rendu adapté aux dimensions de l’écran du terminal utilisé
+pour le consulter.&lt;/p&gt;
+&lt;p&gt;J’en parlais &lt;a href=&quot;/blog/same-site-for-desktop-and-mobile/&quot;&gt;ici&lt;/a&gt;, j’ai mis à jour ce site en utilisant le triple
+principe de &lt;em&gt;fluid grids&lt;/em&gt;, &lt;em&gt;fluid images&lt;/em&gt; et &lt;em&gt;media queries&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Pour cela j’ai créé un thème et un squelette ZPIP qui utilisent des outils
+communs à la plupart des webmasters :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Feedburner pour le flux RSS;&lt;/li&gt;
+&lt;li&gt;les derniers tweets d’un compte Twitter pour dynamiser le contenu du site;&lt;/li&gt;
+&lt;li&gt;Google Analytics pour la mesure d’audience.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pour améliorer le graphisme du site, j’ai aussi utilisé :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ce set de
+&lt;a href=&quot;http://www.charfishdesign.com/goodies/19-free-hand-drawn-sketch-icons/&quot;&gt;&lt;em&gt;sketched icons&lt;/em&gt;&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;cet autre set de
+&lt;a href=&quot;http://www.webdesignerdepot.com/2009/04/24-free-exclusive-vector-icons-handy/&quot;&gt;&lt;em&gt;sketched icons&lt;/em&gt;&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;l’application iPhone &lt;em&gt;ShakeItPhoto&lt;/em&gt; pour donner un rendu sympa aux icônes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Le même site pour consultation sur iPhone&lt;/h2&gt;
+&lt;p&gt;Ainsi, avec une instance de SPIP et sans configuration Apache, le contenu du
+site s’adapte automatiquement aux dimensions de l’écran sur lequel il est
+consulté. Voici par exemple le rendu de la home page sur un iPhone en
+orientation portrait et en orientation paysage :&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/screenshot-zpip-1.png&quot; alt=&quot;Screenshot plugin ZPIP portrait&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;../../assets/images/screenshot-zpip-2.png&quot; alt=&quot;Screenshot plugin ZPIP paysage&quot; /&gt;&lt;/p&gt;
+&lt;h2&gt;À propos de ZPIP&lt;/h2&gt;
+&lt;p&gt;J’utilise donc le plugin ZPIP pour le CMS SPIP pour lequel j’ai créé un thème et
+un squelette. Je viens de mettre à disposition ces 2 composants, pour le moment
+destinés à fonctionner ensemble. Vous pouvez donc les utiliser dès maintenant
+pour votre site ! Pour cela,
+&lt;a href=&quot;http://code.google.com/p/mfgridformobile/&quot;&gt;cliquer ici&lt;/a&gt; !&lt;/p&gt;
+&lt;p&gt;N’hésitez pas à me fournir vos remarques à son sujet sachant que j’ai déjà
+identifié quelques bugs que je corrigerai bientôt dans une seconde version :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;le formulaire de recherche est absent de la version mobile (ne trouvant pas de
+façon agréable de l’intégrer, j’ai choisi de ne pas l’afficher pour le moment,
+ce sera fait bientôt);&lt;/li&gt;
+&lt;li&gt;premier espace de taille aléatoire pour les listes quand le texte est
+justifié;&lt;/li&gt;
+&lt;li&gt;le zoom n’est plus possible sur Safari pour iOS;&lt;/li&gt;
+&lt;li&gt;le site désactive le rendu des flux syndiqués dans SPIP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Après publication de ce post, Joseph commentait :&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bonjour, ceci est très intéressant. Deux petites questions :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Le thème développé peut-il fonctionner indépendamment de votre squelette.
+Autrement dit, le thème fonctionne-t-il avec un Zpip de base ?&lt;/li&gt;
+&lt;li&gt;Pensez-vous qu’il soit difficile d’adapter des thèmes déjà existants afin
+qu’ils s’affichent correctement sur un navigateur mobile ? Quels sont les
+éléments à prendre en compte ? Cela pourrait faire l’objet d’une magnifique
+contribution sur SPIP-Contrib (Comment adapter un thème Zpip aux navigateurs
+mobiles).\r\n\r\nBien cordialement et au plaisir de vous lire prochainement&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Ma réponse :&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Merci pour le commentaire. En ce qui concerne les réponses à vos questions :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;le thème seul peut fonctionner avec un ZPIP de base mais le rendu visuel
+sera loin d’être parfait, c’est pour cela que pour le moment le thème et le
+squelette sont distribués ensemble. Le thème sera probablement bientôt
+soumis à la communauté de la SPIP Zone qui pourra m’aider à le rendre plus
+performant et plus &lt;em&gt;indépendant&lt;/em&gt; du squelette.&lt;/li&gt;
+&lt;li&gt;en ce qui concerne l’adaptation de thèmes existants pour un bon rendu sur
+mobile, il est difficile d’estimer les efforts nécéssaires sans connaître la
+qualité du thème existant : tout dépend de celle-ci. Néanmoins, quelques
+&lt;em&gt;best practices&lt;/em&gt; existent et pourraient faire l’objet d’une contribution sur
+SPIP-contrib : j’y réfléchirai moi-même dans les semaines qui viennent.
+Merci de cette suggestion. (Si vous pensez à l’adaptation d’un thème en
+particulier, n’hésitez pas à me contacter via le formulaire de contact, je
+pourrai peut-être vous aider)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="web" /><summary type="html">Le site vient d’être mis à jour et utilise un thème et un squelette ZPIP pour SPIP qui permet un rendu adapté aux dimensions de l’écran du terminal utilisé pour le consulter.</summary></entry><entry><title type="html">A same website for desktop and mobile?</title><link href="https://bootstragram.com/blog/same-site-for-desktop-and-mobile/" rel="alternate" type="text/html" title="A same website for desktop and mobile?" /><published>2010-08-07T00:00:00+00:00</published><updated>2010-08-07T00:00:00+00:00</updated><id>https://bootstragram.com/blog/same-site-for-desktop-and-mobile</id><content type="html" xml:base="https://bootstragram.com/blog/same-site-for-desktop-and-mobile/">&lt;p&gt;Internet is turning mobile. So what should I do then? Make a desktop version and
+a mobile version of my website? Not really. CSS at the rescue.&lt;/p&gt;
+&lt;h2&gt;Fluid Grids&lt;/h2&gt;
+&lt;p&gt;The first thing to do is to use &lt;em&gt;fluid grids&lt;/em&gt;, which means using only relative
+sizes in your CSS, instead of absolute ones. You can setup sizes relative to the
+default browser font size, to the parent HTML blocks, etc.&lt;/p&gt;
+&lt;p&gt;With this kind of relative sizing, when the user changes the size of the
+browser, all the elements keep the same proportions.&lt;/p&gt;
+&lt;h2&gt;Media Queries&lt;/h2&gt;
+&lt;p&gt;But what if a screen size gets to this critical point where keeping the same
+aspect and proportion is not relevant anymore? Then, you should use &lt;em&gt;media
+queries&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Here again, this is a CSS technique that you can use to reorganize the layout of
+your webpage upon certain conditions. For instance, if the width of the browser
+is below a certain size, you can give up a column layout and switch to a
+single-column layout where blocks are placed one upon another.&lt;/p&gt;
+&lt;h2&gt;Fluid Images&lt;/h2&gt;
+&lt;p&gt;Of course, this is not enough and new issues are going to rise when you’re going
+to put images, or YouTube embeds inside your pages.&lt;/p&gt;
+&lt;p&gt;Some stuff can help (the CSS &lt;code&gt;max-width&lt;/code&gt; attribute for instance), but it’s not
+universally supported yet.&lt;/p&gt;
+&lt;h2&gt;What about iOS?&lt;/h2&gt;
+&lt;p&gt;What’s interesting me most here is not Internet Explorer-compatibility though,
+but making websites that look good on iOS devices, the iPhone and the iPad. I’ve
+tried to give these techniques a try and here it is:&lt;/p&gt;
+&lt;img alt=&quot;A grid layout&quot; src=&quot;/assets/grid-a4a86c0b59ce1bd1909d83195bc6c1bbd6d805e52e14e20030bfe1e8ed50f6ff0c24b426c0f824911973a85f699ffb173c1d009829ad54d069469c1977ec999d.png&quot; integrity=&quot;sha512-pKhsC1nOG9GQnYMZW8bBu9bYBeUuFOIAML/h6O1Q9v8MJLQmwPgkkRlzqF9pn/sXPB0AmCmtVNBpRpwZd+yZnQ==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;This is a 10-column layout of 82px each, separated by 20px gutters. With 2
+outside gutters of 12px each, we get a grid defined by a default width of
+1024px.&lt;/p&gt;
+&lt;p&gt;To setup my CSS correctly, some math are required:&lt;/p&gt;
+&lt;img alt=&quot;Some grid math&quot; src=&quot;/assets/grid-math-f8c80d3765baf8303de1280062936bf456a5c12849b6292f243b5c7658b4e4dd3b841f54d6946565cc9ed8cba28f8e00b3849b42366c0412f413590f2a894b78.png&quot; integrity=&quot;sha512-+MgNN2W6+DA94SgAYpNr9FalwShJtikvJDtcdli05N07hB9U1pRlZcye2Muij44As4SbQjZsBBL0E1kPKolLeA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Then I had all I needed to build the &lt;a href=&quot;../../assets/grid.css&quot;&gt;CSS&lt;/a&gt; for &lt;a href=&quot;../../assets/grid-demo.html&quot;&gt;this demo page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This demo page renders as follow on the iPhone, portrait and landscape:&lt;/p&gt;
+&lt;img alt=&quot;Grid page rendering on an iPhone with portrait orientation&quot; src=&quot;/assets/grid-portrait-0ac542bdda91afe4c763306286a4ad44d5f191d4ed6004b4256b76f353e92541048922282be6bb10ab9575c6e6d9068b18607af2666e12a97d73b758209c0f2f.jpg&quot; integrity=&quot;sha512-CsVCvdqRr+THYzBihqStRNXxkdTtYAS0JWt281PpJUEEiSIoK+a7EKuVdcbm2QaLGGB68mZuEql9c7dYIJwPLw==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;img alt=&quot;Grid page rendering on an iPhone with landscape orientation&quot; src=&quot;/assets/grid-landscape-c076057fa5647b803fc7dd36a9d6062da9f4111484a2b55eb149a68cd22472cabd983a3e517c24f8b27464a6b870951cfbe67280c2bef933dc124d5eb193a296.jpg&quot; integrity=&quot;sha512-wHYFf6Vke4A/x902qdYGLan0ERSEorVesUmmjNIkcsq9mDo+UXwk+LJ0ZKa4cJUc++ZygMK++TPcEk1esZOilg==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;I’ll soon adapt this website, quickly put together with ZPIP so that it uses
+these methods and is adapted, with a nice design, to the iPhone and the iPad.
+Stay tuned.&lt;/p&gt;
+&lt;h2&gt;Useful resources:&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.alistapart.com/articles/fluidgrids/&quot;&gt;Fluid Grids&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.alistapart.com/articles/responsive-web-design/&quot;&gt;Responsive Web Design&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://unstoppablerobotninja.com/entry/fluid-images&quot;&gt;Fluid Images&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="web" /><summary type="html">Internet is turning mobile. So what should I do then? Make a desktop version and a mobile version of my website? Not really. CSS at the rescue.</summary></entry></feed>

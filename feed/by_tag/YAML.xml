@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/YAML.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/YAML.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">My Definitive Front Matter</title><link href="https://bootstragram.com/blog/my-definitive-front-matter/" rel="alternate" type="text/html" title="My Definitive Front Matter" /><published>2021-01-17T00:00:00+00:00</published><updated>2021-01-17T00:00:00+00:00</updated><id>https://bootstragram.com/blog/my-definitive-front-matter</id><content type="html" xml:base="https://bootstragram.com/blog/my-definitive-front-matter/">&lt;p&gt;With every static site generator, you can write your posts or pages with
+Markdown or CommonMark files in which you can include some structured metadata
+called a &lt;em&gt;Front Matter&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Jekyll&lt;/em&gt; has &lt;a href=&quot;https://jekyllrb.com/docs/front-matter/&quot;&gt;it&lt;/a&gt;. &lt;em&gt;Hugo&lt;/em&gt; has &lt;a href=&quot;https://gohugo.io/content-management/front-matter/&quot;&gt;it&lt;/a&gt;. &lt;em&gt;Gatsby&lt;/em&gt; has &lt;a href=&quot;https://www.gatsbyjs.com/docs/how-to/routing/adding-markdown-pages/#frontmatter-for-metadata-in-markdown-files&quot;&gt;it&lt;/a&gt;. &lt;em&gt;Publish&lt;/em&gt; takes
+distance from the naming&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; but definitely has &lt;a href=&quot;https://github.com/JohnSundell/Publish/blob/master/Documentation/HowTo/custom-markdown-metadata-values.md&quot;&gt;it&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;When you start building a website with any of these products — I’m most familiar
+with Jekyll by far —, the default scaffolding will prepare sample posts using
+front matter keys that it considers as required. From this basic starting point,
+users will have the liberty to add any additional keys of their liking. Over
+time, after running many Jekyll projects, I came to rely mostly on the following
+set:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;layout: post
+id: 61C15587-6353-4F0B-B7EA-5FB936E1B7B2
+title: Hey Jude
+author: Paul McCartney
+excerpt: &amp;gt;-
+  *Hey Jude* is a song by the English rock band the Beatles that was released as
+  a non-album single in August 1968.
+image: hey-jude-single.jpg
+category: Past Masters
+tags:
+  - 1968
+  - Julian Lennon
+  - Na na na nananana
+revisions:
+  &amp;quot;2021-01-18&amp;quot;: Fixed typos
+alert:
+  level: info
+  content: This is one of the greatest songs ever.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’ll detail each field now, having Jekyll in mind, but I’m pretty sure this can
+be applied to any static generator.&lt;/p&gt;
+&lt;h2&gt;Layout&lt;/h2&gt;
+&lt;p&gt;This is pretty basic. With Jekyll, you can include a default layout in the site
+configuration but I like to keep it explicit.&lt;/p&gt;
+&lt;h2&gt;ID&lt;/h2&gt;
+&lt;p&gt;This is optional, but if you intend to change URL over time, it can be useful to
+keep consistent feed since an ID is required by both Atom feeds and JSON feeds.&lt;/p&gt;
+&lt;h2&gt;Title&lt;/h2&gt;
+&lt;p&gt;Titles are important since you don’t want to rely on filenames to get your
+posts’ names from. Some useful links to get capitalization right:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;in English, I like &lt;a href=&quot;https://thecapitalizer.com/&quot;&gt;The Capitalizer&lt;/a&gt;;&lt;/li&gt;
+&lt;li&gt;in French, I couldn’t find a good tool but &lt;a href=&quot;https://www.axl.cefan.ulaval.ca/monde/regles-2TITRES.htm&quot;&gt;this page&lt;/a&gt; from an academic in
+Quebec has a good overview of the rules to respect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Author&lt;/h2&gt;
+&lt;p&gt;This is optional since it will be relevant only if the website has more than 1
+contributor. Also, most plugins allow it to be changed to &lt;code&gt;authors&lt;/code&gt; in case an
+article is written by more than 1 person. In case you want to attach rich data
+for each author, the &lt;a href=&quot;https://github.com/jekyll/jekyll-feed#author-information&quot;&gt;&lt;em&gt;Author information&lt;/em&gt;&lt;/a&gt; section from jekyll-feed’s
+&lt;code&gt;README&lt;/code&gt; has good tips.&lt;/p&gt;
+&lt;h2&gt;Excerpt&lt;/h2&gt;
+&lt;p&gt;This is optional. By default the first paragraph of the post will be used. But
+it’s good to keep control over what will probably appear on the home page’s
+reference to your post or social networks. I like &lt;em&gt;excerpt&lt;/em&gt; better than
+&lt;em&gt;description&lt;/em&gt; because it is more specific and explicit.&lt;/p&gt;
+&lt;h2&gt;Image&lt;/h2&gt;
+&lt;p&gt;This is the cover of your post or page. I was using &lt;em&gt;cover&lt;/em&gt; for a while before
+realizing &lt;em&gt;jekyll-feed&lt;/em&gt; was using &lt;em&gt;image&lt;/em&gt; by default so I converted.&lt;/p&gt;
+&lt;h2&gt;Categories and Tags&lt;/h2&gt;
+&lt;p&gt;As for the author, most plugins and themes will support singular or plural forms
+of these tags.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What is the difference between the two?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I would say that &lt;em&gt;categories&lt;/em&gt; are the paths of the navigation tree for your
+website (just like folders and subfolders where you would store your files).
+That’s what would be used to build a &lt;a href=&quot;https://bulma.io/documentation/components/breadcrumb/&quot;&gt;breadcrumb&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Tags&lt;/em&gt; on the other hand can be whatever and don’t involve any kind of structure
+for your data.&lt;/p&gt;
+&lt;p&gt;To put it another way, categories form a relatively rigid tree, while tags form
+a free-form cloud.&lt;/p&gt;
+&lt;h2&gt;Revisions&lt;/h2&gt;
+&lt;p&gt;This section was &lt;del&gt;stolen&lt;/del&gt; inspired by the front matter of NSHipster’s articles (see
+the &lt;a href=&quot;https://github.com/NSHipster/articles/blob/master/2014-07-21-xctestcase.md&quot;&gt;source&lt;/a&gt; for their &lt;code&gt;XCTestCase&lt;/code&gt; post for instance). When you intend to
+keep your content relevant over time, it is very useful to let your users know
+you updated your content so the revisions feature, albeit specific, can become super
+useful.&lt;/p&gt;
+&lt;h2&gt;Alerts&lt;/h2&gt;
+&lt;p&gt;If you want to feature informative banners, in case you deprecate content, or
+want to include an update to a post, an alert front matter is probably a better
+way to go than modifying your content to include extra content (that would
+probably be HTML to include an alert styling anyway, which you should avoid as
+much as possible).&lt;/p&gt;
+&lt;h2&gt;No date? No slug?&lt;/h2&gt;
+&lt;p&gt;Unless you intend to post multiple times a day, I would say the date belongs to
+the filename only, and I don’t see the point of including the date with an
+additional time in the front matter since it seems to just add clutter to it.&lt;/p&gt;
+&lt;p&gt;On a similar note, I like that the slug for the URL is also part of the
+filename. I don’t see any inconvenience doing so since Git does a pretty good
+job at identifying renamings now, and the &lt;code&gt;id&lt;/code&gt; can help you tracking URL that
+changed over time so that they don’t get duplicated in feeds.&lt;/p&gt;
+&lt;p&gt;Any thoughts? &lt;a href=&quot;https://github.com/Bootstragram/bootstragram-blog/issues&quot;&gt;Let me know.&lt;/a&gt;&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;It seems to come from the &lt;a href=&quot;https://en.wikipedia.org/wiki/Book_design#Front_matter&quot;&gt;printed book design&lt;/a&gt; industry. &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="Web Publishing" /><category term="CommonMark" /><category term="Gatsby" /><category term="Jekyll" /><category term="Markdown" /><category term="NSHipster" /><category term="Publish" /><category term="Static Site Generator" /><category term="YAML" /><summary type="html">After years of making static sites with Jekyll, here is my template for a solid front matter for your next static site project.</summary></entry></feed>

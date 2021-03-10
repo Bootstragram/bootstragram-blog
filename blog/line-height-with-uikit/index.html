@@ -1,0 +1,366 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Pixel-Perfect Line Height With UIKit | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Pixel-Perfect Line Height With UIKit" />
+<meta name="author" content="Mick F" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="In this post, I will show you my attempts to render a card component exactly as it was designed, and why it might be worth negociating an approximation with a smaller footprint." />
+<meta property="og:description" content="In this post, I will show you my attempts to render a card component exactly as it was designed, and why it might be worth negociating an approximation with a smaller footprint." />
+<link rel="canonical" href="https://bootstragram.com/blog/line-height-with-uikit/" />
+<meta property="og:url" content="https://bootstragram.com/blog/line-height-with-uikit/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-04T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Pixel-Perfect Line Height With UIKit" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/line-height-with-uikit/","@type":"BlogPosting","headline":"Pixel-Perfect Line Height With UIKit","dateModified":"2021-02-04T00:00:00+00:00","datePublished":"2021-02-04T00:00:00+00:00","author":{"@type":"Person","name":"Mick F"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/line-height-with-uikit/"},"description":"In this post, I will show you my attempts to render a card component exactly as it was designed, and why it might be worth negociating an approximation with a smaller footprint.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Pixel-Perfect Line Height With UIKit</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2021-02-04T00:00:00+00:00" itemprop="datePublished">
+        February 04, 2021
+      </time><span> • </span><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">Mick F</span></span><span> • </span>
+        <ul class="categories-list"><li>
+            <span>
+              <span class="p-category h-card" itemprop="name">
+                <a href="/category/journaling/">
+                Journaling
+                </a>
+              </span>
+              </span>
+            </li></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>According to Matthew Butterick, the author of the excellent <a href="https://practicaltypography.com/"><em>Practical
+Typography</em></a>, the <a href="https://practicaltypography.com/summary-of-key-rules.html">number one key rule</a> of good typography is:</p>
+<blockquote>
+<p>The four most important typographic considerations for body text are <em>point
+size</em>, <em>line spacing</em>, <em>line length</em>, and <em>font</em>, because those choices
+determine how the body text looks.</p>
+</blockquote>
+<p>While point sizes, line lengths and fonts are easy to control with UIKit, line
+spacing is a little trickier.</p>
+<p>In this article, I will first describe in detail a clever helper to meet
+challenging line spacing requirements with pixel-perfect precision. Your design
+team will love you.</p>
+<p>I will then explain why I actually wouldn’t recommend implementing the solution
+for every context, and instead provide a much sturdier <em>pixel-pretty-close</em><sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup>
+alternative. Your design team will still love you. I promise.</p>
+<p>Let’s dive in.</p>
+<h2>The Designer Input</h2>
+<p>Say our design team gives us the following specs for a <strong>card</strong> view component:</p>
+<ul>
+<li>A <strong>title</strong> with a point size of 28pt and a line height of 38pt</li>
+<li>A <strong>body</strong> with a point size of 17pt and a line height of 24pt</li>
+<li>Both the title and body are 8pt apart on the Y-axis, and 8pt away from the
+edges of the card on the X-axis.</li>
+</ul>
+<p>The export from Sketch looks like this<sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup>:</p>
+<img alt="The card as designed by the design team." src="/assets/card-as-designed-1c6c05c370f28bce655fb1d8536bf81ffa046558b248be7cc9d9ef5275000613c3c343d23afcafc988d3b58af4e2ef2e844088a6f8e12478a9966f6a5e91d458.png" integrity="sha512-HGwFw3Dyi85lX7HYU2v4H/oEZViySL58ydnvUnUABhPDw0PSOvyvyYjTtYr04u8uhECIpvjhJHiplm9qXpHUWA==" crossorigin="anonymous">
+<p>And here is a version with colored backgrounds for labels, to better understand
+the layout and where line heights should be considered:</p>
+<img alt="The card as designed by the design team, with boxes for better understanding of the structure." src="/assets/card-as-designed-with-boxes-3370ce7679d180a664a8316946551ec11bcca60f9f261ea2c8a05476df8700f38c0e466cbfda4014c516f9b65ce80cec79320f05566d624761087132a5f91014.png" integrity="sha512-M3DOdnnRgKZkqDFpRlUewRvMpg+fJh6iyKBUdt+HAPOMDkZsv9pAFMUW+bZc6AzseTIPBVZtYkdhCHEypfkQFA==" crossorigin="anonymous">
+<p>Next, we will iterate to reach a pixel-perfect translation of this design into
+UIKit code.</p>
+<h2>Step 1: Laying out the labels</h2>
+<p>Let’s head over to a playground, create our 2 labels and position them with auto
+layout with the following constraints:</p>
+<pre><code class="language-swift">NSLayoutConstraint.activate([
+    // X-avis: 8pt padding between card and title:
+    titleLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1.0),
+    titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+
+    // Y-axis: 8pt padding between card and title: ⚠️
+    titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1.0),
+
+    // Y-axis: 8pt padding between title and label:
+    bodyLabel.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: titleLabel.lastBaselineAnchor, multiplier: 1.0),
+    bodyLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+    bodyLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+])
+</code></pre>
+<p>If you noticed this little warning in the comment ⚠️, bear with me: we will
+address it further down.</p>
+<p>We haven’t written any code related to the line height just yet, but for the
+sake of getting an idea of where we are at this point, here is a <em>ghost
+snapshot</em> of what our view looks like if we place the Sketch design, with a low
+opacity, below our labels:</p>
+<img alt="Pixel-wise comparison of the Sketch design and iOS view after Step 1." src="/assets/card-step-1-3f1129e7745168dca7afcd8b52389633e368a3b2cdc5093b61ed3cfca9b17e98e47054c966e7059554622ce0a27cbe493cc8b542a255f4a50284de71c0420dfa.png" integrity="sha512-PxEp53RRaNynr82LUjiWM+Noo7LNxQk7Ye08/KmxfpjkcFTJZucFlVRiLOCifL5JPMi1QqJV9KUChN5xwEIN+g==" crossorigin="anonymous">
+<h2>Step 2: Adding some paragraph style</h2>
+<p>Now, let’s address the line spacing.</p>
+<p>The most standard approach to add line spacing is to use <a href="https://developer.apple.com/documentation/uikit/uilabel/1620542-attributedtext"><code>UILabel</code>’s
+<code>attributedText</code></a> instead of the simpler <code>text</code> attribute:</p>
+<pre><code class="language-swift">let attributedString = NSMutableAttributedString(string: bodyText)
+// See the reason behind this substraction below
+let lineSpacing = 24.0 - res.font.lineHeight
+let paragraphStyle = NSMutableParagraphStyle()
+paragraphStyle.lineSpacing = lineSpacing
+attributedString.addAttribute(
+	  .paragraphStyle,
+    value: paragraphStyle,
+    range: NSRange(location: 0, length: attributedString.length)
+)
+res.attributedText = attributedString
+</code></pre>
+<p>Here we create an attributed string with a paragraph style attribute. It can
+control the <em>line spacing</em>, ie the numbers of points between two lines of text
+that should be added, or substracted, to the default layout using the font
+metrics<sup class="footnote-ref"><a href="#fn3" id="fnref3">3</a></sup>.</p>
+<p>The line spacing is the difference between the line height <em>of the design</em> and
+the line height <em>of the font being used</em>.</p>
+<p>With line spacing added to both the title and the body labels, our <em>ghost
+snapshot</em> now looks like this.</p>
+<img alt="Pixel-wise comparison of the Sketch design and iOS view after Step 2." src="/assets/card-step-2-80f33d7b048ae57a6f4135d89c6e367f876023a6931fa63c76961cd97d3b2925455bfedb4def26468e98936347c67969664fc8c261c3ddc33afd44baae4d6770.png" integrity="sha512-gPM9ewSK5XpvQTXYnG42f4dgI6aTH6Y8dpYc2X07KSVFW/7bTe8mRo6Yk2NHxnlpZk/IwmHD3cM6/US6rk1ncA==" crossorigin="anonymous">
+<p>A little better but not quite great yet. While the body text line spacing
+appears to be in line with the requirements from the design team — in the sense
+that it looks just a little translated upwards — the card is still far from a
+pixel-perfect result. What is going on?</p>
+<p>The paragraph style’s line spacing contributes to the <strong>inner</strong> part of the line
+height on a given paragraph — so, effectively, on strings spanning on more than
+1 line which, in our example, is the body only. However, the labels don’t apply
+the necessary extra <strong>outer</strong> part of the line height.</p>
+<h2>Step 3: Applying outer-padding</h2>
+<p>To meet our pixel-perfect superposition objective, we need to apply some extra
+Y-axis <strong>padding</strong><sup class="footnote-ref"><a href="#fn4" id="fnref4">4</a></sup> to our labels. Unfortunately, if we want to stay in the
+peaceful UIKit realm and not cross the border to scary <a href="https://developer.apple.com/documentation/coretext">Core Text</a> territory,
+we need to wrap our labels with a view that will be in charge of this extra
+padding.</p>
+<p>I’ll spare you the steps and repetition of code to fast forward to a convenient
+<code>UIView</code> helper subclass that will do the job:</p>
+<pre><code class="language-swift">/// Let's keep font metrics and line height metrics together.s
+struct TextStyle {
+    let font: UIFont
+    let lineHeight: CGFloat
+}
+
+class LineHeightedLabel: UIView {
+    init(text: String?, textStyle: TextStyle) {
+        self.wrappedLabel = UILabel()
+        self.textStyle = textStyle
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        setupViewAndConstraints()
+        setText(text: text)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError(&quot;init(coder:) has not been implemented&quot;)
+    }
+
+    // MARK: - Inspecting the view
+
+    let wrappedLabel: UILabel
+    let textStyle: TextStyle
+
+    var text: String? {
+        get {
+            return wrappedLabel.text
+        }
+
+        set {
+            setText(text: newValue)
+        }
+    }
+
+    private var topYAxisConstraint: NSLayoutConstraint?
+
+    private func setupViewAndConstraints() {
+        wrappedLabel.translatesAutoresizingMaskIntoConstraints = false
+        wrappedLabel.font = textStyle.font
+        addSubview(wrappedLabel)
+
+        // We apply the line height contribution to this constraint.
+        // Since its constant might evolve over time, let's keep a reference.
+        let safeTopYAxisConstraint = topAnchor.constraint(equalTo: wrappedLabel.topAnchor)
+        topYAxisConstraint = safeTopYAxisConstraint
+
+        NSLayoutConstraint.activate([
+            safeTopYAxisConstraint,
+            leadingAnchor.constraint(equalTo: wrappedLabel.leadingAnchor),
+            trailingAnchor.constraint(equalTo: wrappedLabel.trailingAnchor),
+            centerYAnchor.constraint(equalTo: wrappedLabel.centerYAnchor)
+        ])
+    }
+
+    func setText(text: String?) {
+        guard let text = text else {
+            // No text? Then no padding either.
+            topYAxisConstraint?.constant = 0.0
+            wrappedLabel.text = nil
+            return
+        }
+
+        // This is the extra padding we want.
+        // Half of it will go on top of the label.
+        // The other half will go at the bottom of the label.
+        let lineSpacing = textStyle.lineHeight - textStyle.font.lineHeight
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = wrappedLabel.textAlignment
+
+        // Build an attributed string
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length)
+        )
+
+        topYAxisConstraint?.constant = -(lineSpacing / 2.0)
+        wrappedLabel.attributedText = attributedString
+    }
+}
+</code></pre>
+<p>Where are we now? Let’s look at our <em>ghost snapshot</em>:</p>
+<img alt="Pixel-wise comparison of the Sketch design and iOS view after Step 3." src="/assets/card-step-3-542e20f362def890191d99e601b2b61b08f8808f8e944cabb44875d46a93a1ba48a7ffed83f05ba080e1df815618124da5f1c67003ff017609b4831210917743.png" integrity="sha512-VC4g82Le+JAZHZnmAbK2Gwj4gI+OlEyrtEh11GqTobpIp//tg/BboIDh34FWGBJNpfHGcAP/AXYJtIMSEJF3Qw==" crossorigin="anonymous">
+<p>Even though the mysteries of text-layout algorithms led Sketch and Xcode to make
+different decisions about when to break lines, it seems like our code does a
+good job respecting the designed layout so, tada 🎉, we’re done! All that’s left
+to do is to copy paste this little helper everywhere.</p>
+<p>Well… sure, but be careful. While this wrapper does a good job in the context of
+this exercise and its API<sup class="footnote-ref"><a href="#fn5" id="fnref5">5</a></sup> is considerably stable, I actually wouldn’t take
+this approach. Let’s see why.</p>
+<h2>A sturdier alternative using font descriptors and text constraints</h2>
+<p>The major drawbacks about this little helper are:</p>
+<ul>
+<li>While it’s not super fragile, it is still not a great API since it only
+handles two attributes (line spacing and text alignment);</li>
+<li>It adds an extra wrapping view for every label in our design. While this might
+not be really expensive to lay out, it is not very intellectually satisfying;</li>
+<li>It requires to bend Apple’s own rules to do your thing. If more than 12 years
+of iOS development has taught me one thing, it is that following Apple’s
+guidelines will end up being a great return on investment either whenever
+Apple launches its next big thing or when you discover your app had a blind
+spot (accessibility being the usual suspect).</li>
+</ul>
+<p>So what rule are we bending? Remember the little ⚠️ from above? Well if you
+replace this constraint:</p>
+<pre><code class="language-swift">// The origin of the titleLabel frame will be 8pt below the view's.
+titleLabel.topAnchor.constraint(
+  equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor,
+  multiplier: 1.0
+)
+</code></pre>
+<p>by this one — which is likely what Apple wants you to do when you are handling
+labels constraints:</p>
+<pre><code class="language-swift">// The origin of the titleLabel frame will be 11pt below the view's.
+titleLabel.firstBaselineAnchor.constraint(
+  equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor,
+  multiplier: 1.0
+)
+</code></pre>
+<p>You end up with a slightly different result: the title label will be laid out
+3pt further down if you use the text-specific constraint. Since the system knows
+that <code>titleLabel</code> is a <code>title1</code> it will add additional padding that will look
+quite better, without any design cost.</p>
+<p>Apple is very thoughtful about system font sizes and line heights, as
+demonstrated in the <a href="https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/">Typography section of their Human Interfaces
+Guidelines</a>. If your designer still wants to make adjustments on point sizes
+and line spacings, a sturdier alternative to using <code>lineSpacing</code> might be to
+leverage font descriptors to slightly alter the font metrics so that they better
+match your designs. You could use either <a href="https://developer.apple.com/documentation/uikit/uifontdescriptor/symbolictraits/1616689-traitlooseleading"><code>traitLooseLeading</code></a> or
+<a href="https://developer.apple.com/documentation/uikit/uifontdescriptor/symbolictraits/1616694-traittightleading"><code>traitTightLeading</code></a> to slightly modify the line spacing of fonts.</p>
+<p>For our specific line height situation, we want <code>traitLooseLeading</code>:</p>
+<pre><code class="language-swift">let font: UIFont = .init(
+    descriptor: UIFontDescriptor
+        .preferredFontDescriptor(withTextStyle: .body)
+        .withSymbolicTraits(.traitLooseLeading)!,
+    size: 0
+)
+</code></pre>
+<p>Here is another ghost snapshot that doesn’t require to wrap <code>UILabel</code> or use
+attributed strings. Instead, it uses just the adequate constraints, a font with
+a looser leading, and a simple tweak to use a multiplier of <code>1.4</code> for the space
+constraint between the title and the body.</p>
+<img alt="Pixel-wise comparison of the Sketch design and a sturdier iOS view." src="/assets/card-sturdier-option-d13551c9e0a85c3eb0ae0c4af55d0878c8f96ae9279233a617edb01084a2f348f16a6105d5bbe97ade389d927b17ec0997ec726c9a3f98a4865a2142d5b90fd2.png" integrity="sha512-0TVRyeCoXD6wrgxK9V0IeMj5auknkjOmF+2wEISi80jxamEF1bvpet44nZJ7F+wJl+xybJo/mKSGWiFC1bkP0g==" crossorigin="anonymous">
+<p>While this solution will give you less control to get a perfect ghost snapshot
+(see how the card’s total height is not as high as the Sketch design?), I think
+it is the best option for most cases, that should be negotiated with your design
+team.</p>
+<section class="footnotes">
+<ol>
+<li id="fn1">
+<p>Credits for this awesome adjective go to <a href="https://www.joshwcomeau.com/css/pixel-perfection/">Josh W. Comeau</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2">
+<p>I know it looks like 💩 that is not the point 😉. <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3">
+<p>Every font has a lot of metrics. Apple’s <a href="https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW66"><em>Using Text Kit to Draw and Manage
+Text</em> document</a> is very helpful to learn about them, especially the <em>Font
+Metrics</em> figure that is a good recap of the most important ones. <a href="#fnref3" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn4">
+<p>Since we’re exploring multiplatform design — that, let’s face it, is heavily
+influenced by the web linguo —, we might as well just start using it here. <a href="#fnref4" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn5">
+<p>Updating the text, for instance, will not break the layout, even if you set
+the text directly on the wrapped label. <a href="#fnref5" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <a class="u-url" href="/blog/line-height-with-uikit/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/ios/">
+          ios
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/my-definitive-front-matter/">
+        My Definitive Front Matter
+      </a>
+    </p>
+    <p class="related-page-date">January 17, 2021</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/css-polaroid-effect-with-fluid-grids/">
+        A CSS Polaroid Effect With Flexbox
+      </a>
+    </p>
+    <p class="related-page-date">March 07, 2021</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

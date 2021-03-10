@@ -1,0 +1,193 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Service to Activity Communication With The Android SDK | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Service to Activity Communication With The Android SDK" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="I’m an experienced iOS developer but still consider myself a noob regarding Android development. Never mind, I still want to share my latest experiment with the Android SDK: how to run a long operation in the background while still updating the UI regularly?" />
+<meta property="og:description" content="I’m an experienced iOS developer but still consider myself a noob regarding Android development. Never mind, I still want to share my latest experiment with the Android SDK: how to run a long operation in the background while still updating the UI regularly?" />
+<link rel="canonical" href="https://bootstragram.com/blog/android-service-activity-communication/" />
+<meta property="og:url" content="https://bootstragram.com/blog/android-service-activity-communication/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-01-28T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Service to Activity Communication With The Android SDK" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/android-service-activity-communication/","@type":"BlogPosting","headline":"Service to Activity Communication With The Android SDK","dateModified":"2014-01-28T00:00:00+00:00","datePublished":"2014-01-28T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/android-service-activity-communication/"},"description":"I’m an experienced iOS developer but still consider myself a noob regarding Android development. Never mind, I still want to share my latest experiment with the Android SDK: how to run a long operation in the background while still updating the UI regularly?","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Service to Activity Communication With The Android SDK</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2014-01-28T00:00:00+00:00" itemprop="datePublished">
+        January 28, 2014
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>I’m an experienced iOS developer but still consider myself a noob regarding
+Android development. Never mind, I still want to share my latest experiment with
+the Android SDK: how to run a long operation in the background while still
+updating the UI regularly?</p>
+<h2>Where AsyncTask won’t do the job…</h2>
+<p>The Android SDK provides a convenient object to perform background operations
+that will need to provide a UI feedback: <a href="https://developer.android.com/reference/android/os/AsyncTask.html" title="AsyncTask Class API Reference"><code>AsyncTask</code></a>. But as
+<a href="https://developer.android.com/reference/android/os/AsyncTask.html" title="AsyncTask Class API Reference">Android’s documentation</a> says:</p>
+<blockquote>
+<p>AsyncTasks should ideally be used for short operations (a few seconds at the
+most.)</p>
+</blockquote>
+<p>The question then arises: what should we use when a longer background operation
+is needed?</p>
+<h2>Well, guess what? It depends…</h2>
+<p>Searching for an answer to this question on services like StackOverflow ends up
+being more confusing than helpful. <a href="https://stackoverflow.com/search?q=android+ui+communication+background" title="Search for 'Android UI Communication Background' on StackOverflow">Many questions</a> are asked in
+this area but no clear answer appears. But depending on the specific aspects of
+each question, many keywords appear to help getting our quest further:
+<code>Services</code>, <code>Handlers</code>, etc.</p>
+<h2>Let’s give Services a try</h2>
+<p>Ideally, I wanted to find something similar to the <a href="https://nshipster.com/key-value-observing/">KVO</a> mechanism in iOS.</p>
+<p>I decided to give <code>Services</code> a try and developed a <a href="https://en.wikipedia.org/wiki/Proof_of_concept" title="Proof of Concept">POC</a> you can find on
+<a href="https://github.com/dirtyhenry/bootstragram-android" title="My bootstragram-android repository on GitHub">my bootstragram-android repository on GitHub</a>.</p>
+<p>The main reason why I picked <code>Services</code> over other solutions is that I wanted to
+be able to share <em>any kind of objects</em>, not only <code>Serializable</code> and <code>Parcelable</code>
+ones. This constraint eliminated a solution based on a
+<a href="https://developer.android.com/reference/android/support/v4/content/LocalBroadcastManager.html" title="LocalBroadcastManager Class API Reference"><code>LocalBroadcastManager</code></a> as from my understanding,
+objects that can be passed with the <code>Intent</code> (ie <code>Extra</code>) have to be
+<code>Serializable</code> or <code>Parcelable</code>.</p>
+<p>My objectives for this POC were:</p>
+<ol>
+<li>Create a background operation that will live as long as my app, no less.</li>
+<li>This operation must run continously and must update some kind of state at a
+relatively high-frequency.</li>
+<li>The user must be able to get a UI representation of that state without being
+blocked on one activiy in particular.</li>
+</ol>
+<p>Some notes about it went follow.</p>
+<h3>The POC Story</h3>
+<p>The pitch for the POC is as silly as can be. The app will generate in the
+background a new hex-string every 2 seconds. It will have to be displayed in a
+screen with a new color. Wow! I’m sure this app would be a hit on the Google
+Play Store!</p>
+<h3>Create a Service</h3>
+<p>When you create a <code>Service</code>, you need to declare it in your app manifest. I made
+mine private to my app but it’s not required.</p>
+<pre><code class="language-xml">&lt;application ...&gt;
+  ....
+  &lt;service android:name=&quot;.services.RandomEventsService&quot;
+           android:exported=&quot;false&quot; &gt;
+  &lt;/service&gt;
+  ....
+&lt;/application&gt;
+</code></pre>
+<p>The service itself is a subclass of <a href="https://developer.android.com/reference/android/app/IntentService.html" title="IntentService Class API Reference"><code>IntentService</code></a> (which
+provides a convenient <code>onHandleIntent</code> method to override) doing very simple
+things:</p>
+<pre><code class="language-java">protected void onHandleIntent(Intent intent) {
+  while (true) {
+    final RandomSingleton singleton = RandomSingleton.getInstance();
+    singleton.increment();
+    long endTime = System.currentTimeMillis() + 2 * 1000;
+    while (System.currentTimeMillis() &lt; endTime) {
+      synchronized (this) {
+        try {
+          wait(endTime - System.currentTimeMillis());
+        } catch (Exception e) {
+          Log.e(TAG, &quot;Couldn't sleep in peace&quot;, e);
+        }
+      }
+      singleton.increment();
+    }
+  }
+}
+</code></pre>
+<p>The service just runs continously and wakes up every 2 seconds to update the
+<code>RandomSingleton</code> singleton object via the <code>increment()</code> method: objectives 1
+and 2 are achieved.</p>
+<p>Here is <a href="https://github.com/dirtyhenry/bootstragram-android/blob/master/src/com/bootstragram/demo/services/RandomEventsService.java" title="My RandomEventsService source code">the full source code</a>.</p>
+<p>The service is started via a button in an activity:</p>
+<pre><code class="language-java">public void onClick(View v) {
+  Intent intent = new Intent(ServiceFeedbackActivity.this, RandomEventsService.class);
+  startService(intent);
+}
+</code></pre>
+<h3>UI Representation and Notifications</h3>
+<p>We still have objective 3 to achieve. To do so:</p>
+<ol>
+<li>I made my <code>RandomSingleton</code> a subclass of
+<a href="https://developer.android.com/reference/android/database/ContentObservable.html" title="ContentObservable Class API Reference"><code>ContentObservable</code></a></li>
+<li>I created an activity using a subclass of
+<a href="https://developer.android.com/reference/android/database/ContentObserver.html" title="ContentObserver Class API Reference"><code>ContentObserver</code></a>, observing <code>RandomSingleton</code></li>
+<li>Then I made <code>RandomSingleton</code> call <code>dispatchChange(...)</code> at the end of the
+<code>increment()</code> method</li>
+</ol>
+<p>And that’s it.</p>
+<h3>The Result</h3>
+<p><img src="../../assets/images/android-services-to-activity-communication.gif" alt="The app updates the UI every 2s accordingly to the new singleton state" title="The app updates the UI every 2s accordingly to the new singleton state" /></p>
+<h2>Conclusion</h2>
+<p>After a frustrating research that had made me more confused than confident about
+my problem, I found out that the actual implementation was pretty
+straightforward and easier to implement than I expected.</p>
+<p>Nevertheless, I’m still curious of feedbacks you might have about this code and
+I invite you to get in touch via <a href="https://github.com/dirtyhenry/bootstragram-blog/issues" title="Issues">GitHub</a> or <a href="https://twitter.com/dirtyhenry">Twitter</a> if you
+want to engage a discussion about this page (in particular if you know a better
+way to do a Service to UI communication).</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/android-service-activity-communication/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/android/">
+          android
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/notes-from-M101/">
+        Notes from 10 gen's M101JS MongoDB for Developers courseware
+      </a>
+    </p>
+    <p class="related-page-date">January 16, 2014</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/programming-guides-with-appledoc/">
+        How to generate Programming Guides with Appledoc
+      </a>
+    </p>
+    <p class="related-page-date">February 19, 2014</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

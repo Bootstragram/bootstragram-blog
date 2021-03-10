@@ -1,0 +1,243 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Notes from 10 gen’s M101JS MongoDB for Developers courseware | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Notes from 10 gen’s M101JS MongoDB for Developers courseware" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="I signed up for the online MongoDB University MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a promising technology and MongoDB’s courseware uses EdX’s excellent software that I had already used for the MIT 6.002x Electronics course so I was pretty confident of the usefulness of all this." />
+<meta property="og:description" content="I signed up for the online MongoDB University MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a promising technology and MongoDB’s courseware uses EdX’s excellent software that I had already used for the MIT 6.002x Electronics course so I was pretty confident of the usefulness of all this." />
+<link rel="canonical" href="https://bootstragram.com/blog/notes-from-M101/" />
+<meta property="og:url" content="https://bootstragram.com/blog/notes-from-M101/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-01-16T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Notes from 10 gen’s M101JS MongoDB for Developers courseware" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/notes-from-M101/","@type":"BlogPosting","headline":"Notes from 10 gen’s M101JS MongoDB for Developers courseware","dateModified":"2014-01-16T00:00:00+00:00","datePublished":"2014-01-16T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/notes-from-M101/"},"description":"I signed up for the online MongoDB University MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a promising technology and MongoDB’s courseware uses EdX’s excellent software that I had already used for the MIT 6.002x Electronics course so I was pretty confident of the usefulness of all this.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Notes from 10 gen&#39;s M101JS MongoDB for Developers courseware</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2014-01-16T00:00:00+00:00" itemprop="datePublished">
+        January 16, 2014
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>I signed up for the online <a href="https://education.mongodb.com/">MongoDB University</a>
+MongoDB for Node.js Developers course aka M101JS. MongoDB sounds like a
+promising technology and MongoDB’s courseware uses EdX’s excellent software that
+I had already used for the MIT 6.002x Electronics course so I was pretty
+confident of the usefulness of all this.</p>
+<div class="alert alert-info">
+<strong>Work in Progress!</strong>
+I switched from Python to Node.js and started over. I'm currently in:
+<ul>
+<li>Week 5, “Compound Grouping”.</li>
+<li>Week 6, next video is “Connecting to a Replica Set from the Node.js driver”</li>
+<li>Week 7, next video is “Introduction to Blog”
+</div>
+</li>
+</ul>
+<h2>Introduction to MongoDB</h2>
+<p>MongoDB is a non relational datastore. It stores something close from JSON
+called <a href="http://bsonspec.org">BSON</a>, which stands for Binary JSON. It is
+schemaless.</p>
+<p>The tradeoff to gain scalability and performance is that you have to give up
+joins and transactions that relational databases provide.</p>
+<h3>CRUD</h3>
+<p>In MongoDB vocabulary:</p>
+<ul>
+<li>Create is <code>insert</code></li>
+<li>Read is <code>find</code> (analogous to <code>count</code>)</li>
+<li>Update is <code>update</code></li>
+<li>Delete is <code>remove</code></li>
+</ul>
+<p>Table is <code>collection</code>. <code>_id</code> is created by default.</p>
+<h2>Mongo Shell</h2>
+<p>MongoShell is basically a JavaScript interpreter. You’ll be able to CRUD data
+but also run simple JavaScript instructions.</p>
+<p>Features include:</p>
+<ul>
+<li>Autocompletion via the <code>TAB</code> key</li>
+<li>Support of <code>.</code> and <code>[]</code> notation for JavaScript objects</li>
+<li>Support of BSON datatypes</li>
+</ul>
+<p>Connextion to the shell: mongo</p>
+<p>Example:</p>
+<pre><code>&gt; show dbs
+&gt; use mydb
+
+&gt; for (i = 0; i &lt; 3; i++) print(&quot;Hello Bootstragram&quot;);
+Hello Bootstragram
+Hello Bootstragram
+Hello Bootstragram
+
+&gt; help
+
+&gt; obj = { &quot;a&quot; : 1, &quot;b&quot;: &quot;hello&quot;, &quot;c&quot;: [&quot;apple&quot;, &quot;tomatoes&quot;]}
+
+&gt; NumberInt(1)
+
+&gt; NumberLong(1)
+
+&gt; new Date()
+
+&gt; exit
+</code></pre>
+<h3>Query Language</h3>
+<p><code>_id</code> is returned by default with queries. <code>pretty()</code> helps formatting answers
+in a readable way. The second argument tells MongoDB the name of the fields we
+want to fetch.</p>
+<pre><code>&gt; db.collection.findOne()
+&gt; db.collection.findOne({&quot;name&quot;: &quot;Jones&quot;})
+&gt; db.collection.findOne({&quot;name&quot;: &quot;Jones&quot;}, {&quot;name&quot;: true, &quot;_id&quot;: false})
+&gt; db.scores.find( { type: &quot;essay&quot;, score: 50 }, { student: true, _id: false } );
+</code></pre>
+<h3>Query operators</h3>
+<ul>
+<li><code>{ $gt : 95 }</code>: greather than (&gt;, NOT &gt;=)</li>
+<li><code>$gte</code>, <code>$lt</code>, <code>$lte</code> are <code>&gt;=</code>, <code>&lt;</code> and <code>&lt;=</code></li>
+<li><code>$exists</code>: <code>true</code>/<code>false</code> filter documents where the specified field exists or
+not</li>
+<li><code>$type</code> (example: 2 for String, cf. <a href="http://bsonspec.org">BSON specifications</a>)</li>
+<li><code>$regex</code> (example: “^A$”)</li>
+</ul>
+<p>Example:</p>
+<pre><code>&gt; db.scores.find( { type: { $exists: true } } );
+</code></pre>
+<h3>Prefix Query operators</h3>
+<ul>
+<li><code>$or</code> + array</li>
+<li><code>$and</code> + array (not as useful)</li>
+</ul>
+<p>Tricky : db.scores.find( { score : { $gt : 50 }, score : { $lt : 60 } } ); #
+only less than 60 are returned. Beware that $and is not used, but the 2nd score
+field value is replacing the 1st score field value (this is kind of a normal
+dictionary behavior).</p>
+<h3>Querying inside arrays</h3>
+<ul>
+<li>Polymorphism</li>
+<li><code>$all : [ elem1, elem2 ]</code></li>
+<li><code>$in : [ enum1, enum2 ]</code></li>
+</ul>
+<h3>Cursor Operations</h3>
+<p>Processed on the server-side:</p>
+<ul>
+<li>sort</li>
+<li>limit</li>
+<li>skip</li>
+</ul>
+<h3>Update options</h3>
+<ul>
+<li>set, unset</li>
+<li>push, pop, pull, pushAll, pullAll, addToSet</li>
+<li>upsert, multi</li>
+</ul>
+<h3>Error feedback</h3>
+<p>db.runCommand( { getLastError: 1 } )</p>
+<h3>Dot notation</h3>
+<p>Don’t forget the double-quotes!</p>
+<h2>Performance</h2>
+<h3>Basic Usage of Indexes</h3>
+<h4>Creating an index</h4>
+<pre><code>db.collection.ensureIndex( { my_key: 1 }, opts ) # 1 is ascending, -1 is descinding
+</code></pre>
+<p><code>opts</code> can be:</p>
+<ul>
+<li>missing</li>
+<li><code>{ unique: true }</code></li>
+<li><code>{ unique: true, dropDups: true }</code> (RISKY!)</li>
+<li><code>{ sparse: true }</code> (RISKY!)</li>
+</ul>
+<p>Indexes can be created in the background.</p>
+<h4>Finding existing indexex</h4>
+<pre><code>db.system.indexes.find()
+</code></pre>
+<p>or</p>
+<pre><code>db.collection.getIndexes()
+</code></pre>
+<h4>Dropping an index</h4>
+<pre><code>db.collection.dropIndex( { my_key: 1 } )
+</code></pre>
+<h3>Fine Tuning</h3>
+<h4>Explain</h4>
+<p>Adding <code>.explain()</code> on a query produces a document explaining how the request
+was executed. Some of the most relevant information of this document are:</p>
+<ul>
+<li><code>cursor</code>: it tells you if an index was used (<code>BtreeCursor</code>) or not
+(<code>BasicCursor</code>)</li>
+<li><code>millis</code>: it tells you how long the request took in milliseconds</li>
+<li><code>indexOnly</code>: it tells you if the index was enough to return the result of the
+request</li>
+</ul>
+<h4>Size of an index</h4>
+<p>Calling <code>.stats()</code> on a collection gives you a document with some interesting
+information. One particularly important information is the size of your index
+(you want your index to fit inside the memory) that you can also get directly
+via <code>.totalIndexSize()</code>.</p>
+<h3>Profiling</h3>
+<p><a href="http://docs.mongodb.org/manual/reference/method/db.setProfilingLevel/">http://docs.mongodb.org/manual/reference/method/db.setProfilingLevel/</a></p>
+<pre><code>db.system.profile.find({millis: { $gt: 1000 }}).sort({ts: -1})
+</code></pre>
+<p><a href="http://docs.mongodb.org/manual/reference/program/mongotop/">http://docs.mongodb.org/manual/reference/program/mongotop/</a></p>
+
+  </div>
+
+  <a class="u-url" href="/blog/notes-from-M101/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/mongo/">
+          mongo
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/setting-up-a-vpn-server-on-mavericks/">
+        Setting up a VPN Server with Mac OS X Mavericks
+      </a>
+    </p>
+    <p class="related-page-date">October 30, 2013</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/android-service-activity-communication/">
+        Service to Activity Communication With The Android SDK
+      </a>
+    </p>
+    <p class="related-page-date">January 28, 2014</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

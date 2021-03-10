@@ -1,0 +1,162 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>IPv6 Ready ? | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="IPv6 Ready ?" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="L’infrastructure réseau est-elle prête pour l’IPv6 ? La question s’est posée très simplement pour nous à Bootstragram au moment de chercher un hébergement pour nos serveurs. La réponse est simplement non !" />
+<meta property="og:description" content="L’infrastructure réseau est-elle prête pour l’IPv6 ? La question s’est posée très simplement pour nous à Bootstragram au moment de chercher un hébergement pour nos serveurs. La réponse est simplement non !" />
+<link rel="canonical" href="https://bootstragram.com/blog/ipv6-not-ready/" />
+<meta property="og:url" content="https://bootstragram.com/blog/ipv6-not-ready/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-11-13T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="IPv6 Ready ?" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/ipv6-not-ready/","@type":"BlogPosting","headline":"IPv6 Ready ?","dateModified":"2015-11-13T00:00:00+00:00","datePublished":"2015-11-13T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/ipv6-not-ready/"},"description":"L’infrastructure réseau est-elle prête pour l’IPv6 ? La question s’est posée très simplement pour nous à Bootstragram au moment de chercher un hébergement pour nos serveurs. La réponse est simplement non !","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">IPv6 Ready ?</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2015-11-13T00:00:00+00:00" itemprop="datePublished">
+        November 13, 2015
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>L’infrastructure réseau est-elle <strong>prête pour l’IPv6 ?</strong> La question s’est posée
+très simplement pour nous à <em>Bootstragram</em> au moment de chercher un hébergement
+pour nos serveurs. La réponse est simplement <strong>non</strong> !</p>
+<h2>IPv6 et Gandi VPS</h2>
+<p>Ayant l’habitude de travailler avec <a href="http://www.gandi.net/">Gandi</a> (noms de
+domaine et un serveur mi-pro / mi-perso), je suis allé voir leurs offres. Le
+serveur de base est à 7,96€ HT / mois<sup class="footnote-ref"><a href="#fn1" id="fnref1">1</a></sup> en proposant seulement une IPv6.
+Rajouter une IPv4 au serveur représente 3,53€ HT / mois en plus, soit 44%
+d’augmentation !</p>
+<p>De là est né l’envie de tester un serveur IPv6 only et de vérifier si cela
+fonctionne correctement dans une infrastructure réseau à destination du grand
+public. Après tout pourquoi pas, on dit depuis des années qu’il faut passer à
+IPv6 pour palier à
+<a href="https://fr.wikipedia.org/wiki/%C3%89puisement_des_adresses_IPv4">l’épuisement des adresses IPv4</a>.</p>
+<p>Nous avons donc créé un petit serveur IPv6 only pour nos tests.</p>
+<h2>IPv6 et la Freebox</h2>
+<p>À la maison, mon fournisseur d’accès est Free, avec une Freebox V4 (firmware
+1.5.20). La configuration par défaut de cette Freebox n’accepte pas l’IPv6, ce
+qui est un très mauvais démarrage pour nos tests.</p>
+<p>Il est possible d’activer le support de l’IPv6 en allant dans les réglages, mais
+cela implique qu’on se restreint à un public de connaisseurs. Et puis surtout,
+même après activation, on se rend vite compte que ça ne fonctionne pas tout le
+temps.</p>
+<p>Un <code>ssh@ipv6.de.mon.serveur.io</code><sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup> va tourner dans le vide sans afficher de
+prompt, alors que le <code>ssh@ipv4.de.mon.serveur.io</code> vers ce même serveur (qui a
+donc 2 IPs) va répondre tout de suite.</p>
+<p>Et un peu plus tard, <code>ssh@ipv6.de.mon.serveur.io</code><sup class="footnote-ref"><a href="#fn2" id="fnref2">2</a></sup> va fonctionner…</p>
+<p>Ce n’est peut-être pas Free le fautif, c’est peut-être un élément du réseau
+entre Free et Gandi, mais ce qui est sûr c’est qu’il y a 2 obstacles majeurs. Il
+faut déjà avoir une démarche volontaire d’activation de l’IPv6, et même dans ce
+cas, ça ne fonctionne pas tout le temps.</p>
+<h2>IPv6 et la mobilité</h2>
+<p>Notre <a href="https://github.com/statium-io">application <em>Statium</em></a> est proposée sur mobile ; et pour
+notre <a href="http://blog.statium.io/">data-lab</a> nous faisons particulièrement
+attention à ce qu’il soit compatible à 100% avec les smartphones.</p>
+<p>Donc la 2ème question qui vient à l’esprit : est-ce que le réseau 3G et 4G
+supporte l’IPv6 ? Là encore c’est plutôt décevant.</p>
+<p>Mon opérateur est Bouygues Telecom avec un abonnement 4G et mon associé a la
+même configuration. Nous avons effectué quelques tests pour accéder au serveur
+HTTP en IPv6<sup class="footnote-ref"><a href="#fn3" id="fnref3">3</a></sup>, aucun n’a fonctionné (tests effectués avec Safari sur iOS 8).</p>
+<p>De nouveau, ce n’est peut-être pas l’infrastructure Bouygues Telecom qui pose
+problème, c’est peut-être un élément d’interconnexion, mais le résultat est le
+même : si notre serveur est IPv6 only, on sait d’ores et déjà qu’on sera
+inaccessible à une partie importante du traffic mobile.</p>
+<h2>IPv6 not ready</h2>
+<p>En résumé, quand on est éditeur de services, de contenus ou d’applications avec
+une dépendance à internet (ce qui est une tautologie pléonasmique de nos jours),
+on ne peut pas se permettre d’exposer son infrastructure en IPv6 (sauf si on a
+l’envie d’être injoignable par la majorité de ses utilisateurs).</p>
+<p>À l’heure du mouvement <a href="http://www.lafrenchtech.com/">French Tech</a> lancé par le
+gouvernement, il serait intéressant d’accélérer le support de l’IPv6 chez les
+opérateurs, sans quoi rien ne pourra se mettre en place.</p>
+<p>La
+<a href="http://www.nextinpact.com/news/92774-fibre-ipv6-open-data-vote-premieres-mesures-loi-macron.htm">tentative de loi de Corinne Erhel</a>
+va dans ce sens, mais elle n’est pas encore passée.</p>
+<p>Et même si cette loi passe bientôt ; elle oblige les équipementiers à délivrer
+des terminaux compatibles IPv6 à partir du 1er janvier 2017 ; le temps que le
+renouvellement se propage ensuite chez les utilisateurs finaux et dans les
+infrastructures réseaux, il faudra compter quelques années avant d’avoir un taux
+de couverture IPv6 assez intéressant pour que les éditeurs passent le pas.</p>
+<p>On n’y est pas encore !</p>
+<p>une URL avec une IPv6 a cet aspect :
+<code>http://[2001:4198:dc0:41:316:3eaf:fab8:b694]</code></p>
+<section class="footnotes">
+<ol>
+<li id="fn1">
+<p>en se basant sur l’achat d’un pack de 2 millions de crédits chez Gandi <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2">
+<p>une IPv6 a cet aspect : <code>2001:4198:dc0:41:316:3eaf:fab8:b694</code> <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn3">
+<a href="#fnref3" class="footnote-backref">↩</a>
+</li>
+</ol>
+</section>
+
+  </div>
+
+  <a class="u-url" href="/blog/ipv6-not-ready/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/devops/">
+          devops
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/droidcon-2014/">
+        DroidCon 2014
+      </a>
+    </p>
+    <p class="related-page-date">October 22, 2014</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/filemanager-swift-extension-for-ios-file-system-basics/">
+        A FileManager Swift extension to manage iOS file systems basics with ease
+      </a>
+    </p>
+    <p class="related-page-date">June 13, 2017</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>

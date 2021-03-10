@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="https://bootstragram.com/feed/by_tag/ios.xml" rel="self" type="application/atom+xml" /><link href="https://bootstragram.com/" rel="alternate" type="text/html" hreflang="en" /><updated>2021-03-10T22:10:44+00:00</updated><id>https://bootstragram.com/feed/by_tag/ios.xml</id><title type="html">Bootstragram</title><subtitle>Notes for myself and fellow programmers,  with a focus on iOS, Swift and web frontend development.  Since 2009.</subtitle><entry><title type="html">Pixel-Perfect Line Height With UIKit</title><link href="https://bootstragram.com/blog/line-height-with-uikit/" rel="alternate" type="text/html" title="Pixel-Perfect Line Height With UIKit" /><published>2021-02-04T00:00:00+00:00</published><updated>2021-02-04T00:00:00+00:00</updated><id>https://bootstragram.com/blog/line-height-with-uikit</id><content type="html" xml:base="https://bootstragram.com/blog/line-height-with-uikit/">&lt;p&gt;According to Matthew Butterick, the author of the excellent &lt;a href=&quot;https://practicaltypography.com/&quot;&gt;&lt;em&gt;Practical
+Typography&lt;/em&gt;&lt;/a&gt;, the &lt;a href=&quot;https://practicaltypography.com/summary-of-key-rules.html&quot;&gt;number one key rule&lt;/a&gt; of good typography is:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The four most important typographic considerations for body text are &lt;em&gt;point
+size&lt;/em&gt;, &lt;em&gt;line spacing&lt;/em&gt;, &lt;em&gt;line length&lt;/em&gt;, and &lt;em&gt;font&lt;/em&gt;, because those choices
+determine how the body text looks.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;While point sizes, line lengths and fonts are easy to control with UIKit, line
+spacing is a little trickier.&lt;/p&gt;
+&lt;p&gt;In this article, I will first describe in detail a clever helper to meet
+challenging line spacing requirements with pixel-perfect precision. Your design
+team will love you.&lt;/p&gt;
+&lt;p&gt;I will then explain why I actually wouldn’t recommend implementing the solution
+for every context, and instead provide a much sturdier &lt;em&gt;pixel-pretty-close&lt;/em&gt;&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;
+alternative. Your design team will still love you. I promise.&lt;/p&gt;
+&lt;p&gt;Let’s dive in.&lt;/p&gt;
+&lt;h2&gt;The Designer Input&lt;/h2&gt;
+&lt;p&gt;Say our design team gives us the following specs for a &lt;strong&gt;card&lt;/strong&gt; view component:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;strong&gt;title&lt;/strong&gt; with a point size of 28pt and a line height of 38pt&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;body&lt;/strong&gt; with a point size of 17pt and a line height of 24pt&lt;/li&gt;
+&lt;li&gt;Both the title and body are 8pt apart on the Y-axis, and 8pt away from the
+edges of the card on the X-axis.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The export from Sketch looks like this&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;img alt=&quot;The card as designed by the design team.&quot; src=&quot;/assets/card-as-designed-1c6c05c370f28bce655fb1d8536bf81ffa046558b248be7cc9d9ef5275000613c3c343d23afcafc988d3b58af4e2ef2e844088a6f8e12478a9966f6a5e91d458.png&quot; integrity=&quot;sha512-HGwFw3Dyi85lX7HYU2v4H/oEZViySL58ydnvUnUABhPDw0PSOvyvyYjTtYr04u8uhECIpvjhJHiplm9qXpHUWA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;And here is a version with colored backgrounds for labels, to better understand
+the layout and where line heights should be considered:&lt;/p&gt;
+&lt;img alt=&quot;The card as designed by the design team, with boxes for better understanding of the structure.&quot; src=&quot;/assets/card-as-designed-with-boxes-3370ce7679d180a664a8316946551ec11bcca60f9f261ea2c8a05476df8700f38c0e466cbfda4014c516f9b65ce80cec79320f05566d624761087132a5f91014.png&quot; integrity=&quot;sha512-M3DOdnnRgKZkqDFpRlUewRvMpg+fJh6iyKBUdt+HAPOMDkZsv9pAFMUW+bZc6AzseTIPBVZtYkdhCHEypfkQFA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Next, we will iterate to reach a pixel-perfect translation of this design into
+UIKit code.&lt;/p&gt;
+&lt;h2&gt;Step 1: Laying out the labels&lt;/h2&gt;
+&lt;p&gt;Let’s head over to a playground, create our 2 labels and position them with auto
+layout with the following constraints:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;NSLayoutConstraint.activate([
+    // X-avis: 8pt padding between card and title:
+    titleLabel.leadingAnchor.constraint(equalToSystemSpacingAfter: view.safeAreaLayoutGuide.leadingAnchor, multiplier: 1.0),
+    titleLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+
+    // Y-axis: 8pt padding between card and title: ⚠️
+    titleLabel.topAnchor.constraint(equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor, multiplier: 1.0),
+
+    // Y-axis: 8pt padding between title and label:
+    bodyLabel.firstBaselineAnchor.constraint(equalToSystemSpacingBelow: titleLabel.lastBaselineAnchor, multiplier: 1.0),
+    bodyLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+    bodyLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+])
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you noticed this little warning in the comment ⚠️, bear with me: we will
+address it further down.&lt;/p&gt;
+&lt;p&gt;We haven’t written any code related to the line height just yet, but for the
+sake of getting an idea of where we are at this point, here is a &lt;em&gt;ghost
+snapshot&lt;/em&gt; of what our view looks like if we place the Sketch design, with a low
+opacity, below our labels:&lt;/p&gt;
+&lt;img alt=&quot;Pixel-wise comparison of the Sketch design and iOS view after Step 1.&quot; src=&quot;/assets/card-step-1-3f1129e7745168dca7afcd8b52389633e368a3b2cdc5093b61ed3cfca9b17e98e47054c966e7059554622ce0a27cbe493cc8b542a255f4a50284de71c0420dfa.png&quot; integrity=&quot;sha512-PxEp53RRaNynr82LUjiWM+Noo7LNxQk7Ye08/KmxfpjkcFTJZucFlVRiLOCifL5JPMi1QqJV9KUChN5xwEIN+g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;h2&gt;Step 2: Adding some paragraph style&lt;/h2&gt;
+&lt;p&gt;Now, let’s address the line spacing.&lt;/p&gt;
+&lt;p&gt;The most standard approach to add line spacing is to use &lt;a href=&quot;https://developer.apple.com/documentation/uikit/uilabel/1620542-attributedtext&quot;&gt;&lt;code&gt;UILabel&lt;/code&gt;’s
+&lt;code&gt;attributedText&lt;/code&gt;&lt;/a&gt; instead of the simpler &lt;code&gt;text&lt;/code&gt; attribute:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;let attributedString = NSMutableAttributedString(string: bodyText)
+// See the reason behind this substraction below
+let lineSpacing = 24.0 - res.font.lineHeight
+let paragraphStyle = NSMutableParagraphStyle()
+paragraphStyle.lineSpacing = lineSpacing
+attributedString.addAttribute(
+	  .paragraphStyle,
+    value: paragraphStyle,
+    range: NSRange(location: 0, length: attributedString.length)
+)
+res.attributedText = attributedString
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here we create an attributed string with a paragraph style attribute. It can
+control the &lt;em&gt;line spacing&lt;/em&gt;, ie the numbers of points between two lines of text
+that should be added, or substracted, to the default layout using the font
+metrics&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn3&quot; id=&quot;fnref3&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;The line spacing is the difference between the line height &lt;em&gt;of the design&lt;/em&gt; and
+the line height &lt;em&gt;of the font being used&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;With line spacing added to both the title and the body labels, our &lt;em&gt;ghost
+snapshot&lt;/em&gt; now looks like this.&lt;/p&gt;
+&lt;img alt=&quot;Pixel-wise comparison of the Sketch design and iOS view after Step 2.&quot; src=&quot;/assets/card-step-2-80f33d7b048ae57a6f4135d89c6e367f876023a6931fa63c76961cd97d3b2925455bfedb4def26468e98936347c67969664fc8c261c3ddc33afd44baae4d6770.png&quot; integrity=&quot;sha512-gPM9ewSK5XpvQTXYnG42f4dgI6aTH6Y8dpYc2X07KSVFW/7bTe8mRo6Yk2NHxnlpZk/IwmHD3cM6/US6rk1ncA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;A little better but not quite great yet. While the body text line spacing
+appears to be in line with the requirements from the design team — in the sense
+that it looks just a little translated upwards — the card is still far from a
+pixel-perfect result. What is going on?&lt;/p&gt;
+&lt;p&gt;The paragraph style’s line spacing contributes to the &lt;strong&gt;inner&lt;/strong&gt; part of the line
+height on a given paragraph — so, effectively, on strings spanning on more than
+1 line which, in our example, is the body only. However, the labels don’t apply
+the necessary extra &lt;strong&gt;outer&lt;/strong&gt; part of the line height.&lt;/p&gt;
+&lt;h2&gt;Step 3: Applying outer-padding&lt;/h2&gt;
+&lt;p&gt;To meet our pixel-perfect superposition objective, we need to apply some extra
+Y-axis &lt;strong&gt;padding&lt;/strong&gt;&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn4&quot; id=&quot;fnref4&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; to our labels. Unfortunately, if we want to stay in the
+peaceful UIKit realm and not cross the border to scary &lt;a href=&quot;https://developer.apple.com/documentation/coretext&quot;&gt;Core Text&lt;/a&gt; territory,
+we need to wrap our labels with a view that will be in charge of this extra
+padding.&lt;/p&gt;
+&lt;p&gt;I’ll spare you the steps and repetition of code to fast forward to a convenient
+&lt;code&gt;UIView&lt;/code&gt; helper subclass that will do the job:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;/// Let's keep font metrics and line height metrics together.s
+struct TextStyle {
+    let font: UIFont
+    let lineHeight: CGFloat
+}
+
+class LineHeightedLabel: UIView {
+    init(text: String?, textStyle: TextStyle) {
+        self.wrappedLabel = UILabel()
+        self.textStyle = textStyle
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        setupViewAndConstraints()
+        setText(text: text)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError(&amp;quot;init(coder:) has not been implemented&amp;quot;)
+    }
+
+    // MARK: - Inspecting the view
+
+    let wrappedLabel: UILabel
+    let textStyle: TextStyle
+
+    var text: String? {
+        get {
+            return wrappedLabel.text
+        }
+
+        set {
+            setText(text: newValue)
+        }
+    }
+
+    private var topYAxisConstraint: NSLayoutConstraint?
+
+    private func setupViewAndConstraints() {
+        wrappedLabel.translatesAutoresizingMaskIntoConstraints = false
+        wrappedLabel.font = textStyle.font
+        addSubview(wrappedLabel)
+
+        // We apply the line height contribution to this constraint.
+        // Since its constant might evolve over time, let's keep a reference.
+        let safeTopYAxisConstraint = topAnchor.constraint(equalTo: wrappedLabel.topAnchor)
+        topYAxisConstraint = safeTopYAxisConstraint
+
+        NSLayoutConstraint.activate([
+            safeTopYAxisConstraint,
+            leadingAnchor.constraint(equalTo: wrappedLabel.leadingAnchor),
+            trailingAnchor.constraint(equalTo: wrappedLabel.trailingAnchor),
+            centerYAnchor.constraint(equalTo: wrappedLabel.centerYAnchor)
+        ])
+    }
+
+    func setText(text: String?) {
+        guard let text = text else {
+            // No text? Then no padding either.
+            topYAxisConstraint?.constant = 0.0
+            wrappedLabel.text = nil
+            return
+        }
+
+        // This is the extra padding we want.
+        // Half of it will go on top of the label.
+        // The other half will go at the bottom of the label.
+        let lineSpacing = textStyle.lineHeight - textStyle.font.lineHeight
+
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+        paragraphStyle.alignment = wrappedLabel.textAlignment
+
+        // Build an attributed string
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(
+            .paragraphStyle,
+            value: paragraphStyle,
+            range: NSRange(location: 0, length: attributedString.length)
+        )
+
+        topYAxisConstraint?.constant = -(lineSpacing / 2.0)
+        wrappedLabel.attributedText = attributedString
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Where are we now? Let’s look at our &lt;em&gt;ghost snapshot&lt;/em&gt;:&lt;/p&gt;
+&lt;img alt=&quot;Pixel-wise comparison of the Sketch design and iOS view after Step 3.&quot; src=&quot;/assets/card-step-3-542e20f362def890191d99e601b2b61b08f8808f8e944cabb44875d46a93a1ba48a7ffed83f05ba080e1df815618124da5f1c67003ff017609b4831210917743.png&quot; integrity=&quot;sha512-VC4g82Le+JAZHZnmAbK2Gwj4gI+OlEyrtEh11GqTobpIp//tg/BboIDh34FWGBJNpfHGcAP/AXYJtIMSEJF3Qw==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Even though the mysteries of text-layout algorithms led Sketch and Xcode to make
+different decisions about when to break lines, it seems like our code does a
+good job respecting the designed layout so, tada 🎉, we’re done! All that’s left
+to do is to copy paste this little helper everywhere.&lt;/p&gt;
+&lt;p&gt;Well… sure, but be careful. While this wrapper does a good job in the context of
+this exercise and its API&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn5&quot; id=&quot;fnref5&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; is considerably stable, I actually wouldn’t take
+this approach. Let’s see why.&lt;/p&gt;
+&lt;h2&gt;A sturdier alternative using font descriptors and text constraints&lt;/h2&gt;
+&lt;p&gt;The major drawbacks about this little helper are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;While it’s not super fragile, it is still not a great API since it only
+handles two attributes (line spacing and text alignment);&lt;/li&gt;
+&lt;li&gt;It adds an extra wrapping view for every label in our design. While this might
+not be really expensive to lay out, it is not very intellectually satisfying;&lt;/li&gt;
+&lt;li&gt;It requires to bend Apple’s own rules to do your thing. If more than 12 years
+of iOS development has taught me one thing, it is that following Apple’s
+guidelines will end up being a great return on investment either whenever
+Apple launches its next big thing or when you discover your app had a blind
+spot (accessibility being the usual suspect).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So what rule are we bending? Remember the little ⚠️ from above? Well if you
+replace this constraint:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;// The origin of the titleLabel frame will be 8pt below the view's.
+titleLabel.topAnchor.constraint(
+  equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor,
+  multiplier: 1.0
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;by this one — which is likely what Apple wants you to do when you are handling
+labels constraints:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;// The origin of the titleLabel frame will be 11pt below the view's.
+titleLabel.firstBaselineAnchor.constraint(
+  equalToSystemSpacingBelow: view.safeAreaLayoutGuide.topAnchor,
+  multiplier: 1.0
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You end up with a slightly different result: the title label will be laid out
+3pt further down if you use the text-specific constraint. Since the system knows
+that &lt;code&gt;titleLabel&lt;/code&gt; is a &lt;code&gt;title1&lt;/code&gt; it will add additional padding that will look
+quite better, without any design cost.&lt;/p&gt;
+&lt;p&gt;Apple is very thoughtful about system font sizes and line heights, as
+demonstrated in the &lt;a href=&quot;https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/typography/&quot;&gt;Typography section of their Human Interfaces
+Guidelines&lt;/a&gt;. If your designer still wants to make adjustments on point sizes
+and line spacings, a sturdier alternative to using &lt;code&gt;lineSpacing&lt;/code&gt; might be to
+leverage font descriptors to slightly alter the font metrics so that they better
+match your designs. You could use either &lt;a href=&quot;https://developer.apple.com/documentation/uikit/uifontdescriptor/symbolictraits/1616689-traitlooseleading&quot;&gt;&lt;code&gt;traitLooseLeading&lt;/code&gt;&lt;/a&gt; or
+&lt;a href=&quot;https://developer.apple.com/documentation/uikit/uifontdescriptor/symbolictraits/1616694-traittightleading&quot;&gt;&lt;code&gt;traitTightLeading&lt;/code&gt;&lt;/a&gt; to slightly modify the line spacing of fonts.&lt;/p&gt;
+&lt;p&gt;For our specific line height situation, we want &lt;code&gt;traitLooseLeading&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;let font: UIFont = .init(
+    descriptor: UIFontDescriptor
+        .preferredFontDescriptor(withTextStyle: .body)
+        .withSymbolicTraits(.traitLooseLeading)!,
+    size: 0
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Here is another ghost snapshot that doesn’t require to wrap &lt;code&gt;UILabel&lt;/code&gt; or use
+attributed strings. Instead, it uses just the adequate constraints, a font with
+a looser leading, and a simple tweak to use a multiplier of &lt;code&gt;1.4&lt;/code&gt; for the space
+constraint between the title and the body.&lt;/p&gt;
+&lt;img alt=&quot;Pixel-wise comparison of the Sketch design and a sturdier iOS view.&quot; src=&quot;/assets/card-sturdier-option-d13551c9e0a85c3eb0ae0c4af55d0878c8f96ae9279233a617edb01084a2f348f16a6105d5bbe97ade389d927b17ec0997ec726c9a3f98a4865a2142d5b90fd2.png&quot; integrity=&quot;sha512-0TVRyeCoXD6wrgxK9V0IeMj5auknkjOmF+2wEISi80jxamEF1bvpet44nZJ7F+wJl+xybJo/mKSGWiFC1bkP0g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;While this solution will give you less control to get a perfect ghost snapshot
+(see how the card’s total height is not as high as the Sketch design?), I think
+it is the best option for most cases, that should be negotiated with your design
+team.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;Credits for this awesome adjective go to &lt;a href=&quot;https://www.joshwcomeau.com/css/pixel-perfection/&quot;&gt;Josh W. Comeau&lt;/a&gt; &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;I know it looks like 💩 that is not the point 😉. &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn3&quot;&gt;
+&lt;p&gt;Every font has a lot of metrics. Apple’s &lt;a href=&quot;https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW66&quot;&gt;&lt;em&gt;Using Text Kit to Draw and Manage
+Text&lt;/em&gt; document&lt;/a&gt; is very helpful to learn about them, especially the &lt;em&gt;Font
+Metrics&lt;/em&gt; figure that is a good recap of the most important ones. &lt;a href=&quot;#fnref3&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn4&quot;&gt;
+&lt;p&gt;Since we’re exploring multiplatform design — that, let’s face it, is heavily
+influenced by the web linguo —, we might as well just start using it here. &lt;a href=&quot;#fnref4&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn5&quot;&gt;
+&lt;p&gt;Updating the text, for instance, will not break the layout, even if you set
+the text directly on the wrapped label. &lt;a href=&quot;#fnref5&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name>Mick F</name></author><category term="Journaling" /><category term="ios" /><summary type="html">In this post, I will show you my attempts to render a card component exactly as it was designed, and why it might be worth negociating an approximation with a smaller footprint.</summary></entry><entry><title type="html">Activating OpenType Features in iOS</title><link href="https://bootstragram.com/blog/activating-open-type-features-ios/" rel="alternate" type="text/html" title="Activating OpenType Features in iOS" /><published>2021-01-03T00:00:00+00:00</published><updated>2021-01-03T00:00:00+00:00</updated><id>https://bootstragram.com/blog/activating-open-type-features-ios</id><content type="html" xml:base="https://bootstragram.com/blog/activating-open-type-features-ios/">&lt;p&gt;&lt;a href=&quot;https://rsms.me/inter/&quot;&gt;Inter&lt;/a&gt; is an awesome typeface. It is free, open-source, and on top of
+looking great by default, it provides &lt;a href=&quot;https://rsms.me/inter/#features&quot;&gt;many OpenType features&lt;/a&gt; that are
+really easy to use on a website. The &lt;a href=&quot;https://rsms.me/inter/#features/ss01&quot;&gt;alternate digits feature&lt;/a&gt; is one of
+them. Just add the following to a CSS style and you’re done.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-css&quot;&gt;font-feature-settings: &amp;quot;ss01&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;How can we benefit from the same optional features with UIKit?&lt;/strong&gt; This post
+will recap my journey to activate the alternate digits feature on an iOS app.&lt;/p&gt;
+&lt;h2&gt;Adding a custom font and using it&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.apple.com/documentation/uikit/text_display_and_fonts/adding_a_custom_font_to_your_apps&quot;&gt;Adding a custom font to your app&lt;/a&gt; is now pretty easy, compared to &lt;a href=&quot;/blog/what-fonts-for-ios/&quot;&gt;the old
+days&lt;/a&gt;. From there, the most obvious next step is to run &lt;a href=&quot;https://gist.github.com/dirtyhenry/c9fb50745491624fa75768d3149376f6&quot;&gt;a piece of
+code&lt;/a&gt; that I include in every project that use custom fonts. It simply
+prints a list of the font names that are available from your app.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    static func printAllFontNames() {
+        print(&amp;quot;# All Font Names\n&amp;quot;)
+        for familyName in UIFont.familyNames {
+            print(&amp;quot;- \(familyName)&amp;quot;)
+            for font in UIFont.fontNames(forFamilyName: familyName) {
+                print(&amp;quot;  - \(font)&amp;quot;)
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Listing features of a font&lt;/h2&gt;
+&lt;p&gt;Activating features with UIKit is described in the &lt;a href=&quot;https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html#//apple_ref/doc/uid/TP40009542-CH4-SW6&quot;&gt;&lt;em&gt;Activating Font Features&lt;/em&gt;
+section of the Text Programming Guide for iOS&lt;/a&gt;. The code that is presented
+there relies on Objective-C CoreText that you can wrap in modern Swift.&lt;/p&gt;
+&lt;p&gt;To list the features that are supported by a font, you can use the following
+code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;extension UIFont {
+    typealias FontFeatureInfo = [String: Any]
+
+    func listFeatures() {
+        guard let fontFeatures = CTFontCopyFeatures(self) as? [FontFeatureInfo] else {
+            debugPrint(&amp;quot;Could not copy font features.&amp;quot;)
+            return
+        }
+
+        fontFeatures.forEach { fontFeatureInfo in
+            print(fontFeatureInfo)
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It is hard to predict how large the output of this command will be and really
+depends on the font. For the Inter font, &lt;a href=&quot;https://gist.github.com/dirtyhenry/875ebeac13882c5dad710f22f17be5c5&quot;&gt;the output looks pretty intense&lt;/a&gt;.
+It is not the most pleasant prose to read for humans, but scanning for the
+features we want will be pretty straightforward.&lt;/p&gt;
+&lt;p&gt;In my context, the part I was interested in was the following:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[&amp;quot;CTFeatureTypeName&amp;quot;: Alternative Stylistic Sets, &amp;quot;CTFeatureTypeIdentifier&amp;quot;: 35, &amp;quot;CTFeatureTypeSelectors&amp;quot;: &amp;lt;__NSArrayM 0x600002179f20&amp;gt;(
+{
+    CTFeatureSelectorIdentifier = 2;
+    CTFeatureSelectorName = &amp;quot;Open digits&amp;quot;;
+},
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To activate the &lt;em&gt;Open digits&lt;/em&gt; feature, I had to use the &lt;strong&gt;feature type
+identifier 35&lt;/strong&gt;, with the &lt;strong&gt;feature selector identifier 2&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2&gt;Enabling the font features you want&lt;/h2&gt;
+&lt;p&gt;So far, the code I showed was to get your app in the starting blocks. It helps
+you to prepare for the big stage moment: &lt;strong&gt;actually&lt;/strong&gt; enabling the font
+features.&lt;/p&gt;
+&lt;p&gt;So I wrapped these 35 and 2 &lt;em&gt;magic numbers&lt;/em&gt; into something more meaningful: a
+simple struct trying to make sense of Apple’s documentation&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. It is pretty
+basic, aimed to be built on in the future, and I made use of this incredible
+&lt;a href=&quot;https://developer.apple.com/fonts/TrueType-Reference-Manual/RM09/AppendixF.html&quot;&gt;Font Feature Registry&lt;/a&gt; resource&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; to find inspiration for an adequate
+naming:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;sprivate enum FeatureTypeSelectorPair {
+    typealias PairDescriptor = (Int, Int)
+
+    static let stylisticAlternativesStylisticAltOne: PairDescriptor = (35, 2)
+
+    static func attributeValue(for pairDescriptor: PairDescriptor) -&amp;gt; Any {
+        [
+            UIFontDescriptor.FeatureKey.featureIdentifier: pairDescriptor.0,
+            UIFontDescriptor.FeatureKey.typeIdentifier: pairDescriptor.1,
+        ]
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Once there, I was able to instanciate the &lt;code&gt;UIFont&lt;/code&gt; including the option I wanted
+like so:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;func createFontWithOptions(fontName: String, size: CGFloat) -&amp;gt; UIFont {
+    let resultFont = UIFontDescriptor(name: fontName, size: size)
+        .addingAttributes([
+            .featureSettings: [
+                FeatureTypeSelectorPair.attributeValue(
+                    for: FeatureTypeSelectorPair.stylisticAlternativesStylisticAltOne
+                ),
+            ],
+        ])
+
+    // 0.0 means the size from the descriptor will prevail.
+    return UIFont(descriptor: resultFont, size: 0.0)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;The outcome: an alternative digits style&lt;/h2&gt;
+&lt;p&gt;🎉 Tada! I was done. Here is what it looks like in the end: a label with the
+default Inter Bold font appears first, and the label with the Inter Bold with
+the alternate digits feature enabled appears last.&lt;/p&gt;
+&lt;img alt=&quot;A screenshot comparing the string '0123456789' with or without the option&quot; src=&quot;/assets/inter-font-with-or-without-options-fe77bf4be5d1c682d1903d1ab938e740092eb61c4a73cc376775cec32c78e4b104152c2e97f73c43a968db04084667b632afcf466836185b80994ad665fb0ce2.png&quot; integrity=&quot;sha512-/ne/S+XRxoLRkD0auTjnQAkuthxKc8w3Z3XOwyx45LEEFSwul/c8Q6lo2wQIRme2Mq/PRmg2GFuAmUrWZfsM4g==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;A playground using all this code is available &lt;a href=&quot;https://github.com/dirtyhenry/xcode-playgrounds/tree/master/activating-opentype-features.playground&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;⚠️ Note:
+&lt;a href=&quot;https://developer.apple.com/documentation/uikit/uifontdescriptor/featurekey&quot;&gt;the documentation of &lt;code&gt;UIFontDescriptor.FeatureKey&lt;/code&gt;&lt;/a&gt;
+was one of the most confusing I met. It said (1) that &lt;code&gt;featureIdentifier&lt;/code&gt;
+was a key for identifying a font feature type such as ligature or character
+shape and (2) &lt;code&gt;typeIdentifier&lt;/code&gt; was a key for identifying the font feature
+selector. So &lt;code&gt;featureIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureTypeIdentifier&lt;/code&gt; while
+&lt;code&gt;typeIdentifier&lt;/code&gt; refers to &lt;code&gt;CTFeatureSelectorIdentifier&lt;/code&gt;. Of course, I had
+it switched the wrong way the first time I ran the code. Confusing you said?
+🤯 &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;I never considered myself an expert in typefaces or fonts design and
+abilities but this resource was so humbling that I definitely decreased the
+perception of my own level in that skill by quite some orders of magnitude
+😂 &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="Journaling" /><category term="swift" /><category term="ios" /><category term="fonts" /><summary type="html">Using OpenType features of fonts on the web is straightforward. Using them on iOS require a little bit more work but is totally feasible. Let's see how.</summary></entry><entry><title type="html">Notes from FrenchKit 2019</title><link href="https://bootstragram.com/blog/frenchkit-2019/" rel="alternate" type="text/html" title="Notes from FrenchKit 2019" /><published>2019-10-10T00:00:00+00:00</published><updated>2019-10-10T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2019</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2019/">&lt;p&gt;&lt;a href=&quot;/blog/frenchkit-2018/&quot;&gt;&lt;strong&gt;Again&lt;/strong&gt;&lt;/a&gt;,
+&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit 2019&lt;/a&gt; was awesome. Talks with 🌟 are the talks I
+recommend.&lt;/p&gt;
+&lt;h2&gt;Day 1&lt;/h2&gt;
+&lt;h3&gt;Animations with SwiftUI — &lt;a href=&quot;https://twitter.com/chriseidhof&quot;&gt;Chris Eidhof&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Using a basic animation example, namely creating a shaking effect on a rectangle
+view, Chris shows the hidden complexity of SwiftUI and how developers used to
+UIKit need to change their mental model about how to build views. Under the
+hood, SwiftUI seems very similar to React: a tree of views with wrappers all
+hover the place, with an efficient diffing algorithm deciding what to re-render.&lt;/p&gt;
+&lt;h3&gt;Understanding Combine — &lt;a href=&quot;https://twitter.com/dimsumthinking&quot;&gt;Daniel Steinberg&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;A good counterpart to Chris’ talk to mention how Apple frameworks evolved from
+using the delegation pattern, then closures and are now adopting Reactive
+Programming. Combine will probably become the &lt;em&gt;de facto&lt;/em&gt; framework to use, as
+opposed to RxSwift and ReactiveCococa, due to its 1st party nature. The only
+problem is that it is only available for iOS 13.&lt;/p&gt;
+&lt;h3&gt;SwiftUI &amp;amp; Redux — Thomas Ricouard&lt;/h3&gt;
+&lt;p&gt;Many frameworks are available to bring the Redux pattern to iOS development, ie
+dispatch actions, reducers, immutable states, mapStateToProps, etc. It could be
+a good idea to use one to keep having architectural conversations relevant to
+the mobile and web teams.&lt;/p&gt;
+&lt;h3&gt;Testing &amp;amp; Declarative UIs — &lt;a href=&quot;https://twitter.com/nataliya_bg&quot;&gt;Nataliya Patsovska&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Great talk promoting snapshot testing, something I tend to already do on ongoing
+projects 💪. Nataliya mentioned how we could benefit from a new feature of
+iOS/Xcode ie Previews. She wondered if tree inspecting libraries similar to
+&lt;code&gt;react-testing-library&lt;/code&gt; would eventually show up to inspect contents of SwiftUI
+tree representations. A cool idea for an OSS side-project 💡.&lt;/p&gt;
+&lt;h3&gt;Showcase Driven Development — &lt;a href=&quot;https://twitter.com/JegnuX/&quot;&gt;Jérôme Alves&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;This talk was about how Heetch created a browsing interface within the debug
+release version of their app to demo &lt;em&gt;work in progress&lt;/em&gt; to their product and
+quality teams as early as they could, building on &lt;a href=&quot;http://khanlou.com/2019/07/continuous-integration/&quot;&gt;the real continuous
+integration post&lt;/a&gt; by Soroush Khanlou.&lt;/p&gt;
+&lt;h3&gt;Slide to Unlock — &lt;a href=&quot;https://twitter.com/myunderpants&quot;&gt;Joel Kin&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: Building Custom UI with UIKit and Core Animation.&lt;/p&gt;
+&lt;p&gt;When something looks a little complicated, should you spend time looking for a
+library doing what you need, or should you spend time implementing it yourself?
+Building on UISlider, Joel shows a real-case scenario of what to assess to make
+the best informed decision. Notably, UISlider had a much better accessibility
+support that 3rd parties equivalents.&lt;/p&gt;
+&lt;h3&gt;Swiftly Swift manipulation… with Swift — Marcin Krzyzanowski&lt;/h3&gt;
+&lt;p&gt;Marcin shows up what’s under the hood of his &lt;em&gt;work in progress&lt;/em&gt; code reordering
+tool. While we could benefit from such a tool, it sounds too immature to be
+integrated in a CI, but worth trying and keeping an eye on. Or even
+contributing? It involves playing with SourceKitten and Swift AST.&lt;/p&gt;
+&lt;h3&gt;Empower Your UITableView DataSources with a Flexible Model — Denis Poifol&lt;/h3&gt;
+&lt;p&gt;A prescription of a model to write table view view models.&lt;/p&gt;
+&lt;h3&gt;When Did My View Layout? — Gaëtan Zanella&lt;/h3&gt;
+&lt;p&gt;The title of the talk is misleading. It was more about what is an iOS
+application in terms of entry point, event management, run loop, etc.&lt;/p&gt;
+&lt;h3&gt;Math &amp;amp; Map Masterclass — Daniel Steinberg&lt;/h3&gt;
+&lt;p&gt;Good simple exercises on how to implement an alternative version of &lt;code&gt;map&lt;/code&gt; for
+arrays, generics, optionals, results, and combine. Basic &amp;amp; deep at the same
+time.&lt;/p&gt;
+&lt;h3&gt;Swift Pills - &lt;a href=&quot;https://twitter.com/v_pradeilles&quot;&gt;Vincent Pradeilles&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;Weakifiable&lt;/li&gt;
+&lt;li&gt;Autoclosure for log tooling&lt;/li&gt;
+&lt;li&gt;Use map instead of if let These 3 tips are very actionable and recommended.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Day 2&lt;/h2&gt;
+&lt;h3&gt;Swift Generics Topic — Rob Napier&lt;/h3&gt;
+&lt;p&gt;Don’t make things generic to early. Very similar to
+&lt;a href=&quot;https://kentcdodds.com/blog/aha-programming&quot;&gt;this AHA Programming&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;Note encryption — &lt;a href=&quot;https://twitter.com/vixentael&quot;&gt;Anastasiia Voitova&lt;/a&gt; 🌟&lt;/h3&gt;
+&lt;p&gt;Subtitle: 10 lines for encryption, 1500 lines for key management.&lt;/p&gt;
+&lt;p&gt;Anastasiia mentioned the real case of how her consulting company helped the Bear
+app to add security features in their app. What tradeoffs you should pick
+depending on the risks, threats, trust. Lots of recommended readings:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cossack Labs / Implementing End-to-End encryption in Bear App:
+&lt;a href=&quot;https://t.co/oy5vJNCdvR?amp=1&quot;&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/OWASP/owasp-mstg&quot;&gt;OWASP/owasp-mstg&lt;/a&gt;: The Mobile Security
+Testing Guide (MSTG) is a comprehensive manual for mobile app security
+development, testing and reverse engineering.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;SwiftPM’s New Resolver — Mert Buran&lt;/h3&gt;
+&lt;p&gt;Subtitle: Can it Resolve the Conflicts in my Relationship?.&lt;/p&gt;
+&lt;p&gt;Really fun and innovative format. Many analogies to explain how pubgrub works
+for SPM, and how algorithms we took for granted are under-appreciated.&lt;/p&gt;
+&lt;h3&gt;This is Not Rocket (Data) Science — Hervé Berenger&lt;/h3&gt;
+&lt;p&gt;Almost a star for this one. The idea was: how AI is actually hidden everywhere
+and how 1st party frameworks can already help with a lot of stuff. Example:
+using the background color of a messaging app to give a hint of the tone of the
+message that is being written to help think twice about the choice of words
+being used.&lt;/p&gt;
+&lt;h3&gt;Building Voice-First Apps — Elaine Dias Batista&lt;/h3&gt;
+&lt;p&gt;Elaine insisted how voice-first could be important for accessibility, and to do
+it properly with existing frameworks.&lt;/p&gt;
+&lt;h3&gt;An Introduction to Property-Based Testing — Vincent Pradeilles&lt;/h3&gt;
+&lt;p&gt;Another approach to test using random values that can auto-discover edge cases
+of input values that will reveal bugs in a codebase. It is not self sufficient
+but can be a good complement to other testing strategies. Also, it can lead to
+randomness in tests: for instance, a test could fail at the 10th execution. But
+frameworks handling these kind of tests will provide you the failing data and
+you can turn this failing scenario into a deterministic test case by adding it
+in traditional test cases.&lt;/p&gt;
+&lt;h3&gt;Shipping a Catalyst app: The Good, the Bad and the Ugly — Peter Steinberger&lt;/h3&gt;
+&lt;p&gt;The story of how &lt;a href=&quot;https://pdfviewer.io&quot;&gt;PDF Viewer&lt;/a&gt; was ported to macOS using a
+mix of AppKit, UIKit, private API, etc. The conclusion for me is that if you can
+invest on SwiftUI, it is not worth exploring Catalyst.&lt;/p&gt;
+&lt;h3&gt;And That’s A Wrap! — Olivier Halligon&lt;/h3&gt;
+&lt;p&gt;An exploration of property wrappers, a feature introduced by Swift 5.1. It is
+totally compatible with older version of iOS as it is interpreted at compile
+time. The idea is to DRY behaviors of some properties. Example use cases:
+clamping values into a range, handling UserDefaults with convenience,
+customizing how a type conform to Codable, database mapping, etc.&lt;/p&gt;
+&lt;h3&gt;Vapor Classroom — David Bonnet&lt;/h3&gt;
+&lt;p&gt;Key takeaways:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Apple now releases Swift Docker images on the same day new version of Swift
+are released;&lt;/li&gt;
+&lt;li&gt;Vapor allows to share DTO between an iOS client and a backend;&lt;/li&gt;
+&lt;li&gt;A lot of boilerplate code that should be made better via property wrapper in
+Vapor 4.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">Again, FrenchKit 2019 was awesome. Talks with 🌟 are the talks I recommend.</summary></entry><entry><title type="html">WWDC 2019, A Basic Wish List</title><link href="https://bootstragram.com/blog/wwdc-2019-basic-wishlist/" rel="alternate" type="text/html" title="WWDC 2019, A Basic Wish List" /><published>2019-05-29T00:00:00+00:00</published><updated>2019-05-29T00:00:00+00:00</updated><id>https://bootstragram.com/blog/wwdc-2019-basic-wishlist</id><content type="html" xml:base="https://bootstragram.com/blog/wwdc-2019-basic-wishlist/">&lt;p&gt;It’s &lt;a href=&quot;https://www.macstories.net/stories/wwdc-a-wish-list-2019-edition/&quot;&gt;WWDC Wish List Season&lt;/a&gt;. Here is mine. Back to basics.&lt;/p&gt;
+&lt;p&gt;In the last week or so, I’ve experienced 3 different obvious bugs using 3
+different Apple products. If you ask me, my top item for a WWDC wish list would
+be: &lt;em&gt;let bring attentions to details back&lt;/em&gt;!&lt;/p&gt;
+&lt;h2&gt;#1. The iPad bug: recently used emojis&lt;/h2&gt;
+&lt;p&gt;Here is a screenshot of my frequently used emojis:&lt;/p&gt;
+&lt;img alt=&quot;My frequently used keyboard with 6 duplicates appearing&quot; src=&quot;/assets/duplicates-b523d86648a31ccee589e2454111e914239a6f4eac7b9b846251eb49f8ae8ce35ac9898a83920416ae022f36ec5fdd5f0c826154fcbcfc181bb9116e45a89bcb.gif&quot; integrity=&quot;sha512-tSPYZkijHM7lieJFQRHpFCOab06se5uEYlHrSfiujONayYmKg5IEFq4CLzbsX91fDIJhVPy8/BgbuRFuRaibyw==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;Six duplicates and I don’t remember ever using this shower emoji 🚿.&lt;/p&gt;
+&lt;h2&gt;#2. The iPhone bug: typographic glitch&lt;/h2&gt;
+&lt;img alt=&quot;Double space&quot; src=&quot;/assets/double-space-c3cfe469013708f56b4fafaad4e0c0ed57b0af583768ea1cea9da00d6884c3ccdb58240063a46ac199b6cfae45e2f5137954c1b2685c7a9198677a22f3c8992d.gif&quot; integrity=&quot;sha512-w8/kaQE3CPVrT6+q1ODA7Vewr1g3aOoc6p2gDWiEw8zbWCQAY6RqwZm2z65F4vUTeVTBsmhcepGYZ3oi88iZLQ==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;I know putting two spaces after a punctuation is kind of a debate in the US, but
+wait a minute, &lt;a href=&quot;https://practicaltypography.com/one-space-between-sentences.html&quot;&gt;no it isn’t&lt;/a&gt;. And certainly not within a date, nor in French.&lt;/p&gt;
+&lt;h2&gt;#3. The Apple Watch bug: maths horror&lt;/h2&gt;
+&lt;img alt=&quot;Math horror from the native Apple Watch weather app&quot; src=&quot;/assets/bug-weather-apple-watch-6e4862121c52e2a2262f6ede8c65dbcf4cc7d4cdb80a143c2deac47d10251dfdcafdcac17350bc52c1188dc0893529fc0931c0d72c8a6f6567bfd998f4e9bfcc.png&quot; integrity=&quot;sha512-bkhiEhxS4qImL27ejGXbz0zH1M24ChQ8LerEfRAlHf3K/crBc1C8UsEYjcCJNSn8CTHA1yyKb2Vnv9mY9Om/zA==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;So, 13 ≤ 12 ≤ 20? 😱&lt;/p&gt;</content><author><name></name></author><category term="ios" /><summary type="html">It’s WWDC Wish List Season. Here is mine. Back to basics.</summary></entry><entry><title type="html">Notes from FrenchKit 2018</title><link href="https://bootstragram.com/blog/frenchkit-2018/" rel="alternate" type="text/html" title="Notes from FrenchKit 2018" /><published>2018-11-19T00:00:00+00:00</published><updated>2018-11-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2018</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2018/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2018 was awesome. I recommend it
+&lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;again&lt;/a&gt; to any iOS/Swift developer around. Day 1 was much better than
+Day 2. Two recurring topics were:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;code generation leveraging;&lt;/li&gt;
+&lt;li&gt;and the importance of a good product management policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Most speakers seemed to use &lt;a href=&quot;https://www.deckset.com&quot;&gt;Deckset&lt;/a&gt; for their
+presentations. As &lt;a href=&quot;/blog/frenchkit-2017/&quot;&gt;often&lt;/a&gt;, international speakers were much much better
+than French ones.&lt;/p&gt;
+&lt;p&gt;Here are the talks I recommend.&lt;/p&gt;
+&lt;h2&gt;brew create - Max Howell&lt;/h2&gt;
+&lt;p&gt;Storytelling of how Max came to create &lt;a href=&quot;https://brew.sh&quot;&gt;Homebrew&lt;/a&gt; and how he
+managed its huge success. It’s surprising he had such a product-oriented
+approach for such a tech product. The whole talk was really nicely put (very
+minimalist use of slides and a great video of the git activity to give a visual
+feeling to the growing popularity of Brew).&lt;/p&gt;
+&lt;p&gt;Two segments particularly stood out to me:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One about the importance of naming things (the whole brew, cellar, keg,
+formulae that Brew is using);&lt;/li&gt;
+&lt;li&gt;One about the feeling of code ownership and how to control it.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/WMMPRS58n-o&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Going Prod with Server-Side Swift - Pim Stolk&lt;/h2&gt;
+&lt;p&gt;How an ING side-project (Banking of Things) is using server-side Swift. They
+picked &lt;a href=&quot;https://www.kitura.dev&quot;&gt;Kitura&lt;/a&gt; over &lt;a href=&quot;https://vapor.codes&quot;&gt;Vapor&lt;/a&gt;
+because they had a good vibe from the team and they seem to work very closely
+together. They had tips to use containers to be as cloud-provider agnostic as
+possible.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/tRakjsKwdg4&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Sharing Swift: writing code that scales - Florent Pillet&lt;/h2&gt;
+&lt;p&gt;This was a good counterpart to Pim’s talk. Florent is French and is using Vapor
+server-side. He’s really a big fan of
+&lt;a href=&quot;https://github.com/apple/swift-nio&quot;&gt;SwiftNIO&lt;/a&gt; and its performances. One of his
+tip was to make builds in containers locally so you can just deploy binaries to
+production containers (no need for Swift compilers). He seems to have insights
+straight from Apple saying that &lt;a href=&quot;https://swift.org/package-manager/&quot;&gt;SPM&lt;/a&gt; is not
+coming to iOS anytime soon.&lt;/p&gt;
+&lt;p&gt;Both Florent &amp;amp; Pim consider &lt;strong&gt;server-side Swift is production ready&lt;/strong&gt;. Kitura &amp;amp;
+Vapor both provide &lt;a href=&quot;https://prometheus.io&quot;&gt;Prometheus&lt;/a&gt; support which seems to be
+good enough for monitoring. One of the main pain point remaining seems to be
+debugging from Linux.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/1G63BKeNfjA&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Lost Art of System Design - John Sundell&lt;/h2&gt;
+&lt;p&gt;John is as a good showman and as energetic as reading
+&lt;a href=&quot;https://www.swiftbysundell.com&quot;&gt;his blog&lt;/a&gt; lets you think. The talk was about
+how to answer “where should we sit this piece of code?”. He was advocating
+towards decoupling, building frameworks, keys &amp;amp; lock-in to different parts of an
+application. Great practical tips that were somewhat Swift-related but can be
+applied to any language as well.&lt;/p&gt;
+&lt;p&gt;For instance: RootFactory creating basic objects and a LoggedFactory creating
+objects once the user is logged in which translates that we’re sure we can
+provide a User and that we don’t need to make it optional, etc.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/bAokeFxW2fo&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Swift Strings Seven Ways - Mattt&lt;/h2&gt;
+&lt;p&gt;A storytelling kind of talk about how we take strings for granted and we think
+they’re simple but they’re not. The guy is a big name in the iOS scene — among
+others, creator of &lt;a href=&quot;https://nshipster.com&quot;&gt;NSHipster&lt;/a&gt; —, and it was surprising
+to see a talk that was sometimes borderline spiritual (he digs the Cherokee
+language a lot).&lt;/p&gt;
+&lt;p&gt;But the 2nd half was way more practical about string jargons, struggles, and
+tips on how to process them safely (ie override string by other types for
+identifiers for instance in order to hide the complexity of string for a simple
+usage, use Base64 for exchanging in a safe way, etc.)&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/linHwUqeagU&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The 700 next devices - Chris Eidhof&lt;/h2&gt;
+&lt;p&gt;Again, a big figure in iOS development since he started
+&lt;a href=&quot;https://www.objc.io&quot;&gt;objc.io&lt;/a&gt;. He gave a live-coding presentation of a layout
+library he build for Swift that is going to be introduced in
+&lt;a href=&quot;https://talk.objc.io&quot;&gt;Swift Talks&lt;/a&gt;. The library is really useful and has a nice
+API and seems somewhat influenced by flex box as a complement to AutoLayout. It
+will be even more useful once UIKit gets on macOS. Tip: when using the
+Accessibility inspector during development, the simulator seems super
+responsive.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/OLDHgg0uh6A&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;The Underestimated Power of KeyPaths - Vincent Pradeilles&lt;/h2&gt;
+&lt;p&gt;Lightning talk about how to use key paths to improve Swift convenience, in
+particular to avoid dumb closures.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/jpAT5DoSUgw&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;Improving your Developer Experience with Open-Source Swift - Dimitri Dupuis-Latour&lt;/h2&gt;
+&lt;p&gt;Interesting short talk to make contributing to Swift and its environment not as
+scary as it seems. Empowering mode ✊.&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://youtu.be/olS5w9fBxog&quot;&gt;📺 Watch&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2018 was awesome. I recommend it again to any iOS/Swift developer around. Day 1 was much better than Day 2. Two recurring topics were:</summary></entry><entry><title type="html">Notes from FrenchKit 2017</title><link href="https://bootstragram.com/blog/frenchkit-2017/" rel="alternate" type="text/html" title="Notes from FrenchKit 2017" /><published>2018-01-12T00:00:00+00:00</published><updated>2018-01-12T00:00:00+00:00</updated><id>https://bootstragram.com/blog/frenchkit-2017</id><content type="html" xml:base="https://bootstragram.com/blog/frenchkit-2017/">&lt;p&gt;&lt;a href=&quot;http://frenchkit.fr&quot;&gt;FrenchKit&lt;/a&gt; 2017 was awesome. I recommend it to any
+iOS/Swift developer around.&lt;/p&gt;
+&lt;p&gt;I wrote many notes during the two days of the conference but I forgot to process
+them right afterwards when things were still fresh. Bummer.&lt;/p&gt;
+&lt;p&gt;Finally, I went through the notes today and decided to make a blog post out of
+them anyway. Raw and undetailed, 2018-style!&lt;/p&gt;
+&lt;h2&gt;My favorite talks&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/DrdxSNG-_DE&quot;&gt;Playground Driven Development&lt;/a&gt; by Brandon
+Williams (quite more detailed than the
+&lt;a href=&quot;https://talk.objc.io/episodes/S01E51-playground-driven-development-at-kickstarter&quot;&gt;objc.io&lt;/a&gt;’s
+one)&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/e9NI5XnEqHA&quot;&gt;May the Code Review Be with You&lt;/a&gt; by Egor
+Tolstoy&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/3ia3ngqM2mM&quot;&gt;You Deserve Nice Things&lt;/a&gt; by Soroush Khanlou&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/dYWE2d4_IPY&quot;&gt;Core Data Custom Store&lt;/a&gt; by Rew Islam&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://youtu.be/WM6WECv4B2E&quot;&gt;Scaling Open Source Communities&lt;/a&gt; by Felix
+Krause&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Side note to mention that a big theme of the conference was &lt;strong&gt;code generation&lt;/strong&gt;.
+It was frenquently quoted as something you should try out and be ready to use
+when relevant. I’m in.&lt;/p&gt;
+&lt;h2&gt;What could be improved next time?&lt;/h2&gt;
+&lt;h3&gt;France, we need to become better public speakers&lt;/h3&gt;
+&lt;p&gt;As you can see above, not a single French speaker made it to my favorite talks.
+This is hard to explain but for some reasons, French speakers are often nervous,
+awkward or even uncharismatic. I rarely gave public talks but when I did, these
+all applied to me as well. Not sure where this is coming from but fellow French
+developers, we need to address this! 🇫🇷💪&lt;/p&gt;
+&lt;h3&gt;Let’s be better with jokes&lt;/h3&gt;
+&lt;p&gt;I’m sick of jokes filled of condescending notes.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Core Data sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Or:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Cocoapods sucks &lt;em&gt;(audience laughs)&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I don’t remember the exact jokes but I felt some were patronizing and
+misleading. Core Data and Cocoapods are awesome tools. They have flaws but
+nobody should be embarassed using them.&lt;/p&gt;
+&lt;p&gt;Also, enough with cat memes. As most overused material, they lost everything
+that made them cool/cute/funny in the first place.&lt;/p&gt;
+&lt;h2&gt;My TODO list until FrenchKit 2018&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;☐ Try &lt;a href=&quot;https://github.com/krzysztofzablocki/Sourcery&quot;&gt;Sourcery&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☒ Check out BuddyBuild &lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn1&quot; id=&quot;fnref1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out Swift 4’s
+&lt;a href=&quot;https://developer.apple.com/documentation/swift/codable&quot;&gt;Codable&lt;/a&gt; protocol&lt;/li&gt;
+&lt;li&gt;☒ Check out the &lt;a href=&quot;https://www.jetbrains.com/objc/&quot;&gt;AppCode&lt;/a&gt; IDE&lt;/li&gt;
+&lt;li&gt;☐ The &lt;code&gt;rethrows&lt;/code&gt; keyword?&lt;/li&gt;
+&lt;li&gt;☐ Play a little with the &lt;code&gt;Sequence&lt;/code&gt;, &lt;code&gt;IteratorProtocol&lt;/code&gt; protocols&lt;/li&gt;
+&lt;li&gt;☑︎ Start using GitHub’s global search&lt;/li&gt;
+&lt;li&gt;☑︎ Follow &lt;a href=&quot;https://twitter.com/PublicExtension&quot;&gt;PublicExtension&lt;/a&gt; on Twitter&lt;/li&gt;
+&lt;li&gt;☐ Check out Server-side Swift
+&lt;ul&gt;
+&lt;li&gt;☑︎ Kitura&lt;/li&gt;
+&lt;li&gt;☑︎ Vapor&lt;/li&gt;
+&lt;li&gt;☐ &lt;a href=&quot;https://perfect.org&quot;&gt;Perfect&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;☐ Play with &lt;code&gt;NSAtomicStore&lt;/code&gt; (good for a small data set)&lt;/li&gt;
+&lt;li&gt;☒ Check out [Dashlane/CustomStores]&lt;sup class=&quot;footnote-ref&quot;&gt;&lt;a href=&quot;#fn2&quot; id=&quot;fnref2&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;☐ Have a clearer understanding of static vs dynamic libraries&lt;/li&gt;
+&lt;li&gt;☐ Is it possible to dual boot with a Linux distribution?&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/realm/SwiftLint&quot;&gt;SwiftLint&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Read
+&lt;a href=&quot;https://github.com/apple/swift/blob/master/docs/Android.md&quot;&gt;Getting Started with Swift on Android&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Start using &lt;a href=&quot;https://github.com/danger/danger&quot;&gt;Danger&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☑︎ Check out &lt;a href=&quot;https://grafana.com&quot;&gt;Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ Display Xcode build durations&lt;/li&gt;
+&lt;li&gt;☐ Checkout &lt;a href=&quot;https://michele.io/test-logs-in-xcode/&quot;&gt;xcactivitylog files&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;☐ There should be some direct mapping between graphql and core data.&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to Awesome iOS Newsletter&lt;/li&gt;
+&lt;li&gt;☑︎ Subscribe to &lt;a href=&quot;https://swiftnews.curated.co&quot;&gt;this week in Swit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Things I wrote but forgot what it was about&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;detrace&lt;/li&gt;
+&lt;li&gt;Sirius : coordinator&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you know what they could mean, please get in touch.&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;
+&lt;p&gt;Been bought by Apple since. &lt;a href=&quot;#fnref1&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;
+&lt;p&gt;The code is still missing today, not sure it will ever show up. &lt;a href=&quot;#fnref2&quot; class=&quot;footnote-backref&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;</content><author><name></name></author><category term="ios" /><category term="conf" /><category term="swift" /><summary type="html">FrenchKit 2017 was awesome. I recommend it to any iOS/Swift developer around.</summary></entry><entry><title type="html">Dynamic resizing of a UICollectionViewCell’s height</title><link href="https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell/" rel="alternate" type="text/html" title="Dynamic resizing of a UICollectionViewCell’s height" /><published>2017-10-19T00:00:00+00:00</published><updated>2017-10-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell</id><content type="html" xml:base="https://bootstragram.com/blog/ios11-size-for-dynamic-collection-view-cell/">&lt;p&gt;Your cell includes dynamic text and you need to size it appropriately. I feel
+like I did that 1.000.000 times so here it is: my Swift 3 definitive method for
+not repeating myself. It works well with iOS 11 and below.&lt;/p&gt;
+&lt;p&gt;Here are the steps to make it work:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Make sure your cell has all the constraints required to be self-dependent to
+define its size&lt;/li&gt;
+&lt;li&gt;Add a dependency to constraint the width of the cell (which should be easy to
+compute, as most of the time you want to find the height of your cell)&lt;/li&gt;
+&lt;li&gt;Get inspired by the following code to create an equivalent method for your
+cell&lt;/li&gt;
+&lt;/ol&gt;
+&lt;script src=&quot;https://gist.github.com/dirtyhenry/1820b9cb07095c42f427e38a912477d4.js&quot;&gt;
+&lt;/script&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">Your cell includes dynamic text and you need to size it appropriately. I feel like I did that 1.000.000 times so here it is: my Swift 3 definitive method for not repeating myself. It works well with iOS 11 and below.</summary></entry><entry><title type="html">How to log and delete keychain items from your iOS app</title><link href="https://bootstragram.com/blog/deleting-keychain-items/" rel="alternate" type="text/html" title="How to log and delete keychain items from your iOS app" /><published>2017-06-26T00:00:00+00:00</published><updated>2017-06-26T00:00:00+00:00</updated><id>https://bootstragram.com/blog/deleting-keychain-items</id><content type="html" xml:base="https://bootstragram.com/blog/deleting-keychain-items/">&lt;h2&gt;How Keychain Items Can Slow Down Debugging&lt;/h2&gt;
+&lt;p&gt;Firebase, among other iOS libraries can install items in a device keychain and
+it can become pretty painful to test authentication without having to
+reinitialize the simulator, and it gets even more complicated on a real device.&lt;/p&gt;
+&lt;h2&gt;Some Debugging Code&lt;/h2&gt;
+&lt;p&gt;Here is a little piece of code that will output what are the items your app can
+access in the keychain, and will either output them, delete them or both.&lt;/p&gt;
+&lt;p&gt;⚠️ I want to insist this should be enabled for debug/development purposes only,
+you most likely don’t want to use this code in a production environment.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://gist.github.com/dirtyhenry/46a87f9a3717532085974edcfa114051&quot;&gt;the gist&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-swift&quot;&gt;func iterateKeychainItems(log: Bool, delete: Bool) {
+    let secItemClasses = [
+        kSecClassGenericPassword,
+        kSecClassInternetPassword,
+        kSecClassCertificate,
+        kSecClassKey,
+        kSecClassIdentity
+    ]
+
+    if (log) {
+        for secItemClass in secItemClasses {
+            let query: [String: Any] = [
+                kSecReturnAttributes as String: kCFBooleanTrue,
+                kSecMatchLimit as String: kSecMatchLimitAll,
+                kSecClass as String: secItemClass
+            ]
+
+            var result: AnyObject?
+            let status = SecItemCopyMatching(query as CFDictionary, &amp;amp;result)
+            if status == noErr {
+                print(result as Any)
+            }
+        }
+        print(&amp;quot;AppUsageMetadata.iterateKeychainItems ended.&amp;quot;)
+    }
+
+    if (delete) {
+        for secItemClass in secItemClasses {
+            let dictionary = [kSecClass as String:secItemClass]
+            SecItemDelete(dictionary as CFDictionary)
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">How Keychain Items Can Slow Down Debugging</summary></entry><entry><title type="html">A FileManager Swift extension to manage iOS file systems basics with ease</title><link href="https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics/" rel="alternate" type="text/html" title="A FileManager Swift extension to manage iOS file systems basics with ease" /><published>2017-06-13T00:00:00+00:00</published><updated>2017-06-13T00:00:00+00:00</updated><id>https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics</id><content type="html" xml:base="https://bootstragram.com/blog/filemanager-swift-extension-for-ios-file-system-basics/">&lt;p&gt;I recently spent some time figuring out the best way to find the URL/paths of
+the &lt;a href=&quot;https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW12&quot;&gt;recommended iOS file system used directories&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I felt that iOS URL/paths was very confusing:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;NSSearchPathForDirectoriesInDomains&lt;/code&gt; returns an array of paths&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;FileManager&lt;/code&gt;’s
+&lt;code&gt;urls(for directory: FileManager.SearchPathDirectory, in domainMask: FileManager.SearchPathDomainMask)&lt;/code&gt;
+returns an array of URL&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NSHomeDirectory()&lt;/code&gt; returns 1 &lt;code&gt;String&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;String&lt;/code&gt; (ie paths) are missing the URL management methods that &lt;code&gt;NSString&lt;/code&gt; had&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So I came up with this little &lt;code&gt;FileManager&lt;/code&gt;’s extension that could be useful to
+many:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;extension FileManager {
+    func homeDirectory() -&amp;gt; URL {
+        return URL(fileURLWithPath: NSHomeDirectory())
+    }
+
+    func homeDirectoryPath() -&amp;gt; String {
+        return NSHomeDirectory()
+    }
+
+    func tmpDirectory() -&amp;gt; URL {
+        return homeDirectory().appendingPathComponent(&amp;quot;tmp&amp;quot;)
+    }
+
+    // ...
+}
+&lt;/code&gt;&lt;/pre&gt;</content><author><name></name></author><category term="ios" /><category term="swift" /><summary type="html">I recently spent some time figuring out the best way to find the URL/paths of the [recommended iOS file system used directories][ios-file-system-basics].</summary></entry><entry><title type="html">Simulating protected properties and selectors in Objective-C</title><link href="https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/" rel="alternate" type="text/html" title="Simulating protected properties and selectors in Objective-C" /><published>2014-03-19T00:00:00+00:00</published><updated>2014-03-19T00:00:00+00:00</updated><id>https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c</id><content type="html" xml:base="https://bootstragram.com/blog/simulating-protected-modifier-with-objective-c/">&lt;p&gt;There’s no &lt;code&gt;protected&lt;/code&gt; modifier in Objective-C. In a sense, we should be
+grateful that Objective-C is not Java. On the other hand, sometimes it can suck.
+What’s the best way to deal with it? Let’s simulate protection!&lt;/p&gt;
+&lt;h2&gt;The problem is already asked and answered&lt;/h2&gt;
+&lt;p&gt;When looking for a solution to this, I found these two StackOverflow posts:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/12633627/expose-a-private-objective-c-method-or-property-to-subclasses&quot;&gt;Expose a private Objective-C method or property to subclasses&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/3725857/protected-methods-in-objective-c&quot;&gt;Protected methods in objective-c&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;which exposed the real case where the lack of &lt;code&gt;protected&lt;/code&gt; sucks (ie subclassing)
+and also the solution to the problem (ie simulating protection) as used by Apple
+herself in classes such as
+&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/uikit/reference/UIGestureRecognizer_Class/Reference/Reference.html&quot;&gt;&lt;code&gt;UIGestureRecognizer&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;A Concrete Example&lt;/h2&gt;
+&lt;h3&gt;The public…&lt;/h3&gt;
+&lt;p&gt;Let’s say I have a &lt;code&gt;BSDaddy&lt;/code&gt; base class with only one publicly declared taskk:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-objc&quot;&gt;@interface BSDaddy : NSObject
+- (NSString *)introduction;
+@end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now I want a &lt;code&gt;BSSon&lt;/code&gt; class, inheriting from &lt;code&gt;BSDaddy&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-objc&quot;&gt;#import &amp;quot;BSDaddy.h&amp;quot;
+
+@interface BSSon : BSDaddy
+
+@end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;… the protected…&lt;/h3&gt;
+&lt;p&gt;Let’s say, Dad has information it should share with his son, like an address for
+instance. Let’s create a new file &lt;code&gt;BSDaddySubclass.h&lt;/code&gt; in which we declared this
+kind of stuff.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-objc&quot;&gt;@interface BSDaddy ()
+
+@property(nonatomic, strong) NSString *protectedAddress;
+
+- (NSString *)healthInsuranceId;
+
+@end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please note that I’m using &lt;code&gt;()&lt;/code&gt; instead of something more precise like
+&lt;code&gt;(subclass)&lt;/code&gt; as, otherwise, the properties are not auto-synthetized.&lt;/p&gt;
+&lt;h3&gt;… and the private&lt;/h3&gt;
+&lt;p&gt;Here is a basic implementation of Dad, in which we also defined stuff we want to
+keep private from Son.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-objc&quot;&gt;#import &amp;quot;BSDaddy.h&amp;quot;
+#import &amp;quot;BSDaddySubclass.h&amp;quot;
+
+@interface BSDaddy ()
+
+@property(weak, nonatomic) NSString *secretSexFantasy;
+
+- (NSNumber *)creditCardPinNumber;
+
+@end
+
+@implementation BSDaddy
+
+- (id)init {
+   self = [super init];
+   if (self) {
+      self.protectedAddress = @&amp;quot;Hill Valley&amp;quot;;
+      self.secretSexFantasy = @&amp;quot;being disguised as an alien&amp;quot;;
+   }
+   return self;
+}
+
+- (NSString *)introduction { return @&amp;quot;Hi! My name is George McFly!&amp;quot;; }
+
+- (NSString *)healthInsuranceId { return @&amp;quot;123456789&amp;quot;; }
+
+- (NSNumber *)creditCardPinNumber { return [NSNumber numberWithInteger:1234]; }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please note that we reuse &lt;code&gt;()&lt;/code&gt; for the new interface declaration, it will not
+conflict with the one in &lt;code&gt;BSDaddySubclass.h&lt;/code&gt;&lt;/p&gt;
+&lt;h3&gt;Now let’s implement Son&lt;/h3&gt;
+&lt;p&gt;Son is a rebel and want to share everything about his dad when he introduces
+himself.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-objc&quot;&gt;#import &amp;quot;BSSon.h&amp;quot;
+#import &amp;quot;BSDaddySubclass.h&amp;quot;
+
+@implementation BSSon
+
+- (NSString *)introduction {
+   // Property 'secretSexFantasy' not found on object of type 'BSSon *'
+   // NSString *myDadSecretFantasy = self.secretSexFantasy;
+
+   #pragma clang diagnostic push
+   #pragma clang diagnostic ignored &amp;quot;-Wundeclared-selector&amp;quot;
+
+   NSString *myDadSecretFantasy = nil;
+   NSNumber *creditCardPinNumber = nil;
+
+   if ([self respondsToSelector:@selector(secretSexFantasy)]) {
+      myDadSecretFantasy = [self performSelector:@selector(secretSexFantasy)
+                                   withObject:nil];
+   }
+
+   if ([self respondsToSelector:@selector(creditCardPinNumber)]) {
+      creditCardPinNumber = [self performSelector:@selector(creditCardPinNumber)
+                                    withObject:nil];
+   }
+
+   #pragma clang diagnostic pop
+
+   return [NSString stringWithFormat:@&amp;quot;Hi! I'm Marty. My dad says: “%@”. He'll be mad cause I'm making public that we live in %@ and his health insurance ID is %@. He'll be even madder after I tell you his secret sex fantasy is %@, and that his credit card PIN number is %@.&amp;quot;, [super introduction], self.protectedAddress, [self healthInsuranceId], myDadSecretFantasy, creditCardPinNumber];
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please note:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;BSDaddySubclass.h&lt;/code&gt; is imported.&lt;/li&gt;
+&lt;li&gt;The properties and tasks declared in &lt;code&gt;BSDad.m&lt;/code&gt; can’t be used: you will get a
+compilation error if you try&lt;/li&gt;
+&lt;li&gt;The properties and tasks declared in &lt;code&gt;BSDadSubclass.h&lt;/code&gt; &lt;strong&gt;can&lt;/strong&gt; be used
+normally without the need of an extra &lt;code&gt;@synthesize&lt;/code&gt; or &lt;code&gt;@dynamic&lt;/code&gt; for
+properties.&lt;/li&gt;
+&lt;li&gt;Most importantly, please note that this is just &lt;em&gt;simulated protection&lt;/em&gt;, which
+relies on a &lt;strong&gt;convention&lt;/strong&gt;! If another class decides to import
+&lt;code&gt;BSDadSubclass.h&lt;/code&gt;, nothing will prevent it to do so and use the protected
+methods as public ones. You just need to &lt;em&gt;establish the convention that this
+is bad programming&lt;/em&gt; within your team. To make this even clearer, remember as
+well that &lt;em&gt;there is no such things as private methods&lt;/em&gt; either. If you know a
+private method exists, you can still call it. That’s the power of Objective-C
+and remember what Uncle Ben said: “With great power comes great
+responsability”!&lt;/li&gt;
+&lt;li&gt;Optional: notice also the several &lt;code&gt;#pragma&lt;/code&gt; that will prevent you to get
+warnings when trying to perform private selectors in your code. If you need
+them, you should be aware maybe you’re doing something nasty.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;This is how George and Marty will introduce themselves:&lt;/p&gt;
+&lt;img alt=&quot;Hello George and Marty&quot; title=&quot;Nasty Marty&quot; src=&quot;/assets/inheritance-1bcd6cb1a0eff58d0756f35980034591ec17394a1eb0cb86443470c81e7bc601c35e2896052e336c6afd90ecc24166f3cc9f090775ab3c14fb13056f1f4eee0d.png&quot; integrity=&quot;sha512-G81ssaDv9Y0HVvNZgANFkewXOUoesMuGRDRwyB57xgHDXiiWBS4zbGr9kOzCQWbzzJ8JB3WrPBT7EwVvH07uDQ==&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;p&gt;You can find the full source code of this example on &lt;a href=&quot;https://github.com/Bootstragram/bootstragram-ios&quot;&gt;my iOS Demo
+code&lt;/a&gt; on GitHub.&lt;/p&gt;
+&lt;p&gt;And again, if you want to address me some feedback or comments, it’s via
+&lt;a href=&quot;http://twitter.com/dirtyhenry&quot;&gt;Twitter&lt;/a&gt; or &lt;a href=&quot;https://github.com/Bootstragram/bootstragram-blog/issues&quot; title=&quot;Issues&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><category term="ios" /><summary type="html">There’s no protected modifier in Objective-C. In a sense, we should be grateful that Objective-C is not Java. On the other hand, sometimes it can suck. What’s the best way to deal with it? Let’s simulate protection!</summary></entry></feed>

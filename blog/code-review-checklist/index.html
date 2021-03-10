@@ -1,0 +1,171 @@
+<!doctype html>
+<html class="no-js" lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Code Reviews, a Checklist | Bootstragram</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Code Reviews, a Checklist" />
+<meta property="og:locale" content="en" />
+<meta name="description" content="Reviewing code from fellow developers should be considered a best practice. While its main goal is to make sure your teammate didn’t lose track of what a good software developer should do, it can also help the reviewer extend his knowledge of a project and get inspired by other’s code." />
+<meta property="og:description" content="Reviewing code from fellow developers should be considered a best practice. While its main goal is to make sure your teammate didn’t lose track of what a good software developer should do, it can also help the reviewer extend his knowledge of a project and get inspired by other’s code." />
+<link rel="canonical" href="https://bootstragram.com/blog/code-review-checklist/" />
+<meta property="og:url" content="https://bootstragram.com/blog/code-review-checklist/" />
+<meta property="og:site_name" content="Bootstragram" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2013-08-01T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Code Reviews, a Checklist" />
+<script type="application/ld+json">
+{"url":"https://bootstragram.com/blog/code-review-checklist/","@type":"BlogPosting","headline":"Code Reviews, a Checklist","dateModified":"2013-08-01T00:00:00+00:00","datePublished":"2013-08-01T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://bootstragram.com/blog/code-review-checklist/"},"description":"Reviewing code from fellow developers should be considered a best practice. While its main goal is to make sure your teammate didn’t lose track of what a good software developer should do, it can also help the reviewer extend his knowledge of a project and get inspired by other’s code.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://bootstragram.com/feed.xml" title="Bootstragram" /><!-- Plausible --><script async defer data-domain="bootstragram.com" src="https://plausible.io/js/plausible.js"></script></head>
+<body>
+  <!--[if IE]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]--><header>  
+  <a id="site-title" rel="author" href="/">Bootstragram</a><nav>
+    <ul><li>
+          <a class="page-link" href="/tags/">Tags</a>
+        </li><li>
+          <a class="page-link" href="/about/">About</a>
+        </li></ul>
+  </nav></header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+      <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <div class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Code Reviews, a Checklist</h1>
+    <div class="post-meta">
+      <time class="dt-published" datetime="2013-08-01T00:00:00+00:00" itemprop="datePublished">
+        August 01, 2013
+      </time><span> • </span>
+        <ul class="categories-list"></ul></div>
+  </div><div class="post-content e-content" itemprop="articleBody">
+    <p>Reviewing code from fellow developers should be considered a best practice.
+While its main goal is to make sure your teammate didn’t lose track of what a
+good software developer should do, it can also help the reviewer extend his
+knowledge of a project and get inspired by other’s code.</p>
+<h2>5 Golden Rules</h2>
+<p>Things to have in mind/check when you review code include these 5 golden rules:</p>
+<ol>
+<li>The code compiles on the reviewer’s environment without warnings and tests
+are not broken.</li>
+<li>The new code implements the bug fix/feature it was supposed to.</li>
+<li>The code remains <a href="http://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a>.</li>
+<li>Things are kept small and simple, with a clear separation of concerns: <a href="http://en.wikipedia.org/wiki/Single_responsibility_principle">“each
+class should do only one thing, and do that one thing well”</a>. If you don’t
+get what the new code is doing, something’s wrong.</li>
+<li>The new code is tested.</li>
+</ol>
+<h2>How to review code?</h2>
+<p>My team is using <a href="https://github.com/nvie/gitflow">GitFlow</a> on our own Git servers (i mean “no GitHub”, so no
+“pull request”). My way to actually review code is the following:</p>
+<ul>
+<li>
+<p>Checkout the branch to review</p>
+</li>
+<li>
+<p>Identify what is the delta between this branch and its base branch (let’s say
+<code>develop</code>)</p>
+<ul>
+<li>
+<p>First, get the base revision tag:</p>
+<pre><code>git merge-base branch-to-review develop
+ee682bdaf3a578a8de647006b500c87ca72c7ffc
+</code></pre>
+</li>
+<li>
+<p>Then, use your diff tool to visualize what changed (i personally use
+<a href="http://www.kaleidoscopeapp.com/">Kaleidoscope</a>)</p>
+<pre><code>git difftool ee682bdaf3a578a8de647006b500c87ca72c7ffc HEAD
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Give the review developer some feedback, ask questions about what is not clear</p>
+</li>
+<li>
+<p>If necessary, fix the code by yourself if changes are fast to implement
+(letting the other know what you’re doing) or in pair programming with the
+reviewee if things are heavier</p>
+</li>
+<li>
+<p>Merge the code on the base branch</p>
+</li>
+<li>
+<p>Deploy on your staging environment to make sure things are ok</p>
+</li>
+<li>
+<p>Clean up Git branches behind you</p>
+<pre><code class="language-shell">git branch -d branch-to-review
+git push origin :branch-to-review
+</code></pre>
+</li>
+</ul>
+<h2>A note about testing</h2>
+<p>Reviewing code that doesn’t include tests can be disappointing for a reviewer
+and adding some tests after an implementation feels like cheating. Here is a
+quote from Daniel Eggert - from the excellent <a href="http://www.objc.io/issue-1/testing-view-controllers.html">objc.io</a> - that both reviewers
+and reviewees should have in mind when reviewing/developing:</p>
+<blockquote>
+<p>Tests should help us speed up development and make things more fun. <code>[...]</code>
+Generally, if you find something difficult to test, that’s a hint that your
+design may be broken and that you should refactor some of it. <code>[...]</code> You’ll
+get diminishing returns as you add more tests. First and foremost, add simple
+tests. Branch into more sophisticated territory as you start to feel
+comfortable with it.</p>
+</blockquote>
+<h2>Links</h2>
+<p>Other resources discuss the subject:</p>
+<ul>
+<li><a href="http://lifehacker.com/all-code-is-bad-so-dont-stress-if-yours-sucks-1569821801">All Code Is Bad, So Don’t Stress If Yours Sucks</a> (added in May 2014)</li>
+</ul>
+<h2>Conclusion</h2>
+<p>I’ll try to add some examples and additions to this page as I process code
+reviews in the future. Again, feel free to get in touch to provide some feedback
+and as <a href="https://github.com/dirtyhenry/bootstragram-blog/blob/master/_posts/2013-08-01-code-review-checklist.md">this page is open source and available on GitHub</a>, pull requests are
+welcome. I’ll review them with a great pleasure.</p>
+
+  </div>
+
+  <a class="u-url" href="/blog/code-review-checklist/" hidden></a><ul class="tags-list"><li>
+          <a class="tag-link" href="/tag/oped/">
+          oped
+          </a>
+        </li></ul><div id="related-pages"><div id="related-page-previous">
+    <p class="related-page-heading">previous</p>
+    <p class="related-page-title">
+      <a href="/blog/backup-tips/">
+        7 tips to create a safe and consistent backup strategy as a Mac user
+      </a>
+    </p>
+    <p class="related-page-date">March 17, 2013</p>
+  </div><div id="related-page-next">
+    <p class="related-page-heading">next</p>
+    <p class="related-page-title">
+      <a href="/blog/setting-up-a-vpn-server-on-mavericks/">
+        Setting up a VPN Server with Mac OS X Mavericks
+      </a>
+    </p>
+    <p class="related-page-date">October 30, 2013</p>
+  </div></div>
+</article>
+<script type="text/javascript" src="/assets/js/main.js"></script>
+
+    </div>
+  </main><footer>
+  <ul class="meta">
+    <li>Bootstragram</li><li><a href="https://github.com/bootstragram/bootstragram-blog">bootstragram/bootstragram-blog</a></li></ul>
+  
+  <nav>
+    <ul><li><a class="page-link" href="/archives/">Archives</a></li><li><a class="page-link" href="/bookmarks/">Development Tools Bookmarks</a></li></ul>
+  </nav>
+  
+</footer>
+</body>
+</html>
